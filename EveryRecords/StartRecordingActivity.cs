@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using System.Globalization;
 
 namespace EveryRecords
 {
@@ -35,6 +36,7 @@ namespace EveryRecords
 
             _recordList = FindViewById<ListView>(Resource.Id.RecordList);
             _recordList.Adapter = new SimpleListAdapter(this, new List<string>());
+            _recordList.ItemLongClick += recordList_ItemLongClick;
             var add = FindViewById<TextView>(Resource.Id.AddText);
             add.Click += add_Click;
 
@@ -45,11 +47,24 @@ namespace EveryRecords
             base.OnActivityResult(requestCode, resultCode, data);
 
             _waitingForResult = false;
-            if (resultCode == Result.Ok)
+            if (requestCode == 0)
             {
-                var recording = data.GetStringExtra(RecordingActivity.OutputRecordTag);
-                _records.Add(recording);
-                _recordList.Adapter = new SimpleListAdapter(this, _records);
+                if (resultCode == Result.Ok)
+                {
+                    var recording = data.GetStringExtra(RecordingActivity.OutputRecordTag);
+                    _records.Add(recording);
+                    _recordList.Adapter = new SimpleListAdapter(this, _records);
+                }
+            }
+
+            if (requestCode == 1)
+            {
+                if (resultCode == Result.Ok)
+                {
+                    var item = data.GetStringExtra(ConfirmActivity.DataTag);
+                    _records.Remove(item);
+                    _recordList.Adapter = new SimpleListAdapter(this, _records);
+                }
             }
         }
 
@@ -67,13 +82,26 @@ namespace EveryRecords
                 _records.Clear();
             }
         }
-
+                
         private void add_Click(object sender, EventArgs e)
         {
             _waitingForResult = true;
             var intent = new Intent(this, typeof(RecordingActivity));
             intent.PutExtra(RecordingActivity.ReturnToTag, GetType().FullName);
             StartActivityForResult(intent, 0);
+        }
+
+        private void recordList_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
+        {
+            _waitingForResult = true;
+            var list = sender as ListView;
+            var item = list.Adapter.GetItem(e.Position).ToString();
+
+            var intent = new Intent(this, typeof(ConfirmActivity));
+            intent.PutExtra(ConfirmActivity.MessageTag, string.Format(CultureInfo.InvariantCulture, "È·¶¨ÒªÉ¾³ý[{0}]Âð£¿", item));
+            intent.PutExtra(ConfirmActivity.DataTag, item);
+            intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
+            StartActivityForResult(intent, 1);
         }
     }
 }

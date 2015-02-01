@@ -17,8 +17,10 @@
   <string name="RecordTitle">创建新记录</string>
   <string name="ReportTitle">查看记录</string>
   <string name="HistoryTitle">查看历史记录</string>
-  <string name="EditNode">编辑节点</string>
-  <string name="SettingTitle">设置分类</string>
+  <string name="AddCategory">添加分类</string>
+  <string name="EditCategory">编辑分类</string>
   <string name="Category">类别</string>
   <string name="About">关于</string>
+  <string name="Ok">确定</string>
+  <string name="Cancel">取消</string>
 </resources>

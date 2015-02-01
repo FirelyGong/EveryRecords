@@ -42,6 +42,15 @@
                 android:layout_weight="0.1"
                 android:textColor="@android:color/background_light" />
             <Button
+                android:text="@string/Setting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/SettingButton"
+                android:background="#4682B4"
+                android:layout_weight="0.1"
+                android:layout_margin="10px"
+                android:textColor="@android:color/background_light" />
+            <Button
                 android:text="@string/Exit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -142,8 +151,8 @@
             android:layout_weight="0.25"
             android:weightSum="1">
             <Button
-                android:text="@string/Setting"
-                android:id="@+id/SettingButton"
+                android:text="@string/Category"
+                android:id="@+id/CategoryButton"
                 android:background="@drawable/MetroButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"

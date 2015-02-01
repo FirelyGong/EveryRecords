@@ -61,8 +61,6 @@ namespace EveryRecords
                         result.Add(item);
                     }
                 }
-
-                return result;
             }
 
             if (result.Count == 0)
@@ -125,6 +123,36 @@ namespace EveryRecords
                         };
             _recordingData.Records.Add(record);
             return record.ToString();
+        }
+
+        public bool DeleteRecord(string recordString)
+        {
+            DataChanged = true;
+            var record = _recordingData.Records.FirstOrDefault(r => r.ToString() == recordString);
+            if (record == null)
+            {
+                return false;
+            }
+            else
+            {
+                var amount = 0 - record.Amount;
+                string[] paths = record.Path.Split(';');
+                IList<string> lst = new List<string>();
+                foreach (var path in paths)
+                {
+                    var arr = path.Split('/');
+                    foreach (var node in arr)
+                    {
+                        if (!lst.Contains(node))
+                        {
+                            lst.Add(node);
+                            AddCategorySummary(node, amount);
+                        }
+                    }
+                }
+
+                return _recordingData.Records.Remove(record);
+            }
         }
 
         public double GetCategorySummary(string category)

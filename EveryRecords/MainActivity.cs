@@ -13,7 +13,6 @@ namespace EveryRecords
     public class MainActivity : Activity
     {
         private TextView _title;
-        //private ImageView _titleIcon;
         private Button _recording;
         private Button _reporting;
         private Button _setting;
@@ -51,6 +50,12 @@ namespace EveryRecords
             _setting.Click += delegate
             {
                 StartActivity(typeof(SettingActivity));
+            };
+
+            var cateogry = FindViewById<Button>(Resource.Id.CategoryButton);
+            cateogry.Click += delegate
+            {
+                StartActivity(typeof(CategoryActivity));
             };
 
             _exit = FindViewById<Button>(Resource.Id.ExitButton);

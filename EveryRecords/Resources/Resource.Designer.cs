@@ -69,71 +69,80 @@ namespace EveryRecords
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f05000b
+			public const int AddButton = 2131034123;
+			
+			// aapt resource value: 0x7f05002c
+			public const int AddText = 2131034156;
+			
 			// aapt resource value: 0x7f050025
-			public const int AddButton = 2131034149;
-			
-			// aapt resource value: 0x7f050029
-			public const int AddText = 2131034153;
-			
-			// aapt resource value: 0x7f05001c
-			public const int AmountText = 2131034140;
+			public const int AmountText = 2131034149;
 			
 			// aapt resource value: 0x7f050002
 			public const int BackButton = 2131034114;
 			
-			// aapt resource value: 0x7f050027
-			public const int CategoryItems = 2131034151;
-			
-			// aapt resource value: 0x7f05001a
-			public const int CategoryList = 2131034138;
-			
-			// aapt resource value: 0x7f05001e
-			public const int CommentsText = 2131034142;
-			
-			// aapt resource value: 0x7f050026
-			public const int DeleteButton = 2131034150;
-			
-			// aapt resource value: 0x7f05000d
-			public const int ExitButton = 2131034125;
-			
-			// aapt resource value: 0x7f050016
-			public const int HistoryButton = 2131034134;
-			
-			// aapt resource value: 0x7f050006
-			public const int HistoryList = 2131034118;
-			
-			// aapt resource value: 0x7f050024
-			public const int NodeText = 2131034148;
-			
-			// aapt resource value: 0x7f050019
-			public const int PathString = 2131034137;
+			// aapt resource value: 0x7f050010
+			public const int CancelButton = 2131034128;
 			
 			// aapt resource value: 0x7f050021
-			public const int PathText = 2131034145;
+			public const int CategoryButton = 2131034145;
 			
-			// aapt resource value: 0x7f050012
-			public const int RecordButton = 2131034130;
-			
-			// aapt resource value: 0x7f050028
-			public const int RecordList = 2131034152;
-			
-			// aapt resource value: 0x7f050022
-			public const int ReportsList = 2131034146;
-			
-			// aapt resource value: 0x7f050020
-			public const int SaveText = 2131034144;
+			// aapt resource value: 0x7f05000d
+			public const int CategoryItems = 2131034125;
 			
 			// aapt resource value: 0x7f050023
-			public const int SelectionList = 2131034147;
+			public const int CategoryList = 2131034147;
 			
-			// aapt resource value: 0x7f050018
-			public const int SettingButton = 2131034136;
+			// aapt resource value: 0x7f050027
+			public const int CommentsText = 2131034151;
+			
+			// aapt resource value: 0x7f05000e
+			public const int ContentText = 2131034126;
+			
+			// aapt resource value: 0x7f050016
+			public const int ExitButton = 2131034134;
+			
+			// aapt resource value: 0x7f05001f
+			public const int HistoryButton = 2131034143;
+			
+			// aapt resource value: 0x7f050011
+			public const int HistoryList = 2131034129;
+			
+			// aapt resource value: 0x7f05000a
+			public const int NodeText = 2131034122;
+			
+			// aapt resource value: 0x7f05000f
+			public const int OkButton = 2131034127;
+			
+			// aapt resource value: 0x7f050022
+			public const int PathString = 2131034146;
+			
+			// aapt resource value: 0x7f050006
+			public const int PathText = 2131034118;
+			
+			// aapt resource value: 0x7f05001b
+			public const int RecordButton = 2131034139;
+			
+			// aapt resource value: 0x7f05002b
+			public const int RecordList = 2131034155;
+			
+			// aapt resource value: 0x7f050029
+			public const int ReportsList = 2131034153;
+			
+			// aapt resource value: 0x7f050028
+			public const int SaveText = 2131034152;
+			
+			// aapt resource value: 0x7f05002a
+			public const int SelectionList = 2131034154;
+			
+			// aapt resource value: 0x7f050015
+			public const int SettingButton = 2131034133;
 			
 			// aapt resource value: 0x7f050005
 			public const int SubTitleText = 2131034117;
 			
-			// aapt resource value: 0x7f05000f
-			public const int SummaryText = 2131034127;
+			// aapt resource value: 0x7f050018
+			public const int SummaryText = 2131034136;
 			
 			// aapt resource value: 0x7f050001
 			public const int TitleInnerLayout = 2131034113;
@@ -144,53 +153,53 @@ namespace EveryRecords
 			// aapt resource value: 0x7f050004
 			public const int TitleSubLayout = 2131034116;
 			
-			// aapt resource value: 0x7f05000a
-			public const int TitleText = 2131034122;
-			
-			// aapt resource value: 0x7f05000c
-			public const int VerButton = 2131034124;
+			// aapt resource value: 0x7f050012
+			public const int TitleText = 2131034130;
 			
 			// aapt resource value: 0x7f050014
-			public const int ViewReportButton = 2131034132;
-			
-			// aapt resource value: 0x7f050007
-			public const int linearLayout1 = 2131034119;
-			
-			// aapt resource value: 0x7f05000e
-			public const int linearLayout10 = 2131034126;
-			
-			// aapt resource value: 0x7f050008
-			public const int linearLayout2 = 2131034120;
-			
-			// aapt resource value: 0x7f05001f
-			public const int linearLayout3 = 2131034143;
-			
-			// aapt resource value: 0x7f050010
-			public const int linearLayout4 = 2131034128;
-			
-			// aapt resource value: 0x7f050011
-			public const int linearLayout5 = 2131034129;
-			
-			// aapt resource value: 0x7f050013
-			public const int linearLayout6 = 2131034131;
-			
-			// aapt resource value: 0x7f050015
-			public const int linearLayout7 = 2131034133;
-			
-			// aapt resource value: 0x7f050017
-			public const int linearLayout8 = 2131034135;
-			
-			// aapt resource value: 0x7f05000b
-			public const int linearLayout9 = 2131034123;
-			
-			// aapt resource value: 0x7f050009
-			public const int textView1 = 2131034121;
-			
-			// aapt resource value: 0x7f05001b
-			public const int textView3 = 2131034139;
+			public const int VerButton = 2131034132;
 			
 			// aapt resource value: 0x7f05001d
-			public const int textView4 = 2131034141;
+			public const int ViewReportButton = 2131034141;
+			
+			// aapt resource value: 0x7f05000c
+			public const int linearLayout1 = 2131034124;
+			
+			// aapt resource value: 0x7f050017
+			public const int linearLayout10 = 2131034135;
+			
+			// aapt resource value: 0x7f050007
+			public const int linearLayout2 = 2131034119;
+			
+			// aapt resource value: 0x7f050009
+			public const int linearLayout3 = 2131034121;
+			
+			// aapt resource value: 0x7f050019
+			public const int linearLayout4 = 2131034137;
+			
+			// aapt resource value: 0x7f05001a
+			public const int linearLayout5 = 2131034138;
+			
+			// aapt resource value: 0x7f05001c
+			public const int linearLayout6 = 2131034140;
+			
+			// aapt resource value: 0x7f05001e
+			public const int linearLayout7 = 2131034142;
+			
+			// aapt resource value: 0x7f050020
+			public const int linearLayout8 = 2131034144;
+			
+			// aapt resource value: 0x7f050013
+			public const int linearLayout9 = 2131034131;
+			
+			// aapt resource value: 0x7f050008
+			public const int textView1 = 2131034120;
+			
+			// aapt resource value: 0x7f050024
+			public const int textView3 = 2131034148;
+			
+			// aapt resource value: 0x7f050026
+			public const int textView4 = 2131034150;
 			
 			// aapt resource value: 0x7f050003
 			public const int titleText = 2131034115;
@@ -212,28 +221,34 @@ namespace EveryRecords
 			public const int AboutLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int HistoryLayout = 2130903041;
+			public const int CategoryLayout = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int ListviewItemLayout = 2130903042;
+			public const int ConfirmLayout = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Main = 2130903043;
+			public const int HistoryLayout = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int RecordingLayout = 2130903044;
+			public const int ListviewItemLayout = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int ReportingLayout = 2130903045;
+			public const int Main = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int SelectionLayout = 2130903046;
+			public const int RecordingLayout = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int SettingLayout = 2130903047;
+			public const int ReportingLayout = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int StartRecordingLayout = 2130903048;
+			public const int SelectionLayout = 2130903048;
+			
+			// aapt resource value: 0x7f030009
+			public const int SettingLayout = 2130903049;
+			
+			// aapt resource value: 0x7f03000a
+			public const int StartRecordingLayout = 2130903050;
 			
 			static Layout()
 			{
@@ -254,6 +269,9 @@ namespace EveryRecords
 			// aapt resource value: 0x7f040009
 			public const int Add = 2130968585;
 			
+			// aapt resource value: 0x7f040011
+			public const int AddCategory = 2130968593;
+			
 			// aapt resource value: 0x7f040006
 			public const int Amount = 2130968582;
 			
@@ -262,6 +280,9 @@ namespace EveryRecords
 			
 			// aapt resource value: 0x7f04000b
 			public const int Back = 2130968587;
+			
+			// aapt resource value: 0x7f040016
+			public const int Cancel = 2130968598;
 			
 			// aapt resource value: 0x7f040013
 			public const int Category = 2130968595;
@@ -272,8 +293,8 @@ namespace EveryRecords
 			// aapt resource value: 0x7f04000a
 			public const int Delete = 2130968586;
 			
-			// aapt resource value: 0x7f040011
-			public const int EditNode = 2130968593;
+			// aapt resource value: 0x7f040012
+			public const int EditCategory = 2130968594;
 			
 			// aapt resource value: 0x7f04000d
 			public const int Exit = 2130968589;
@@ -286,6 +307,9 @@ namespace EveryRecords
 			
 			// aapt resource value: 0x7f040010
 			public const int HistoryTitle = 2130968592;
+			
+			// aapt resource value: 0x7f040015
+			public const int Ok = 2130968597;
 			
 			// aapt resource value: 0x7f040002
 			public const int Record = 2130968578;
@@ -301,9 +325,6 @@ namespace EveryRecords
 			
 			// aapt resource value: 0x7f040005
 			public const int Setting = 2130968581;
-			
-			// aapt resource value: 0x7f040012
-			public const int SettingTitle = 2130968594;
 			
 			// aapt resource value: 0x7f04000c
 			public const int UpLevel = 2130968588;
