@@ -1,60 +1,146 @@
-﻿using System;
+﻿using EveryRecords.Persistence;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace EveryRecords
 {
-    public class RecordingDataFactory
+    public class RecordingDataFactory:DataFactory
     {
+        public const string NoHistoryList = "没有历史记录";
+        public const string RecordFilePrefix = "recordings_";
+
         public static readonly RecordingDataFactory Instance = new RecordingDataFactory();
 
-        private Dictionary<string, int> _summaries;
+        public static RecordingDataFactory CreateHistoryData(int year, int month)
+        {
+            return new RecordingDataFactory(year, month);
+        }
 
-        private IList<RecordItem> _records;
+        private RecordingData _recordingData;
 
         private RecordingDataFactory()
+            : this(DateTime.Now.Year, DateTime.Now.Month)
         {
-            _summaries = new Dictionary<string, int>();
-            _records = new List<RecordItem>();
         }
 
-        public void AddRecord(string path, string comments, int amount)
+        private RecordingDataFactory(int year, int month)
         {
-            string[] categories = path.Split('/');
-            if (string.IsNullOrEmpty(categories[0]))
-            {
-                categories[0] = CategoryDataFactory.RootCategory;
-            }
-
-            foreach (var item in categories)
-            {
-                AddCategorySummary(item, amount);
-            }
-
-            _records.Add(new RecordItem
-            {
-                Category = categories[categories.Length - 1],
-                Path = path,
-                Amount = amount,
-                Comments = comments,
-                RecordTime = DateTime.Now.ToString("yyyy/MM/dd-HH:mm:ss")
-            });
+            _recordingData = new RecordingData();
+            DataPath = ConstructDataPath(year, month);
         }
 
-        public int GetCategorySummary(string category)
+        protected override string DataPath
         {
-            if(_summaries.ContainsKey(category))
+            get;
+            set;
+        }
+
+        public IList<string> GetHistoryList()
+        {
+            var result = new List<string>();
+            if (Directory.Exists(BasePath))
             {
-                return _summaries[category];
+                var list = Directory.EnumerateFiles(BasePath);
+                foreach (var file in list)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    if (fileName.StartsWith(RecordFilePrefix))
+                    {
+                        string[] arr = fileName.Split('_');
+                        if (arr.Length != 2 || arr[1] == DateTime.Now.ToString("yyyyMM"))
+                        {
+                            continue;
+                        }
+
+                        var item = arr[1].Insert(4, "-");
+                        result.Add(item);
+                    }
+                }
+
+                return result;
+            }
+
+            if (result.Count == 0)
+            {
+                result.Add(NoHistoryList);
+            }
+
+            return result;
+        }
+
+        public void LoadData()
+        {
+            if (File.Exists(DataPath))
+            {
+                _recordingData = LoadData<RecordingData>();
+            }
+            else
+            {
+                _recordingData = new RecordingData();
+            }
+        }
+
+        public void SaveData()
+        {
+            if (DataChanged)
+            {
+                SaveData(_recordingData);
+                DataChanged = false;
+            }
+        }
+
+        public string AddRecord(IList<string> paths, string comments, double amount)
+        {
+            DataChanged = true;
+
+            MakeSureRecordInCurrentMonth();
+            IList<string> categories = new List<string>();
+            IList<string> lst = new List<string>();
+            foreach (var path in paths)
+            {
+                var arr = path.Split('/');
+                foreach (var node in arr)
+                {
+                    if (!lst.Contains(node))
+                    {
+                        lst.Add(node);
+                        AddCategorySummary(node, amount);
+                    }
+                }
+
+                categories.Add(arr[arr.Length - 1]);
+            }
+            var record = new RecordItem
+                        {
+                            Category = string.Join(",", categories),
+                            Path = string.Join(";", paths),
+                            Amount = amount,
+                            Comments = comments,
+                            RecordTime = DateTime.Now.ToString("yyyy/MM/dd-HH:mm:ss")
+                        };
+            _recordingData.Records.Add(record);
+            return record.ToString();
+        }
+
+        public double GetCategorySummary(string category)
+        {
+            var result = _recordingData.Summaries.FirstOrDefault(l => l.Category == category);
+            if(result!=null)
+            {
+                return result.Summary;
             }
 
             return 0;
         }
 
-        public Dictionary<string, int> GetSubCategoriesSummary(string parent)
+        public Dictionary<string, double> GetSubCategoriesSummary(string parent)
         {
-            Dictionary<string, int> result = new Dictionary<string, int>();
+            Dictionary<string, double> result = new Dictionary<string, double>();
             var categories = CategoryDataFactory.Instance.GetSubCategories(parent);
             foreach (var item in categories)
             {
@@ -66,18 +152,37 @@ namespace EveryRecords
 
         public IList<string> GetRecords(string category)
         {
-            return new List<string>(_records.Where(r => r.Category == category).Select(r => r.ToString()));
+            return new List<string>(_recordingData.Records.Where(r => r.Category.Contains(category)).Select(r => r.ToString()));
         }
 
-        private void AddCategorySummary(string category, int amount)
+        private void AddCategorySummary(string category, double amount)
         {
-            if (!_summaries.ContainsKey(category))
+            var result = _recordingData.Summaries.FirstOrDefault(l => l.Category == category);
+            if (result == null)
             {
-                _summaries.Add(category, 0);
+                _recordingData.Summaries.Add(new SummaryItem { Category = category, Summary = amount });
             }
+            else
+            {
+                result.Summary += amount;
+            }
+        }
 
-            var total = _summaries[category];
-            _summaries[category] = total + amount;
+        private string ConstructDataPath(int year, int month)
+        {
+            var fileName = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}.xml",RecordFilePrefix, year.ToString("0000"), month.ToString("00"));
+            return Path.Combine(BasePath, fileName);
+        }
+         
+        private void MakeSureRecordInCurrentMonth()
+        {
+            var filePath = ConstructDataPath(DateTime.Now.Year, DateTime.Now.Month);
+            if (filePath != DataPath)
+            {
+                SaveData();
+                DataPath = filePath;
+                LoadData();
+            }
         }
     }
 }

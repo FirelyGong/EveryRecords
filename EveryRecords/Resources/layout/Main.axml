@@ -2,25 +2,154 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <Button
-        android:id="@+id/RecordButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Record" />
-    <Button
-        android:text="@string/ViewReport"
+    android:layout_height="fill_parent"
+    android:background="@android:color/background_light"
+    android:weightSum="1">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ViewReportButton" />
-    <Button
-        android:text="@string/Setting"
+        android:id="@+id/linearLayout1"
+        android:background="#4682B4"
+        android:layout_weight="0.15">
+        <TextView
+            android:text="@string/ApplicationName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TitleText"
+            android:gravity="center_vertical"
+            android:layout_margin="10px"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout9"
+            android:gravity="right"
+            android:weightSum="1">
+            <Button
+                android:text="Button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/VerButton"
+                android:background="#4682B4"
+                android:layout_margin="10px"
+                android:layout_weight="0.1"
+                android:textColor="@android:color/background_light" />
+            <Button
+                android:text="@string/Exit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/ExitButton"
+                android:background="#4682B4"
+                android:textColor="@android:color/background_light"
+                android:layout_margin="10px"
+                android:layout_weight="0.1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout10">
+            <TextView
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/SummaryText"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SettingButton" />
-    <Button
-        android:text="@string/Exit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ExitButton" />
+        android:id="@+id/linearLayout4"
+        android:layout_weight="0.85">
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout5"
+            android:layout_weight="0.25"
+            android:weightSum="1">
+            <Button
+                android:id="@+id/RecordButton"
+                android:text="@string/Record"
+                android:background="@drawable/MetroButton"
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_margin="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout6"
+            android:layout_weight="0.25"
+            android:weightSum="1">
+            <Button
+                android:text="@string/ViewReport"
+                android:id="@+id/ViewReportButton"
+                android:background="@drawable/MetroButton"
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_margin="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout7"
+            android:layout_weight="0.25"
+            android:weightSum="1">
+            <Button
+                android:text="@string/HistoryRec"
+                android:id="@+id/HistoryButton"
+                android:background="@drawable/MetroButton"
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_margin="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout8"
+            android:layout_weight="0.25"
+            android:weightSum="1">
+            <Button
+                android:text="@string/Setting"
+                android:id="@+id/SettingButton"
+                android:background="@drawable/MetroButton"
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_margin="10px" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

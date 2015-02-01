@@ -2,41 +2,140 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@android:color/background_light">
+    <LinearLayout
+        android:id="@+id/TitleLayout"
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4682B4"
+        android:weightSum="1">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TitleInnerLayout"
+            android:background="#191970"
+            android:weightSum="1"
+            android:gravity="center"
+            android:layout_marginTop="10px">
+            <Button
+                android:text="   &lt;-   "
+                android:id="@+id/BackButton"
+                android:background="#4682B4"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15" />
+            <TextView
+                android:text="@string/RecordTitle"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/titleText"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="#4682B4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2px"
+                android:layout_weight="0.85" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TitleSubLayout">
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SubTitleText" />
+        </LinearLayout>
+    </LinearLayout>
     <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/PathString" />
-    <TextView
-        android:text="@string/Amount"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/PathString"
+        android:textColor="@android:color/black"
+        android:text="@string/Category" />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3" />
-    <EditText
-        android:text="0"
+        android:id="@+id/CategoryList" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AmountText" />
-    <TextView
-        android:text="@string/Comments"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/linearLayout2">
+        <TextView
+            android:text="@string/Amount"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView3"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical" />
+        <EditText
+            android:text="0"
+            android:id="@+id/AmountText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:shadowColor="#f0f8ffff" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4" />
-    <EditText
+        android:id="@+id/linearLayout1">
+        <TextView
+            android:text="@string/Comments"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView4"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical" />
+        <EditText
+            android:id="@+id/CommentsText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/CommentsText" />
-    <Button
-        android:text="@string/Save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SaveButton" />
-    <Button
-        android:text="@string/Back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/BackButton" />
+        android:id="@+id/linearLayout3"
+        android:gravity="center"
+        android:weightSum="1">
+        <TextView
+            android:text="@string/Save"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SaveText"
+            android:background="#B0E0E6"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:clickable="true"
+            android:textColor="@android:color/black"
+            android:padding="10px" />
+    </LinearLayout>
 </LinearLayout>

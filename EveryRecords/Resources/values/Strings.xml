@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">EveryRecords</string>
+    <string name="ApplicationName">Every Records</string>
   <string name="Record">记帐</string>
   <string name="ViewReport">报表</string>
+  <string name="HistoryRec">历史</string>
   <string name="Setting">设置</string>
   <string name="Amount">金额</string>
   <string name="Comments">备注</string>
@@ -13,4 +14,11 @@
   <string name="Back">返回</string>
   <string name="UpLevel">上一级</string>
   <string name="Exit">退出</string>
+  <string name="RecordTitle">创建新记录</string>
+  <string name="ReportTitle">查看记录</string>
+  <string name="HistoryTitle">查看历史记录</string>
+  <string name="EditNode">编辑节点</string>
+  <string name="SettingTitle">设置分类</string>
+  <string name="Category">类别</string>
+  <string name="About">关于</string>
 </resources>

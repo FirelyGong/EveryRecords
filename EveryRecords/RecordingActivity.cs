@@ -12,13 +12,17 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "RecordingActivity")]
+    [Activity(Label = "RecordingActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
     public class RecordingActivity : Activity
     {
+        public const string OutputRecordTag = "CreatedRecording";
+        public const string ReturnToTag = "ReturnTo";
+
         private IList<string> _categories;
+        private IList<string> _paths;
+        private string _currentPath;
         private int _currentCategoryIndex;
 
-        private TextView _pathText;
         private EditText _amountText;
         private EditText _commentsText;
         
@@ -29,14 +33,12 @@ namespace EveryRecords
             // Create your application here
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.RecordingLayout);
-
+            _paths = new List<string>();
             _categories = CategoryDataFactory.Instance.GetCategories();
-            _pathText = FindViewById<TextView>(Resource.Id.PathString);
-            _pathText.Text = CategoryDataFactory.RootCategory;
             _amountText = FindViewById<EditText>(Resource.Id.AmountText);
             _commentsText = FindViewById<EditText>(Resource.Id.CommentsText);
 
-            var save = FindViewById<Button>(Resource.Id.SaveButton);
+            var save = FindViewById<TextView>(Resource.Id.SaveText);
             save.Click += save_Click;
 
             var back = FindViewById<Button>(Resource.Id.BackButton);
@@ -61,11 +63,12 @@ namespace EveryRecords
 
             if (resultCode != Result.Ok)
             {
+                Finish();
                 return;
             }
 
-            var selection=data.GetStringExtra("Selection");
-            _pathText.Text = _pathText.Text+"/"+selection;
+            var selection=data.GetStringExtra(SelectionActivity.SelectionTag);
+            _currentPath += "/" + selection;
 
             var sub = CategoryDataFactory.Instance.GetSubCategories(selection);
             if (sub.Count>0)
@@ -74,28 +77,34 @@ namespace EveryRecords
             }
             else
             {
+                _paths.Add(_currentPath);
                 TryContinueCategory();
             }
         }
 
         private void save_Click(object sender, EventArgs e)
         {
-            int amount;
-            if(!int.TryParse(_amountText.Text, out amount) || amount==0)
+            double amount;
+            if(!double.TryParse(_amountText.Text, out amount) || amount==0)
             {
                 Toast.MakeText(this,"请输入正确的金额！",ToastLength.Long).Show();
                 return;
             }
 
-            RecordingDataFactory.Instance.AddRecord(_pathText.Text, _commentsText.Text, amount);
+            var recording = RecordingDataFactory.Instance.AddRecord(_paths, _commentsText.Text, amount);
+            //RecordingDataFactory.Instance.SaveData();
+            var lastActivity = Intent.GetStringExtra(ReturnToTag);
+            var intent = new Intent(this, Type.GetType(lastActivity, true));
+            intent.PutExtra(OutputRecordTag, recording);
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
         private void SelectDataFromCategory(string category)
         {
             var intent = new Intent(this, typeof(SelectionActivity));
-            intent.PutExtra("ReturnTo", this.GetType().FullName);
-            intent.PutExtra("DataCategory", category);
+            intent.PutExtra(SelectionActivity.ReturnToTag, this.GetType().FullName);
+            intent.PutExtra(SelectionActivity.ParentCategoryTag, category);
             StartActivityForResult(intent, 0);
         }
 
@@ -104,9 +113,13 @@ namespace EveryRecords
             if(_currentCategoryIndex>=_categories.Count)
             {
                 _currentCategoryIndex = 0;
+
+                var list = FindViewById<ListView>(Resource.Id.CategoryList);
+                list.Adapter = new SimpleListAdapter(this, _paths);
             }
             else
             {
+                _currentPath = CategoryDataFactory.RootCategory;
                 var item = _categories[_currentCategoryIndex];
                 SelectDataFromCategory(item);
                 _currentCategoryIndex++;

@@ -13,11 +13,16 @@ using System.Globalization;
 
 namespace EveryRecords
 {
-    [Activity(Label = "ReportingActivity")]
+    [Activity(Label = "ReportingActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
     public class ReportingActivity : Activity
     {
-        TextView _pathText;
-        ListView _reportingList;
+        public const string RecordsYearMonthTag = "RecordsYearMonth";
+
+        private const string NoRecord = "没有记录！";
+        private TextView _pathText;
+        private ListView _reportingList;
+        private bool _displayingDetail;
+        private RecordingDataFactory _reocrdingData;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -26,16 +31,35 @@ namespace EveryRecords
             // Create your application here
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.ReportingLayout);
+
+            var yearMonth = Intent.GetStringExtra(RecordsYearMonthTag);
+                int year;
+                int month;
+            if (string.IsNullOrEmpty(yearMonth))
+            {
+                year = DateTime.Now.Year;
+                month = DateTime.Now.Month;
+                _reocrdingData = RecordingDataFactory.Instance;
+            }
+            else
+            {
+                string[] arr=yearMonth.Split('-');
+                int.TryParse(arr[0], out year);
+                int.TryParse(arr[1], out month);
+                _reocrdingData = RecordingDataFactory.CreateHistoryData(year, month);
+                _reocrdingData.LoadData();
+            }
+            var subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
+            subTitle.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
+
             _pathText = FindViewById<TextView>(Resource.Id.PathText);
+            _pathText.Click += uplevel_Click;
             var back = FindViewById<Button>(Resource.Id.BackButton);
             back.Click += delegate
             {
                 Finish();
             };
-
-            var uplevel = FindViewById<Button>(Resource.Id.UpLevelButton);
-            uplevel.Click += uplevel_Click;
-
+            
             _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
             DisplayCategory("");
@@ -44,6 +68,11 @@ namespace EveryRecords
         private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
+            if (item == NoRecord || _displayingDetail)
+            {
+                return;
+            }
+
             var current = item.Split(':')[0];
             _pathText.Text = _pathText.Text + "/" + current;
             DisplayCategory(current);
@@ -81,7 +110,8 @@ namespace EveryRecords
             string[] datas = new string[] { };
             if (string.IsNullOrEmpty(parent))
             {
-                var item=FormatListItem(CategoryDataFactory.RootCategory, RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory));
+                _displayingDetail = false;
+                var item = FormatListItem(CategoryDataFactory.RootCategory, _reocrdingData.GetCategorySummary(CategoryDataFactory.RootCategory));
                 datas=new string[]{item};
             }
             else
@@ -89,11 +119,13 @@ namespace EveryRecords
                 var subs = CategoryDataFactory.Instance.GetSubCategories(parent);
                 if (subs.Count == 0)
                 {
-                    datas = RecordingDataFactory.Instance.GetRecords(parent).ToArray();
+                    _displayingDetail = true;
+                    datas = _reocrdingData.GetRecords(parent).ToArray();
                 }
                 else
                 {
-                    var items = RecordingDataFactory.Instance.GetSubCategoriesSummary(parent);
+                    _displayingDetail = false;
+                    var items = _reocrdingData.GetSubCategoriesSummary(parent);
                     var list = new List<string>();
                     foreach (var item in items)
                     {
@@ -111,10 +143,14 @@ namespace EveryRecords
                 }
             }
 
-            _reportingList.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1,datas);
+            if(datas.Length==0)
+            {
+                datas = new string[] { NoRecord };
+            }
+            _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
         }
 
-        private string FormatListItem(string category, int amount)
+        private string FormatListItem(string category, double amount)
         {
             var item = string.Format(CultureInfo.InvariantCulture, "{0}:{1}", category, amount);
 

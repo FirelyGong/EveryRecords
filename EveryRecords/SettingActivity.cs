@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "双击显示子项")]
+    [Activity(Label = "双击显示子项", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
     public class SettingActivity : Activity
     {
         TextView _pathText;
@@ -25,18 +25,16 @@ namespace EveryRecords
             // Set our view from the "SettingLayout" layout resource
             SetContentView(Resource.Layout.SettingLayout);
 
-            _currentNode = FindViewById<EditText>(Resource.Id.NodeText);
+            _currentNode = FindViewById<EditText>(Resource.Id.NodeText);            
             _pathText = FindViewById<TextView>(Resource.Id.PathText);
+            _pathText.Click += uplevel_Click;
             _pathText.Text = CategoryDataFactory.RootCategory;
             var back = FindViewById<Button>(Resource.Id.BackButton);
             back.Click += delegate
             {
                 Finish();
             };
-
-            var uplevel = FindViewById<Button>(Resource.Id.UpLevelButton);
-            uplevel.Click += uplevel_Click;
-
+            
             var add = FindViewById<Button>(Resource.Id.AddButton);
             add.Click += add_Click;
 
@@ -46,9 +44,22 @@ namespace EveryRecords
             list.ItemClick += list_ItemClick;
 
             DisplayCategory(CategoryDataFactory.RootCategory);
-            //SetListViewHeightBasedOnChildren(list);
         }
 
+        protected override void OnPause()
+        {
+            try
+            {
+                CategoryDataFactory.Instance.SaveData();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+            }
+
+            base.OnPause();
+        }
+        
         private void delete_Click(object sender, EventArgs e)
         {
             if(string.IsNullOrEmpty(_currentNode.Text))
@@ -126,34 +137,8 @@ namespace EveryRecords
         private void DisplayCategory(string parent)
         {
             var list = FindViewById<ListView>(Resource.Id.CategoryItems);
-            list.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1, CategoryDataFactory.Instance.GetSubCategories(parent));
+            list.Adapter = new SimpleListAdapter(this, CategoryDataFactory.Instance.GetSubCategories(parent).ToList());
             _currentNode.Text = "";
-        }
-        private void SetListViewHeightBasedOnChildren(ListView listView)
-        {
-            // 获取ListView对应的Adapter   
-            var listAdapter = listView.Adapter;
-            if (listAdapter == null)
-            {
-                return;
-            }
-
-            int totalHeight = 0;
-            for (int i = 0, len = listAdapter.Count; i < len; i++)
-            {
-                // listAdapter.getCount()返回数据项的数目   
-                View listItem = listAdapter.GetView(i, null, listView);
-                // 计算子项View 的宽高   
-                listItem.Measure(0, 0);
-                // 统计所有子项的总高度   
-                totalHeight += listItem.MeasuredHeight;
-            }
-
-            var para = listView.LayoutParameters;
-            para.Height = totalHeight + (listView.DividerHeight * (listAdapter.Count - 1));
-            // listView.getDividerHeight()获取子项间分隔符占用的高度   
-            // params.height最后得到整个ListView完整显示需要的高度   
-            listView.LayoutParameters = para;
         }
     }
 }

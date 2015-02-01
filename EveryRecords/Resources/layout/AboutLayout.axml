@@ -3,24 +3,23 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/background_light"
-    android:weightSum="1">
+    android:background="@android:color/background_light">
     <LinearLayout
+        android:id="@+id/TitleLayout"
         android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:id="@+id/linearLayout1"
+        android:layout_height="wrap_content"
         android:background="#4682B4"
-        android:weightSum="1"
-        android:layout_height="wrap_content">
+        android:weightSum="1">
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout4"
+            android:id="@+id/TitleInnerLayout"
             android:background="#191970"
             android:weightSum="1"
             android:gravity="center"
@@ -35,9 +34,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.15" />
             <TextView
-                android:text="@string/ReportTitle"
+                android:text="@string/About"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/textView1"
+                android:id="@+id/titleText"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -53,43 +52,12 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout5">
+            android:id="@+id/TitleSubLayout">
             <TextView
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/SubTitleText" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLayout3"
-        android:gravity="top">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2"
-            android:gravity="left">
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/PathText"
-                android:textColor="@android:color/black"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true" />
-        </LinearLayout>
-        <ListView
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ReportsList" />
     </LinearLayout>
 </LinearLayout>

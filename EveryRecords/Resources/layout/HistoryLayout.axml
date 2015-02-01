@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.15" />
             <TextView
-                android:text="@string/SettingTitle"
+                android:text="@string/HistoryTitle"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/titleText"
                 android:textColor="@android:color/background_light"
@@ -60,71 +60,10 @@
                 android:id="@+id/SubTitleText" />
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/PathText"
-        android:textColor="@android:color/black"
-        android:clickable="true" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2">
-        <TextView
-            android:text="@string/EditNode"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/textView1"
-            android:textColor="@android:color/black"
-            android:gravity="center_vertical" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout3"
-            android:weightSum="1">
-            <EditText
-                android:id="@+id/NodeText"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@android:color/black"
-                android:layout_weight="0.8" />
-            <Button
-                android:text="@string/Add"
-                android:id="@+id/AddButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                android:background="#B0E0E6"
-                android:layout_margin="10px" />
-            <Button
-                android:text="@string/Delete"
-                android:id="@+id/DeleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                android:background="#B0E0E6"
-                android:layout_margin="10px" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1" />
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/CategoryItems" />
+        android:id="@+id/HistoryList" />
 </LinearLayout>

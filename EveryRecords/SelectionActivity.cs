@@ -12,28 +12,36 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "SelectionActivity")]
-    public class SelectionActivity : ListActivity
+    [Activity(Label = "«Î—°‘Ò∑÷¿‡", Theme = "@android:style/Theme.Dialog")]
+    public class SelectionActivity : Activity
     {
+        public const string ParentCategoryTag = "DataCategory";
+        public const string ReturnToTag = "ReturnTo";
+        public const string SelectionTag = "Selection";
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
+            SetContentView(Resource.Layout.SelectionLayout);
+
             // Create your application here
-            var category = Intent.GetStringExtra("DataCategory");
+            var category = Intent.GetStringExtra(ParentCategoryTag);
             var datas = CategoryDataFactory.Instance.GetSubCategories(category);
 
-            ListAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1, datas);
-            
+            var title = FindViewById<TextView>(Resource.Id.TitleText);
+            title.Text = "";
+
+            var list = FindViewById<ListView>(Resource.Id.SelectionList);
+            list.Adapter = new SimpleListAdapter(this, datas.ToList());
+            list.ItemClick += list_ItemClick;
         }
 
-        protected override void OnListItemClick(ListView l, View v, int position, long id)
+        void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            base.OnListItemClick(l, v, position, id);
-
-            var lastActivity=Intent.GetStringExtra("ReturnTo");
+            var lastActivity = Intent.GetStringExtra(ReturnToTag);
             var intent = new Intent(this, Type.GetType(lastActivity, true));
-            intent.PutExtra("Selection", l.Adapter.GetItem(position).ToString());
+            intent.PutExtra(SelectionTag, ((ListView)sender).Adapter.GetItem(e.Position).ToString());
             SetResult(Result.Ok, intent);
             Finish();
         }

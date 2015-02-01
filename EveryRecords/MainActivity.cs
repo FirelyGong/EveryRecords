@@ -5,44 +5,85 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.Globalization;
 
 namespace EveryRecords
 {
-    [Activity(Label = "EveryRecords", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "EveryRecords", MainLauncher = true, Icon = "@drawable/EveryRecords", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
     public class MainActivity : Activity
     {
+        private TextView _title;
+        //private ImageView _titleIcon;
+        private Button _recording;
+        private Button _reporting;
+        private Button _setting;
+        private Button _exit;
+        private Button _history;
+
+        private TextView _sumText;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            LoadData();
 
-            // Get our button from the layout resource,
-            // and attach an event to it
-            Button recording = FindViewById<Button>(Resource.Id.RecordButton);
-
-            recording.Click += delegate {
-                StartActivity(typeof(RecordingActivity));
-            };
-
-            var reporting = FindViewById<Button>(Resource.Id.ViewReportButton);
-            reporting.Click += delegate
+            _sumText = FindViewById<TextView>(Resource.Id.SummaryText);
+            _recording = FindViewById<Button>(Resource.Id.RecordButton);
+            _recording.Click += delegate
             {
-                StartActivity(typeof(ReportingActivity));
+                StartActivity(typeof(StartRecordingActivity));
             };
 
-            var setting = FindViewById<Button>(Resource.Id.SettingButton);
-            setting.Click += delegate
+            _reporting = FindViewById<Button>(Resource.Id.ViewReportButton);
+            _reporting.Click += delegate
+            {
+                var intent = new Intent(this, typeof(ReportingActivity));
+                var now=DateTime.Now;
+                intent.PutExtra(ReportingActivity.RecordsYearMonthTag, string.Format(CultureInfo.InvariantCulture, "{0}-{1}", now.Year, now.Month));
+
+                StartActivity(intent);
+            };
+
+            _setting = FindViewById<Button>(Resource.Id.SettingButton);
+            _setting.Click += delegate
             {
                 StartActivity(typeof(SettingActivity));
             };
 
-            var exit = FindViewById<Button>(Resource.Id.ExitButton);
-            exit.Click += delegate
+            _exit = FindViewById<Button>(Resource.Id.ExitButton);
+            _exit.Click += delegate
             {
                 Finish();
             };
+
+            _history = FindViewById<Button>(Resource.Id.HistoryButton);
+            _history.Click += delegate
+            {
+                StartActivity(typeof(HistoryActivity));
+            };
+
+            var ver = FindViewById<Button>(Resource.Id.VerButton);
+            ver.Text = GetType().Assembly.GetName().Version.ToString();
+            ver.Click += delegate
+            {
+                StartActivity(typeof(AboutActivity));
+            };
+        }
+        
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            _sumText.Text = "当月记录金额：" + RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
+        }
+
+        private void LoadData()
+        {
+            CategoryDataFactory.Instance.LoadData();
+            RecordingDataFactory.Instance.LoadData();
         }
     }
 }
