@@ -30,12 +30,11 @@ namespace EveryRecords
             var back = FindViewById<Button>(Resource.Id.BackButton);
             back.Click += delegate
             {
-                RecordingDataFactory.Instance.SaveData();
                 Finish();
             };
 
             _recordList = FindViewById<ListView>(Resource.Id.RecordList);
-            _recordList.Adapter = new SimpleListAdapter(this, new List<string>());
+            _recordList.Adapter = new SimpleListAdapter(this, new List<string>(new []{"ÇëÌí¼Ó¼ÇÂ¼"}));
             _recordList.ItemLongClick += recordList_ItemLongClick;
             var add = FindViewById<TextView>(Resource.Id.AddText);
             add.Click += add_Click;
