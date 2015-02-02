@@ -88,12 +88,41 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical" />
-        <EditText
-            android:text="0"
-            android:id="@+id/AmountText"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:shadowColor="#f0f8ffff" />
+            android:id="@+id/linearLayout4"
+            android:weightSum="10"
+            android:gravity="right">
+            <TextView
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/AmountLabel"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:gravity="center" />
+            <EditText
+                android:text="0"
+                android:id="@+id/AmountTextBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:shadowColor="#f0f8ffff"
+                android:layout_weight="5" />
+            <Button
+                android:text="+"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/AddAmountButton"
+                android:background="#B0E0E6"
+                android:textColor="@android:color/black"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1" />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"

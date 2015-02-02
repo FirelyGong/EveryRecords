@@ -16,7 +16,7 @@ namespace EveryRecords
     [Activity(Label = "CategoryActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
     public class CategoryActivity : Activity
     {
-        TextView _pathText;
+        TextView _subTitle;
         EditText _currentNode;
 
         protected override void OnCreate(Bundle bundle)
@@ -27,13 +27,12 @@ namespace EveryRecords
             SetContentView(Resource.Layout.CategoryLayout);
 
             _currentNode = FindViewById<EditText>(Resource.Id.NodeText);
-            _pathText = FindViewById<TextView>(Resource.Id.PathText);
-            _pathText.Click += uplevel_Click;
-            _pathText.Text = CategoryDataFactory.RootCategory;
+            _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
+            _subTitle.Text = CategoryDataFactory.RootCategory;
             var back = FindViewById<Button>(Resource.Id.BackButton);
             back.Click += delegate
             {
-                Finish();
+                OnBackPressed();
             };
 
             var add = FindViewById<Button>(Resource.Id.AddButton);
@@ -43,6 +42,19 @@ namespace EveryRecords
             list.ItemClick += list_ItemClick;
             list.ItemLongClick += list_ItemLongClick;
             DisplayCategory(CategoryDataFactory.RootCategory);
+        }
+
+        public override void OnBackPressed()
+        {
+            if (_subTitle.Text == CategoryDataFactory.RootCategory)
+            {
+                base.OnBackPressed();
+            }
+            else
+            {
+                var parent = BackToLastLevel();
+                DisplayCategory(parent);
+            }
         }
 
         protected override void OnPause()
@@ -93,18 +105,12 @@ namespace EveryRecords
                 DisplayCategory(current);
             }
         }
-
-        private void uplevel_Click(object sender, EventArgs e)
-        {
-            BackToLastLevel();
-            DisplayCategory(GetCurrentLevel());
-        }
-
+        
         private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var current = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
 
-            _pathText.Text = _pathText.Text + "/" + current;
+            _subTitle.Text = _subTitle.Text + "/" + current;
             DisplayCategory(current);
         }
 
@@ -120,20 +126,21 @@ namespace EveryRecords
             StartActivityForResult(intent, 0);
         }
 
-        private void BackToLastLevel()
+        private string BackToLastLevel()
         {
-            string[] arr = _pathText.Text.Split('/');
+            string[] arr = _subTitle.Text.Split('/');
             if (arr.Length <= 1)
             {
-                return;
+                return CategoryDataFactory.RootCategory;
             }
 
-            _pathText.Text = _pathText.Text.Substring(0, _pathText.Text.LastIndexOf("/"));
+            _subTitle.Text = _subTitle.Text.Substring(0, _subTitle.Text.LastIndexOf("/"));
+            return arr[arr.Length - 2];
         }
 
         private string GetCurrentLevel()
         {
-            string[] arr = _pathText.Text.Split('/');
+            string[] arr = _subTitle.Text.Split('/');
             if (arr.Length <= 1)
             {
                 return CategoryDataFactory.RootCategory;

@@ -19,7 +19,7 @@ namespace EveryRecords
         public const string RecordsYearMonthTag = "RecordsYearMonth";
 
         private const string NoRecord = "没有记录！";
-        private TextView _pathText;
+        private TextView _subTitle;
         private ListView _reportingList;
         private bool _displayingDetail;
         private RecordingDataFactory _reocrdingData;
@@ -49,20 +49,33 @@ namespace EveryRecords
                 _reocrdingData = RecordingDataFactory.CreateHistoryData(year, month);
                 _reocrdingData.LoadData();
             }
-            var subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
-            subTitle.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
+            var title = FindViewById<TextView>(Resource.Id.TitleText);
+            title.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
 
-            _pathText = FindViewById<TextView>(Resource.Id.PathText);
-            _pathText.Click += uplevel_Click;
+            _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
+
             var back = FindViewById<Button>(Resource.Id.BackButton);
             back.Click += delegate
             {
-                Finish();
+                OnBackPressed();
             };
             
             _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
             DisplayCategory("");
+        }
+
+        public override void OnBackPressed()
+        {
+            if (string.IsNullOrEmpty(_subTitle.Text))
+            {
+                base.OnBackPressed();
+            }
+            else
+            {
+                var parent = BackToLastLevel();
+                DisplayCategory(parent);
+            }
         }
 
         private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -74,37 +87,22 @@ namespace EveryRecords
             }
 
             var current = item.Split(':')[0];
-            _pathText.Text = _pathText.Text + "/" + current;
+            _subTitle.Text = _subTitle.Text + "/" + current;
             DisplayCategory(current);
         }
 
-        private void uplevel_Click(object sender, EventArgs e)
+        private string BackToLastLevel()
         {
-            BackToLastLevel();
-            DisplayCategory(GetCurrentLevel());
-        }
-        private void BackToLastLevel()
-        {
-            string[] arr = _pathText.Text.Split('/');
-            if (arr.Length <= 1)
-            {
-                return;
-            }
-
-            _pathText.Text = _pathText.Text.Substring(0, _pathText.Text.LastIndexOf("/"));
-        }
-
-        private string GetCurrentLevel()
-        {
-            string[] arr = _pathText.Text.Split('/');
+            string[] arr = _subTitle.Text.Split('/');
             if (arr.Length <= 1)
             {
                 return "";
             }
 
-            return arr[arr.Length - 1];
+            _subTitle.Text = _subTitle.Text.Substring(0, _subTitle.Text.LastIndexOf("/"));
+            return arr[arr.Length - 2];
         }
-
+        
         private void DisplayCategory(string parent)
         {
             string[] datas = new string[] { };

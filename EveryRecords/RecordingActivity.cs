@@ -23,7 +23,8 @@ namespace EveryRecords
         private string _currentPath;
         private int _currentCategoryIndex;
 
-        private EditText _amountText;
+        private TextView _amountLabel;
+        private EditText _amountTextBox;
         private EditText _commentsText;
         
         protected override void OnCreate(Bundle bundle)
@@ -35,7 +36,8 @@ namespace EveryRecords
             SetContentView(Resource.Layout.RecordingLayout);
             _paths = new List<string>();
             _categories = CategoryDataFactory.Instance.GetCategories();
-            _amountText = FindViewById<EditText>(Resource.Id.AmountText);
+            _amountTextBox = FindViewById<EditText>(Resource.Id.AmountTextBox);
+            _amountLabel = FindViewById<TextView>(Resource.Id.AmountLabel);
             _commentsText = FindViewById<EditText>(Resource.Id.CommentsText);
 
             var save = FindViewById<TextView>(Resource.Id.SaveText);
@@ -47,6 +49,8 @@ namespace EveryRecords
                 Finish();
             };
 
+            var addAmount = FindViewById<Button>(Resource.Id.AddAmountButton);
+            addAmount.Click += addAmount_Click;
             TryContinueCategory();          
         }
 
@@ -84,20 +88,40 @@ namespace EveryRecords
 
         private void save_Click(object sender, EventArgs e)
         {
-            double amount;
-            if(!double.TryParse(_amountText.Text, out amount) || amount==0)
+            if (!string.IsNullOrEmpty(_amountTextBox.Text))
             {
-                Toast.MakeText(this,"请输入正确的金额！",ToastLength.Long).Show();
+                addAmount_Click(null, EventArgs.Empty);
+            }
+
+            double amount = double.Parse(_amountLabel.Text);
+            if (amount == 0)
+            {
+                Toast.MakeText(this, "请输入正确的金额！", ToastLength.Long).Show();
                 return;
             }
 
             var recording = RecordingDataFactory.Instance.AddRecord(_paths, _commentsText.Text, amount);
-            //RecordingDataFactory.Instance.SaveData();
             var lastActivity = Intent.GetStringExtra(ReturnToTag);
             var intent = new Intent(this, Type.GetType(lastActivity, true));
             intent.PutExtra(OutputRecordTag, recording);
             SetResult(Result.Ok, intent);
             Finish();
+        }
+
+        private void addAmount_Click(object sender, EventArgs e)
+        {
+            double amt = 0;
+            if(!double.TryParse(_amountTextBox.Text, out amt))
+            {
+                Toast.MakeText(this, "请输入正确的金额！", ToastLength.Long).Show();
+                return;
+            }
+            else
+            {
+                amt += double.Parse(_amountLabel.Text);
+                _amountLabel.Text = amt.ToString();
+                _amountTextBox.Text = "";
+            }
         }
 
         private void SelectDataFromCategory(string category)

@@ -37,7 +37,7 @@
             <TextView
                 android:text="@string/ReportTitle"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/textView1"
+                android:id="@+id/TitleText"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -53,43 +53,20 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout5">
+            android:id="@+id/linearLayout2">
             <TextView
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/SubTitleText" />
+                android:id="@+id/SubTitleText"
+                android:textColor="@android:color/background_light"
+                android:layout_margin="10px" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
+    <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLayout3"
-        android:gravity="top">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2"
-            android:gravity="left">
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/PathText"
-                android:textColor="@android:color/black"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true" />
-        </LinearLayout>
-        <ListView
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ReportsList" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/ReportsList" />
 </LinearLayout>
