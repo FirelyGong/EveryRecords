@@ -51,10 +51,13 @@ namespace EveryRecords
 			public const int EveryRecords_small = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Icon = 2130837506;
+			public const int FunctionButton = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int MetroButton = 2130837507;
+			public const int Icon = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int TitleButton = 2130837508;
 			
 			static Drawable()
 			{
@@ -74,9 +77,6 @@ namespace EveryRecords
 			
 			// aapt resource value: 0x7f05000a
 			public const int AddButton = 2131034122;
-			
-			// aapt resource value: 0x7f05002d
-			public const int AddText = 2131034157;
 			
 			// aapt resource value: 0x7f050024
 			public const int AmountLabel = 2131034148;
@@ -133,7 +133,7 @@ namespace EveryRecords
 			public const int ReportsList = 2131034154;
 			
 			// aapt resource value: 0x7f050029
-			public const int SaveText = 2131034153;
+			public const int SaveButton = 2131034153;
 			
 			// aapt resource value: 0x7f05002b
 			public const int SelectionList = 2131034155;

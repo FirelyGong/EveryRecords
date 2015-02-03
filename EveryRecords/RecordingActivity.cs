@@ -40,7 +40,7 @@ namespace EveryRecords
             _amountLabel = FindViewById<TextView>(Resource.Id.AmountLabel);
             _commentsText = FindViewById<EditText>(Resource.Id.CommentsText);
 
-            var save = FindViewById<TextView>(Resource.Id.SaveText);
+            var save = FindViewById<Button>(Resource.Id.SaveButton);
             save.Click += save_Click;
 
             var back = FindViewById<Button>(Resource.Id.BackButton);

@@ -37,9 +37,8 @@
             android:id="@+id/OkButton"
             android:layout_weight="0.4"
             android:layout_margin="10px"
-            android:background="#B0E0E6"
-            android:textColor="@android:color/black"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/black" />
         <Button
             android:text="@string/Cancel"
             android:layout_width="wrap_content"
@@ -47,8 +46,7 @@
             android:id="@+id/CancelButton"
             android:layout_weight="0.4"
             android:layout_margin="10px"
-            android:background="#B0E0E6"
-            android:textColor="@android:color/black"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 </LinearLayout>

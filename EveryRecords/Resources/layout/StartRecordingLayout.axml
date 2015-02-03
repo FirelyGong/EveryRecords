@@ -27,7 +27,7 @@
             <Button
                 android:text="   &lt;-   "
                 android:id="@+id/BackButton"
-                android:background="#4682B4"
+                android:background="@drawable/TitleButton"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:background="#4682B4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="2px"
                 android:layout_weight="0.85" />
         </LinearLayout>
@@ -66,15 +66,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/RecordList" />
-    <TextView
+    <Button
         android:text="@string/Add"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AddText"
-        android:clickable="true"
-        android:textColor="@android:color/black"
-        android:layout_margin="10px"
-        android:gravity="center"
-        android:background="#B0E0E6" />
+        android:id="@+id/AddButton"
+        android:background="@drawable/FunctionButton"
+        android:textColor="@android:color/black" />
 </LinearLayout>

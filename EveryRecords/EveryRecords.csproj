@@ -71,7 +71,9 @@
     <Compile Include="Persistence\CategoryData.cs" />
     <Compile Include="Persistence\CategoryItem.cs" />
     <Compile Include="Persistence\RecordingData.cs" />
+    <Compile Include="Persistence\SettingData.cs" />
     <Compile Include="Persistence\SummaryItem.cs" />
+    <Compile Include="SettingDataFactory.cs" />
     <Compile Include="SimpleListAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="RecordingActivity.cs" />
@@ -133,7 +135,8 @@
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\drawable\EveryRecords.png" />
     <AndroidResource Include="Resources\drawable\EveryRecords_small.png" />
-    <AndroidResource Include="Resources\drawable\MetroButton.xml" />
+    <AndroidResource Include="Resources\drawable\FunctionButton.xml" />
+    <AndroidResource Include="Resources\drawable\TitleButton.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

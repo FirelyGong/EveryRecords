@@ -27,7 +27,7 @@
             <Button
                 android:text="   &lt;-   "
                 android:id="@+id/BackButton"
-                android:background="#4682B4"
+                android:background="@drawable/TitleButton"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:background="#4682B4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="2px"
                 android:layout_weight="0.85" />
         </LinearLayout>
@@ -120,9 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/AddAmountButton"
-                android:background="#B0E0E6"
+                android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_weight="1"
                 android:layout_margin="10px" />
         </LinearLayout>
@@ -157,18 +156,13 @@
         android:id="@+id/linearLayout3"
         android:gravity="center"
         android:weightSum="1">
-        <TextView
+        <Button
             android:text="@string/Save"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/SaveButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/SaveText"
-            android:background="#B0E0E6"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:background="@drawable/FunctionButton"
             android:layout_weight="0.5"
-            android:clickable="true"
-            android:textColor="@android:color/black"
-            android:padding="10px" />
+            android:textColor="@android:color/black" />
     </LinearLayout>
 </LinearLayout>

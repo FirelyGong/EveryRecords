@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/VerButton"
-                android:background="#4682B4"
+                android:background="@drawable/TitleButton"
                 android:layout_margin="10px"
                 android:layout_weight="0.1"
                 android:textColor="@android:color/background_light" />
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/SettingButton"
-                android:background="#4682B4"
+                android:background="@drawable/TitleButton"
                 android:layout_weight="0.1"
                 android:layout_margin="10px"
                 android:textColor="@android:color/background_light" />
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/ExitButton"
-                android:background="#4682B4"
+                android:background="@drawable/TitleButton"
                 android:textColor="@android:color/background_light"
                 android:layout_margin="10px"
                 android:layout_weight="0.1" />
@@ -96,7 +96,7 @@
             <Button
                 android:id="@+id/RecordButton"
                 android:text="@string/Record"
-                android:background="@drawable/MetroButton"
+                android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
             <Button
                 android:text="@string/ViewReport"
                 android:id="@+id/ViewReportButton"
-                android:background="@drawable/MetroButton"
+                android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
             <Button
                 android:text="@string/HistoryRec"
                 android:id="@+id/HistoryButton"
-                android:background="@drawable/MetroButton"
+                android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             <Button
                 android:text="@string/Category"
                 android:id="@+id/CategoryButton"
-                android:background="@drawable/MetroButton"
+                android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -36,9 +36,8 @@ namespace EveryRecords
             _recordList = FindViewById<ListView>(Resource.Id.RecordList);
             _recordList.Adapter = new SimpleListAdapter(this, new List<string>(new []{"ÇëÌí¼Ó¼ÇÂ¼"}));
             _recordList.ItemLongClick += recordList_ItemLongClick;
-            var add = FindViewById<TextView>(Resource.Id.AddText);
+            var add = FindViewById<Button>(Resource.Id.AddButton);
             add.Click += add_Click;
-
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
