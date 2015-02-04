@@ -1,0 +1,7 @@
+﻿<resources>
+  <!--继承Android内置的Theme.Dialog，位于/base/core/res/res/values/themes.xml -->
+  <style name="PopupTheme" parent="android:Theme.Dialog">
+    <item name="android:windowBackground">@android:color/background_light</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
+</resources>

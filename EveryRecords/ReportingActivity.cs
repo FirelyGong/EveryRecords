@@ -62,6 +62,7 @@ namespace EveryRecords
             
             _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
+            _reportingList.ItemLongClick += reportingList_ItemLongClick;
             DisplayCategory("");
         }
 
@@ -78,6 +79,30 @@ namespace EveryRecords
             }
         }
 
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (requestCode == 0)
+            {
+                if (resultCode == Result.Ok)
+                {
+                    var item = data.GetStringExtra(ConfirmActivity.DataTag);
+                    var bln = _reocrdingData.DeleteRecord(item);
+                    if (bln)
+                    {
+                        _reocrdingData.SaveData();
+                        var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
+                        list.Remove(item);
+                        _reportingList.Adapter = new SimpleListAdapter(this, list);
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "É¾³ýÊ§°Ü", ToastLength.Long).Show();
+                    }
+                }
+            }
+        }
+
         private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
@@ -89,6 +114,24 @@ namespace EveryRecords
             var current = item.Split(':')[0];
             _subTitle.Text = _subTitle.Text + "/" + current;
             DisplayCategory(current);
+        }
+
+        private void reportingList_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
+        {
+            var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
+            if (item == NoRecord || (!_displayingDetail))
+            {
+                return;
+            }
+
+            if (SettingDataFactory.Instance.AllowDeleteRecord)
+            {
+                var intent = new Intent(this, typeof(ConfirmActivity));
+                intent.PutExtra(ConfirmActivity.MessageTag, string.Format(CultureInfo.InvariantCulture, "È·¶¨ÒªÉ¾³ý[{0}]Âð£¿", item));
+                intent.PutExtra(ConfirmActivity.DataTag, item);
+                intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
+                StartActivityForResult(intent, 0);
+            }
         }
 
         private string BackToLastLevel()

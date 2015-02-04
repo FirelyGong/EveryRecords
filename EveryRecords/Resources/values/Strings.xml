@@ -23,4 +23,6 @@
   <string name="About">关于</string>
   <string name="Ok">确定</string>
   <string name="Cancel">取消</string>
+  <string name="AllowDeleteRecord">允许删除记录</string>
+  <string name="AllowDeleteHistory">允许删除历史</string>
 </resources>

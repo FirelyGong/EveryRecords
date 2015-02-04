@@ -137,6 +137,7 @@
     <AndroidResource Include="Resources\drawable\EveryRecords_small.png" />
     <AndroidResource Include="Resources\drawable\FunctionButton.xml" />
     <AndroidResource Include="Resources\drawable\TitleButton.xml" />
+    <AndroidResource Include="Resources\values\style.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

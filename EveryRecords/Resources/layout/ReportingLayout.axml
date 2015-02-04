@@ -63,10 +63,19 @@
                 android:layout_margin="10px" />
         </LinearLayout>
     </LinearLayout>
-    <ListView
+    <LinearLayout
+        android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ReportsList" />
+        android:layout_height="match_parent"
+        android:id="@+id/ContentLayout"
+        android:layout_margin="10px">
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ReportsList" />
+    </LinearLayout>
 </LinearLayout>

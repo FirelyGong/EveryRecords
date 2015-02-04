@@ -39,6 +39,11 @@ namespace EveryRecords
             return position;
         }
 
+        public IList<string> GetSource()
+        {
+            return new List<string>(_items);
+        }
+
         public override string this[int position]
         {
             get { return _items[position]; }

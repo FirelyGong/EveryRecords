@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "请选择分类", Theme = "@android:style/Theme.Dialog")]
+    [Activity(Label = "请选择分类", Theme = "@style/PopupTheme")]
     public class SelectionActivity : Activity
     {
         public const string ParentCategoryTag = "DataCategory";
@@ -30,7 +30,7 @@ namespace EveryRecords
             var datas = CategoryDataFactory.Instance.GetSubCategories(category);
 
             var title = FindViewById<TextView>(Resource.Id.TitleText);
-            title.Text = "";
+            title.Text = "请选择分类";
 
             var list = FindViewById<ListView>(Resource.Id.SelectionList);
             list.Adapter = new SimpleListAdapter(this, datas.ToList());

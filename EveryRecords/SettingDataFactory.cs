@@ -45,5 +45,39 @@ namespace EveryRecords
                 DataChanged = false;
             }
         }
+
+        public bool AllowDeleteRecord
+        {
+            get
+            {
+                return _settingData.AllowDeleteRecord;
+            }
+
+            set
+            {
+                if (value != _settingData.AllowDeleteRecord)
+                {
+                    DataChanged = true;
+                    _settingData.AllowDeleteRecord = value;
+                }
+            }
+        }
+
+        public bool AllowDeleteHistory
+        {
+            get
+            {
+                return _settingData.AllowDeleteHistory;
+            }
+
+            set
+            {
+                if (value != _settingData.AllowDeleteHistory)
+                {
+                    DataChanged = true;
+                    _settingData.AllowDeleteHistory = value;
+                }
+            }
+        }
     }
 }

@@ -60,4 +60,27 @@
                 android:id="@+id/SubTitleText" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ContentLayout"
+        android:layout_margin="10px">
+        <CheckBox
+            android:text="@string/AllowDeleteRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/AllowDeleteRecordCheck"
+            android:textColor="@android:color/black"
+            android:layout_margin="10px" />
+        <CheckBox
+            android:text="@string/AllowDeleteHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/AllowDeleteHistoryCheck"
+            android:textColor="@android:color/black"
+            android:layout_margin="10px" />
+    </LinearLayout>
 </LinearLayout>

@@ -64,52 +64,61 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2">
-        <TextView
-            android:text="@string/AddCategory"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/textView1"
-            android:textColor="@android:color/black"
-            android:gravity="center_vertical" />
+        android:layout_height="match_parent"
+        android:id="@+id/ContentLayout"
+        android:layout_margin="10px">
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout3"
-            android:weightSum="1"
-            android:layout_marginRight="10px">
-            <EditText
-                android:id="@+id/NodeText"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2">
+            <TextView
+                android:text="@string/AddCategory"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:id="@+id/textView1"
                 android:textColor="@android:color/black"
-                android:layout_weight="0.99"
-                android:layout_margin="10px" />
-            <Button
-                android:text="@string/Add"
-                android:id="@+id/AddButton"
-                android:layout_width="wrap_content"
+                android:gravity="center_vertical" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.01"
-                android:background="@drawable/FunctionButton"
-                android:layout_margin="10px"
-                android:layout_gravity="center_vertical"
-                android:textColor="@android:color/black" />
+                android:id="@+id/linearLayout3"
+                android:weightSum="1"
+                android:layout_marginRight="10px">
+                <EditText
+                    android:id="@+id/NodeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/black"
+                    android:layout_weight="0.99"
+                    android:layout_margin="10px" />
+                <Button
+                    android:text="@string/Add"
+                    android:id="@+id/AddButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.01"
+                    android:background="@drawable/FunctionButton"
+                    android:layout_margin="10px"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
         </LinearLayout>
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CategoryItems" />
     </LinearLayout>
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/CategoryItems" />
 </LinearLayout>

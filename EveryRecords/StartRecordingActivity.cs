@@ -60,8 +60,16 @@ namespace EveryRecords
                 if (resultCode == Result.Ok)
                 {
                     var item = data.GetStringExtra(ConfirmActivity.DataTag);
-                    _records.Remove(item);
-                    _recordList.Adapter = new SimpleListAdapter(this, _records);
+                    var bln = RecordingDataFactory.Instance.DeleteRecord(item);
+                    if (bln)
+                    {
+                        _records.Remove(item);
+                        _recordList.Adapter = new SimpleListAdapter(this, _records);
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "É¾³ýÊ§°Ü", ToastLength.Long).Show();
+                    }
                 }
             }
         }

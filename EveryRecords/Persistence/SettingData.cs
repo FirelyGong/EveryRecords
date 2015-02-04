@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace EveryRecords.Persistence
 {
-    [XmlRoot("CategoryData")]
+    [XmlRoot("SettingData")]
     public class SettingData
     {
         [XmlElement("AllowDeleteRecord")]

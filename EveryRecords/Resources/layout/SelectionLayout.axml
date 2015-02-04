@@ -10,12 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/TitleText"
-        android:textColor="@android:color/black"
-        android:gravity="center" />
+        android:textColor="@android:color/background_light"
+        android:gravity="center"
+        android:background="#4682B4"
+        android:layout_marginBottom="20px"
+        android:padding="10px" />
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SelectionList" />
+        android:id="@+id/SelectionList"
+        android:layout_margin="10px" />
 </LinearLayout>

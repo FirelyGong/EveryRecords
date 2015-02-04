@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "确认",Theme = "@android:style/Theme.Dialog")]
+    [Activity(Label = "确认", Theme = "@style/PopupTheme")]
     public class ConfirmActivity : Activity
     {
         public const string DataTag = "Data";
@@ -29,6 +29,8 @@ namespace EveryRecords
             // Create your application here
             SetContentView(Resource.Layout.ConfirmLayout);
 
+            var title = FindViewById<TextView>(Resource.Id.TitleText);
+            title.Text = "确认";
             _data = Intent.GetStringExtra(DataTag);
             _message = Intent.GetStringExtra(MessageTag);
 

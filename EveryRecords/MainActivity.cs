@@ -89,6 +89,7 @@ namespace EveryRecords
         {
             CategoryDataFactory.Instance.LoadData();
             RecordingDataFactory.Instance.LoadData();
+            SettingDataFactory.Instance.LoadData();
         }
     }
 }
