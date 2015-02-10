@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:id="@+id/RootLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:color/background_light"
@@ -11,69 +12,84 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1"
+        android:id="@+id/TitleLayout"
         android:background="#4682B4"
         android:layout_weight="0.15">
-        <TextView
-            android:text="@string/ApplicationName"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/TitleText"
-            android:gravity="center_vertical"
-            android:layout_margin="10px"
-            android:textStyle="bold" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout9"
-            android:gravity="right"
-            android:weightSum="1">
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/VerButton"
-                android:background="@drawable/TitleButton"
-                android:layout_margin="10px"
-                android:layout_weight="0.1"
-                android:textColor="@android:color/background_light" />
-            <Button
-                android:text="@string/Setting"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/SettingButton"
-                android:background="@drawable/TitleButton"
-                android:layout_weight="0.1"
-                android:layout_margin="10px"
-                android:textColor="@android:color/background_light" />
-            <Button
-                android:text="@string/Exit"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/ExitButton"
-                android:background="@drawable/TitleButton"
-                android:textColor="@android:color/background_light"
-                android:layout_margin="10px"
-                android:layout_weight="0.1" />
-        </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout10">
-            <TextView
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/TitleInnerLayout">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TitleStringLayout"
+                android:layout_gravity="top"
+                android:gravity="top">
+                <TextView
+                    android:text="@string/ApplicationName"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/TitleText"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/background_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout9"
+                android:gravity="right">
+                <Button
+                    android:text="Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/VerButton"
+                    android:background="@drawable/TitleButton"
+                    android:layout_margin="10px"
+                    android:textColor="@android:color/background_light" />
+                <Button
+                    android:text="@string/Setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/SettingButton"
+                    android:background="@drawable/TitleButton"
+                    android:layout_margin="10px"
+                    android:textColor="@android:color/background_light" />
+                <Button
+                    android:text="@string/Exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ExitButton"
+                    android:background="@drawable/TitleButton"
+                    android:textColor="@android:color/background_light"
+                    android:layout_margin="10px" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/SummaryText"
-                android:gravity="center" />
+                android:id="@+id/linearLayout10">
+                <TextView
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/SummaryText"
+                    android:gravity="center"
+                    android:textColor="@android:color/background_light" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -81,16 +97,36 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
+        android:layout_height="25dip"
+        android:id="@+id/MiddleTopLayout"
+        android:background="@drawable/PercentageBackground"
+        android:weightSum="1"
+        android:gravity="right">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="5px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/PercentLayout"
+            android:layout_weight="0.5"
+            android:background="@android:color/background_light" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout4"
-        android:layout_weight="0.85">
+        android:id="@+id/MiddleLayout"
+        android:layout_weight="0.45">
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout5"
+            android:id="@+id/Col1Layout"
             android:layout_weight="0.25"
             android:weightSum="1">
             <Button
@@ -100,7 +136,7 @@
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_weight="0.2"
                 android:layout_margin="10px" />
         </LinearLayout>
         <LinearLayout
@@ -109,7 +145,7 @@
             android:minHeight="25px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout6"
+            android:id="@+id/Col2Layout"
             android:layout_weight="0.25"
             android:weightSum="1">
             <Button
@@ -119,7 +155,7 @@
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_weight="0.2"
                 android:layout_margin="10px" />
         </LinearLayout>
         <LinearLayout
@@ -128,7 +164,7 @@
             android:minHeight="25px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout7"
+            android:id="@+id/Col3Layout"
             android:layout_weight="0.25"
             android:weightSum="1">
             <Button
@@ -138,7 +174,7 @@
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_weight="0.2"
                 android:layout_margin="10px" />
         </LinearLayout>
         <LinearLayout
@@ -147,7 +183,7 @@
             android:minHeight="25px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout8"
+            android:id="@+id/Col4Layout"
             android:layout_weight="0.25"
             android:weightSum="1">
             <Button
@@ -157,8 +193,155 @@
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_weight="0.2"
                 android:layout_margin="10px" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BottomLayout"
+        android:layout_weight="0.4"
+        android:weightSum="6">
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Recent1Layout"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:weightSum="1">
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Recent1"
+                android:textColor="#ffffff"
+                android:gravity="top"
+                android:layout_weight="0.05"
+                android:background="#DCDCDC"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Recent2Layout"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:weightSum="1">
+            <TextView
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Recent2"
+                android:textColor="#ffffff"
+                android:gravity="top"
+                android:layout_weight="0.05"
+                android:background="#DCDCDC"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Recent3Layout"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:weightSum="1">
+            <TextView
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Recent3"
+                android:textColor="#ffffff"
+                android:gravity="top"
+                android:layout_weight="0.05"
+                android:background="#DCDCDC"
+                android:layout_marginRight="10px"
+                android:layout_marginLeft="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Recent4Layout"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:weightSum="1">
+            <TextView
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Recent4"
+                android:textColor="#ffffff"
+                android:gravity="top"
+                android:layout_weight="0.05"
+                android:background="#DCDCDC"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Recent5Layout"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:weightSum="1">
+            <TextView
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Recent5"
+                android:textColor="#ffffff"
+                android:gravity="top"
+                android:layout_weight="0.05"
+                android:background="#DCDCDC"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Recent6Layout"
+            android:weightSum="1"
+            android:layout_weight="1"
+            android:gravity="bottom">
+            <TextView
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Recent6"
+                android:textColor="#ffffff"
+                android:gravity="top"
+                android:layout_weight="0.05"
+                android:background="#DCDCDC"
+                android:layout_marginRight="10px"
+                android:layout_marginLeft="10px" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

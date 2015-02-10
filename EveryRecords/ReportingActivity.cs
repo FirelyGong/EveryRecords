@@ -10,10 +10,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Globalization;
+using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "ReportingActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
+    [Activity(Label = "ReportingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class ReportingActivity : Activity
     {
         public const string RecordsYearMonthTag = "RecordsYearMonth";
@@ -31,6 +32,8 @@ namespace EveryRecords
             // Create your application here
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.ReportingLayout);
+
+            this.InitialActivity(() => OnBackPressed());
 
             var yearMonth = Intent.GetStringExtra(RecordsYearMonthTag);
                 int year;
@@ -53,12 +56,6 @@ namespace EveryRecords
             title.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
 
             _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
-
-            var back = FindViewById<Button>(Resource.Id.BackButton);
-            back.Click += delegate
-            {
-                OnBackPressed();
-            };
             
             _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
@@ -131,6 +128,10 @@ namespace EveryRecords
                 intent.PutExtra(ConfirmActivity.DataTag, item);
                 intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
                 StartActivityForResult(intent, 0);
+            }
+            else
+            {
+                Toast.MakeText(this, "当前设置不允许删除", ToastLength.Long).Show();
             }
         }
 

@@ -12,7 +12,7 @@ using Android.Widget;
 using EveryRecords.Persistence;
 using System.IO;
 
-namespace EveryRecords
+namespace EveryRecords.DataFactories
 {
     public class CategoryDataFactory:DataFactory
     {
@@ -36,9 +36,15 @@ namespace EveryRecords
 
         public void LoadData()
         {
+            if (DataLoaded)
+            {
+                return;
+            }
+
             if (File.Exists(DataPath))
             {
                 _categoryData = LoadData<CategoryData>();
+                DataLoaded = true;
             }
             else
             {

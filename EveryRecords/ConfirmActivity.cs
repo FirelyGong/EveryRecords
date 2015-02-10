@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "确认", Theme = "@style/PopupTheme")]
+    [Activity(Label = "确认", Theme = "@style/PopupTheme", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class ConfirmActivity : Activity
     {
         public const string DataTag = "Data";

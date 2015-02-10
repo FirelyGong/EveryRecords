@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace EveryRecords
+namespace EveryRecords.DataFactories
 {
     public class SettingDataFactory:DataFactory
     {
@@ -27,9 +27,15 @@ namespace EveryRecords
 
         public void LoadData()
         {
+            if (DataLoaded)
+            {
+                return;
+            }
+
             if (File.Exists(DataPath))
             {
                 _settingData = LoadData<SettingData>();
+                DataLoaded = true;
             }
             else
             {
@@ -76,6 +82,23 @@ namespace EveryRecords
                 {
                     DataChanged = true;
                     _settingData.AllowDeleteHistory = value;
+                }
+            }
+        }
+
+        public double ExpensesLimit
+        {
+            get
+            {
+                return _settingData.ExpensesLimit;
+            }
+
+            set
+            {
+                if (value != _settingData.ExpensesLimit)
+                {
+                    DataChanged = true;
+                    _settingData.ExpensesLimit = value;
                 }
             }
         }

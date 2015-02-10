@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace EveryRecords
+namespace EveryRecords.DataFactories
 {
     public class RecordingDataFactory:DataFactory
     {
-        public const string NoHistoryList = "没有历史记录";
         public const string RecordFilePrefix = "recordings_";
 
         public static readonly RecordingDataFactory Instance = new RecordingDataFactory();
@@ -40,42 +39,17 @@ namespace EveryRecords
             set;
         }
 
-        public IList<string> GetHistoryList()
-        {
-            var result = new List<string>();
-            if (Directory.Exists(BasePath))
-            {
-                var list = Directory.EnumerateFiles(BasePath);
-                foreach (var file in list)
-                {
-                    var fileName = Path.GetFileNameWithoutExtension(file);
-                    if (fileName.StartsWith(RecordFilePrefix))
-                    {
-                        string[] arr = fileName.Split('_');
-                        if (arr.Length != 2 || arr[1] == DateTime.Now.ToString("yyyyMM"))
-                        {
-                            continue;
-                        }
-
-                        var item = arr[1].Insert(4, "-");
-                        result.Add(item);
-                    }
-                }
-            }
-
-            if (result.Count == 0)
-            {
-                result.Add(NoHistoryList);
-            }
-
-            return result;
-        }
-
         public void LoadData()
         {
+            if (DataLoaded)
+            {
+                return;
+            }
+
             if (File.Exists(DataPath))
             {
                 _recordingData = LoadData<RecordingData>();
+                DataLoaded = true;
             }
             else
             {
@@ -122,6 +96,7 @@ namespace EveryRecords
                             RecordTime = DateTime.Now.ToString("yyyy/MM/dd-HH:mm:ss")
                         };
             _recordingData.Records.Add(record);
+            UpdateHistoricData();
             return record.ToString();
         }
 
@@ -150,7 +125,7 @@ namespace EveryRecords
                         }
                     }
                 }
-
+                UpdateHistoricData();
                 return _recordingData.Records.Remove(record);
             }
         }
@@ -198,7 +173,7 @@ namespace EveryRecords
 
         private string ConstructDataPath(int year, int month)
         {
-            var fileName = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}.xml",RecordFilePrefix, year.ToString("0000"), month.ToString("00"));
+            var fileName = string.Format(CultureInfo.InvariantCulture, "{0}{1}-{2}.xml",RecordFilePrefix, year.ToString("0000"), month.ToString("00"));
             return Path.Combine(BasePath, fileName);
         }
          
@@ -208,9 +183,17 @@ namespace EveryRecords
             if (filePath != DataPath)
             {
                 SaveData();
+                UpdateHistoricData();
                 DataPath = filePath;
                 LoadData();
             }
+        }
+
+        private void UpdateHistoricData()
+        {
+            string currentFile=Path.GetFileNameWithoutExtension(DataPath);
+            string historicId = currentFile.Substring((currentFile.IndexOf("_") + 1));
+            HistoricDataFactory.Instance.AddHistoric(historicId, GetCategorySummary(CategoryDataFactory.RootCategory));
         }
     }
 }

@@ -9,10 +9,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "RecordingActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
+    [Activity(Label = "RecordingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class RecordingActivity : Activity
     {
         public const string OutputRecordTag = "CreatedRecording";
@@ -34,6 +35,9 @@ namespace EveryRecords
             // Create your application here
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.RecordingLayout);
+
+            this.InitialActivity(() => Finish());
+
             _paths = new List<string>();
             _categories = CategoryDataFactory.Instance.GetCategories();
             _amountTextBox = FindViewById<EditText>(Resource.Id.AmountTextBox);
@@ -42,12 +46,6 @@ namespace EveryRecords
 
             var save = FindViewById<Button>(Resource.Id.SaveButton);
             save.Click += save_Click;
-
-            var back = FindViewById<Button>(Resource.Id.BackButton);
-            back.Click += delegate
-            {
-                Finish();
-            };
 
             var addAmount = FindViewById<Button>(Resource.Id.AddAmountButton);
             addAmount.Click += addAmount_Click;

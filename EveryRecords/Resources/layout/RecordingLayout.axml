@@ -14,50 +14,56 @@
         android:background="#4682B4"
         android:weightSum="1">
         <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/TitleInnerLayout"
-            android:background="#191970"
-            android:weightSum="1"
-            android:gravity="center"
-            android:layout_marginTop="10px">
-            <Button
-                android:text="   &lt;-   "
-                android:id="@+id/BackButton"
-                android:background="@drawable/TitleButton"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.15" />
-            <TextView
-                android:text="@string/RecordTitle"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/titleText"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:background="#4682B4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="2px"
-                android:layout_weight="0.85" />
-        </LinearLayout>
-        <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/TitleSubLayout">
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="match_parent"
+            android:id="@+id/TitleInnerLayout">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/SubTitleText" />
+                android:id="@+id/TitleInnerLayout"
+                android:background="#191970"
+                android:weightSum="1"
+                android:gravity="center"
+                android:layout_marginTop="10px">
+                <Button
+                    android:text="@string/Back"
+                    android:id="@+id/BackButton"
+                    android:background="@drawable/TitleButton"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:text="@string/RecordTitle"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/titleText"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="#4682B4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2px" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TitleSubLayout">
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SubTitleText" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

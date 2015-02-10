@@ -10,10 +10,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Globalization;
+using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "HistoryActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
+    [Activity(Label = "HistoryActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class HistoryActivity : Activity
     {
         private ListView _historyList;
@@ -25,21 +26,24 @@ namespace EveryRecords
             // Create your application here
             SetContentView(Resource.Layout.HistoryLayout);
 
+            this.InitialActivity(() => Finish());
             _historyList = FindViewById<ListView>(Resource.Id.HistoryList);
             _historyList.ItemClick += historyList_ItemClick;
             _historyList.ItemLongClick += historyList_ItemLongClick;
-            var back = FindViewById<Button>(Resource.Id.BackButton);
-            back.Click += delegate
-            {
-                Finish();
-            };
         }
 
         protected override void OnResume()
         {
             base.OnResume();
 
-            _historyList.Adapter = new SimpleListAdapter(this, RecordingDataFactory.Instance.GetHistoryList());
+            _historyList.Adapter = new SimpleListAdapter(this, HistoricDataFactory.Instance.GetHistoryList());
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            HistoricDataFactory.Instance.SaveData();
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
@@ -68,13 +72,13 @@ namespace EveryRecords
         private void historyList_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var item = _historyList.Adapter.GetItem(e.Position).ToString();
-            if (item == RecordingDataFactory.NoHistoryList)
+            if (item == HistoricDataFactory.NoHistoryList)
             {
                 return;
             }
             
             var intent = new Intent(this, typeof(ReportingActivity));
-            intent.PutExtra(ReportingActivity.RecordsYearMonthTag, item);
+            intent.PutExtra(ReportingActivity.RecordsYearMonthTag, item.Split(':')[0]);
 
             StartActivity(intent);
         }
@@ -82,8 +86,9 @@ namespace EveryRecords
         private void historyList_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
         {
             var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
-            if (item == RecordingDataFactory.NoHistoryList)
+            if (item == HistoricDataFactory.NoHistoryList)
             {
+                Toast.MakeText(this, "没有记录可以删除", ToastLength.Long).Show();
                 return;
             }
 
@@ -91,9 +96,13 @@ namespace EveryRecords
             {
                 var intent = new Intent(this, typeof(ConfirmActivity));
                 intent.PutExtra(ConfirmActivity.MessageTag, string.Format(CultureInfo.InvariantCulture, "确定要删除历史记录[{0}]吗？", item));
-                intent.PutExtra(ConfirmActivity.DataTag, item);
+                intent.PutExtra(ConfirmActivity.DataTag, item.Split(':')[0]);
                 intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
                 StartActivityForResult(intent, 0);
+            }
+            else
+            {
+                Toast.MakeText(this, "当前设置不允许删除", ToastLength.Long).Show();
             }
         }
     }

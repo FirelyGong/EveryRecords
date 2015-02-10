@@ -21,5 +21,8 @@ namespace EveryRecords.Persistence
 
         [XmlElement("AllowDeleteHistory")]
         public bool AllowDeleteHistory { get; set; }
+
+        [XmlElement("ExpensesLimit")]
+        public double ExpensesLimit { get; set; }
     }
 }

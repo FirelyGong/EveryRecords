@@ -63,21 +63,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutActivity.cs" />
+    <Compile Include="ActivityExtensionMethods.cs" />
     <Compile Include="CategoryActivity.cs" />
-    <Compile Include="CategoryDataFactory.cs" />
+    <Compile Include="DataFactories\CategoryDataFactory.cs" />
     <Compile Include="ConfirmActivity.cs" />
-    <Compile Include="DataFactory.cs" />
+    <Compile Include="DataFactories\DataFactory.cs" />
+    <Compile Include="DataFactories\HistoricDataFactory.cs" />
     <Compile Include="HistoryActivity.cs" />
+    <Compile Include="IntroductionActivity.cs" />
     <Compile Include="Persistence\CategoryData.cs" />
     <Compile Include="Persistence\CategoryItem.cs" />
+    <Compile Include="Persistence\HistoricData.cs" />
+    <Compile Include="Persistence\HistoricItem.cs" />
     <Compile Include="Persistence\RecordingData.cs" />
     <Compile Include="Persistence\SettingData.cs" />
     <Compile Include="Persistence\SummaryItem.cs" />
-    <Compile Include="SettingDataFactory.cs" />
+    <Compile Include="DataFactories\SettingDataFactory.cs" />
     <Compile Include="SimpleListAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="RecordingActivity.cs" />
-    <Compile Include="RecordingDataFactory.cs" />
+    <Compile Include="DataFactories\RecordingDataFactory.cs" />
     <Compile Include="Persistence\RecordItem.cs" />
     <Compile Include="ReportingActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -119,6 +124,9 @@
     <AndroidResource Include="Resources\layout\CategoryLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\IntroductionLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -132,12 +140,27 @@
     <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
+    <Content Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <AndroidResource Include="Resources\drawable\EveryRecords.png" />
     <AndroidResource Include="Resources\drawable\EveryRecords_small.png" />
     <AndroidResource Include="Resources\drawable\FunctionButton.xml" />
     <AndroidResource Include="Resources\drawable\TitleButton.xml" />
-    <AndroidResource Include="Resources\values\style.xml" />
+    <AndroidResource Include="Resources\values\style.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\anim\PushLeftIn.xml" />
+    <AndroidResource Include="Resources\anim\PushLeftOut.xml" />
+    <AndroidResource Include="Resources\anim\PushRightIn.xml" />
+    <AndroidResource Include="Resources\anim\PushRightOut.xml" />
+    <AndroidResource Include="Resources\drawable\a.png" />
+    <AndroidResource Include="Resources\drawable\b.png" />
+    <AndroidResource Include="Resources\drawable\c.png" />
+    <AndroidResource Include="Resources\drawable\d.png" />
+    <AndroidResource Include="Resources\drawable\e.png" />
+    <AndroidResource Include="Resources\menu\AppMenu.xml" />
+    <AndroidResource Include="Resources\drawable\PercentageBackground.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

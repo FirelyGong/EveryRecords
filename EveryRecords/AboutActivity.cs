@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace EveryRecords
 {
-    [Activity(Label = "AboutActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
+    [Activity(Label = "AboutActivity", ScreenOrientation=Android.Content.PM.ScreenOrientation.Portrait)]
     public class AboutActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
@@ -22,11 +22,10 @@ namespace EveryRecords
             // Create your application here
             SetContentView(Resource.Layout.AboutLayout);
 
-            var back = FindViewById<Button>(Resource.Id.BackButton);
-            back.Click += delegate
-            {
-                Finish();
-            };
+            this.InitialActivity(() => Finish());
+
+            var introduce = FindViewById<Button>(Resource.Id.IntroduceButton);
+            introduce.Click += delegate { StartActivity(typeof(IntroductionActivity)); };
         }
     }
 }

@@ -10,10 +10,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Globalization;
+using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "StartRecordingActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
+    [Activity(Label = "StartRecordingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class StartRecordingActivity : Activity
     {
         private ListView _recordList;
@@ -26,12 +27,8 @@ namespace EveryRecords
 
             // Create your application here
             SetContentView(Resource.Layout.StartRecordingLayout);
+            this.InitialActivity(() => Finish());
             _records = new List<string>();
-            var back = FindViewById<Button>(Resource.Id.BackButton);
-            back.Click += delegate
-            {
-                Finish();
-            };
 
             _recordList = FindViewById<ListView>(Resource.Id.RecordList);
             _recordList.Adapter = new SimpleListAdapter(this, new List<string>(new []{"ÇëÌí¼Ó¼ÇÂ¼"}));
@@ -85,6 +82,7 @@ namespace EveryRecords
             if (_recordList.Adapter.Count > 0)
             {
                 RecordingDataFactory.Instance.SaveData();
+                HistoricDataFactory.Instance.SaveData();
                 _records.Clear();
             }
         }

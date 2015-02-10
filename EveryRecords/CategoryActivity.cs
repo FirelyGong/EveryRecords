@@ -10,10 +10,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Globalization;
+using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "CategoryActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen")]
+    [Activity(Label = "CategoryActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class CategoryActivity : Activity
     {
         TextView _subTitle;
@@ -26,15 +27,12 @@ namespace EveryRecords
             // Set our view from the "SettingLayout" layout resource
             SetContentView(Resource.Layout.CategoryLayout);
 
+            this.InitialActivity(() => OnBackPressed());
+
             _currentNode = FindViewById<EditText>(Resource.Id.NodeText);
             _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
             _subTitle.Text = CategoryDataFactory.RootCategory;
-            var back = FindViewById<Button>(Resource.Id.BackButton);
-            back.Click += delegate
-            {
-                OnBackPressed();
-            };
-
+           
             var add = FindViewById<Button>(Resource.Id.AddButton);
             add.Click += add_Click;
 

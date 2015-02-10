@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace EveryRecords
+namespace EveryRecords.DataFactories
 {
     public class DataFactory
     {
+        protected bool DataLoaded;
+
         protected bool DataChanged;
 
         protected string BasePath;
@@ -17,6 +19,7 @@ namespace EveryRecords
 
         public DataFactory()
         {
+            DataLoaded = false;
             BasePath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "Android/data/com.ziwish.EveryRecord");
         }
 

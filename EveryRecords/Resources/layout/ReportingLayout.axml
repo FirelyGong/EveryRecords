@@ -10,57 +10,63 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:id="@+id/linearLayout1"
+        android:id="@+id/TitleLayout"
         android:background="#4682B4"
         android:weightSum="1"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout4"
-            android:background="#191970"
-            android:weightSum="1"
-            android:gravity="center"
-            android:layout_marginTop="10px">
-            <Button
-                android:text="   &lt;-   "
-                android:id="@+id/BackButton"
-                android:background="@drawable/TitleButton"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.15" />
-            <TextView
-                android:text="@string/ReportTitle"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/TitleText"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:background="#4682B4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="2px"
-                android:layout_weight="0.85" />
-        </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2">
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_height="match_parent"
+            android:id="@+id/TitleInnerLayout">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/SubTitleText"
-                android:textColor="@android:color/background_light"
-                android:layout_margin="10px" />
+                android:id="@+id/linearLayout4"
+                android:background="#191970"
+                android:weightSum="1"
+                android:gravity="center"
+                android:layout_marginTop="10px">
+                <Button
+                    android:text="@string/Back"
+                    android:id="@+id/BackButton"
+                    android:background="@drawable/TitleButton"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:text="@string/ReportTitle"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/TitleText"
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="#4682B4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2px" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout2">
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SubTitleText"
+                    android:textColor="@android:color/background_light"
+                    android:layout_margin="10px" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

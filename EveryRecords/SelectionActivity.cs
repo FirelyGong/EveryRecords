@@ -9,10 +9,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "请选择分类", Theme = "@style/PopupTheme")]
+    [Activity(Label = "请选择分类", Theme = "@style/PopupTheme", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SelectionActivity : Activity
     {
         public const string ParentCategoryTag = "DataCategory";

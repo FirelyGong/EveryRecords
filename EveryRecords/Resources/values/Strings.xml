@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">Every Records</string>
+    <string name="ApplicationName">花哪了</string>
   <string name="Record">记帐</string>
   <string name="ViewReport">报表</string>
   <string name="HistoryRec">历史</string>
@@ -11,7 +11,7 @@
   <string name="Save">保存</string>
   <string name="Add">添加</string>
   <string name="Delete">删除</string>
-  <string name="Back">返回</string>
+  <string name="Back">  &lt;-  </string>
   <string name="UpLevel">上一级</string>
   <string name="Exit">退出</string>
   <string name="RecordTitle">创建新记录</string>
@@ -25,4 +25,7 @@
   <string name="Cancel">取消</string>
   <string name="AllowDeleteRecord">允许删除记录</string>
   <string name="AllowDeleteHistory">允许删除历史</string>
+  <string name="AboutApp">《花哪了》是一款记录家庭收入开支的应用，操作简单，界面简洁。它可以定制不同的分类，以从不同的多维度来记录和分析每一笔收入和开支。绝对是居家生活必备工具！</string>
+  <string name="Introduce">观看简介</string>
+  <string name="ExpensesLimit">支出提醒</string>
 </resources>

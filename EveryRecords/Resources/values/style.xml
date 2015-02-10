@@ -1,7 +1,14 @@
 ﻿<resources>
   <!--继承Android内置的Theme.Dialog，位于/base/core/res/res/values/themes.xml -->
-  <style name="PopupTheme" parent="android:Theme.Dialog">
+  <style name="PopupTheme" parent="android:Theme.Holo.Dialog">
     <item name="android:windowBackground">@android:color/background_light</item>
     <item name="android:windowNoTitle">true</item>
+  </style>
+  <style name="AppTheme" parent="android:Theme.Holo.Light">
+    <item name="android:windowBackground">@android:color/background_light</item>
+    <item name="android:windowNoTitle">true</item>
+    <!-- API 19 theme customizations can go here. -->
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:windowTranslucentNavigation">true</item>
   </style>
 </resources>
