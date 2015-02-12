@@ -70,6 +70,7 @@
     <Compile Include="DataFactories\DataFactory.cs" />
     <Compile Include="DataFactories\HistoricDataFactory.cs" />
     <Compile Include="HistoryActivity.cs" />
+    <Compile Include="IndexActivity.cs" />
     <Compile Include="IntroductionActivity.cs" />
     <Compile Include="Persistence\CategoryData.cs" />
     <Compile Include="Persistence\CategoryItem.cs" />
@@ -127,9 +128,12 @@
     <AndroidResource Include="Resources\layout\IntroductionLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\IndexLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\layout\MainLayout.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml">

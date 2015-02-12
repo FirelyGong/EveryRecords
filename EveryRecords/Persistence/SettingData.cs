@@ -16,6 +16,9 @@ namespace EveryRecords.Persistence
     [XmlRoot("SettingData")]
     public class SettingData
     {
+        [XmlElement("AppVersion")]
+        public string AppVersion { get; set; }
+
         [XmlElement("AllowDeleteRecord")]
         public bool AllowDeleteRecord { get; set; }
 

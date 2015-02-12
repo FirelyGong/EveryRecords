@@ -52,6 +52,22 @@ namespace EveryRecords.DataFactories
             }
         }
 
+        public string AppVersion
+        {
+            get
+            {
+                return _settingData.AppVersion;
+            }
+
+            set
+            {
+                if (value != _settingData.AppVersion)
+                {
+                    DataChanged = true;
+                    _settingData.AppVersion = value;
+                }
+            }
+        }
         public bool AllowDeleteRecord
         {
             get

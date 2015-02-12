@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace EveryRecords
 {
-    [Activity(Label = "花哪了", MainLauncher = true, Icon = "@drawable/EveryRecords", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "花哪了", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
         private Button _recording;
@@ -20,6 +20,7 @@ namespace EveryRecords
         private Button _setting;
         private Button _exit;
         private Button _history;
+        private string _verString;
 
         private TextView _sumText;
 
@@ -28,7 +29,7 @@ namespace EveryRecords
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.MainLayout);
 
             this.InitialActivity(null);
             
@@ -74,13 +75,20 @@ namespace EveryRecords
             };
 
             var ver = FindViewById<Button>(Resource.Id.VerButton);
-            ver.Text = GetType().Assembly.GetName().Version.ToString();
+            _verString = GetType().Assembly.GetName().Version.ToString();
+            ver.Text = _verString;
             ver.Click += delegate
             {
                 StartActivity(typeof(AboutActivity));
             };
 
             _sumText.Text = "数据加载中..";
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            ShowIntroduction();
             UpdateUiInfo();
         }
 
@@ -91,32 +99,23 @@ namespace EveryRecords
             UpdateUiInfo();
         }
 
-        private async void UpdateUiInfo()
+        private void ShowIntroduction()
         {
-            var bln = await LoadDataAsync();
+            if (_verString != SettingDataFactory.Instance.AppVersion)
+            {
+                StartActivity(typeof(IntroductionActivity));
+                SettingDataFactory.Instance.AppVersion = _verString;
+                SettingDataFactory.Instance.SaveData();
+            }
+        }
 
-            _sumText.Text = "当月记录金额：" + RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
+        private void UpdateUiInfo()
+        {
             UpdatePercentage();
             UpdateRecents();
+            _sumText.Text = "当月记录金额:" + RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
         }
-
-        private Task<bool> LoadDataAsync()
-        {
-            return Task.Run(() =>
-            {
-                LoadData();
-                return true;
-            });
-        }
-
-        private void LoadData()
-        {
-            CategoryDataFactory.Instance.LoadData();
-            RecordingDataFactory.Instance.LoadData();
-            SettingDataFactory.Instance.LoadData();
-            HistoricDataFactory.Instance.LoadData();
-        }
-
+        
         private void UpdatePercentage()
         {
             var percentUI = FindViewById<LinearLayout>(Resource.Id.PercentLayout);
@@ -151,32 +150,28 @@ namespace EveryRecords
             {
                 maxAmount = amounts.Max();
             }
-            if (amounts.Count > 0)
+            else
             {
-                UpdateRecentUi(amounts[0], amounts[0]/maxAmount , FindViewById<TextView>(Resource.Id.Recent1));
+                return;
             }
-            if (amounts.Count > 1)
+
+            for (int i = amounts.Count; i < 6; i++)
             {
-                UpdateRecentUi(amounts[1], amounts[1] / maxAmount, FindViewById<TextView>(Resource.Id.Recent2));
+                amounts.Add(0);
             }
-            if (amounts.Count > 2)
-            {
-                UpdateRecentUi(amounts[2], amounts[2] / maxAmount, FindViewById<TextView>(Resource.Id.Recent3));
-            }
-            if (amounts.Count > 3)
-            {
-                UpdateRecentUi(amounts[3], amounts[3] / maxAmount, FindViewById<TextView>(Resource.Id.Recent4));
-            }
-            if (amounts.Count > 4)
-            {
-                UpdateRecentUi(amounts[4], amounts[4] / maxAmount, FindViewById<TextView>(Resource.Id.Recent5));
-            }
+
+            UpdateRecentUi(amounts[0], amounts[0] / maxAmount, FindViewById<TextView>(Resource.Id.Recent1));
+            UpdateRecentUi(amounts[1], amounts[1] / maxAmount, FindViewById<TextView>(Resource.Id.Recent2));
+            UpdateRecentUi(amounts[2], amounts[2] / maxAmount, FindViewById<TextView>(Resource.Id.Recent3));
+            UpdateRecentUi(amounts[3], amounts[3] / maxAmount, FindViewById<TextView>(Resource.Id.Recent4));
+            UpdateRecentUi(amounts[4], amounts[4] / maxAmount, FindViewById<TextView>(Resource.Id.Recent5));
+            UpdateRecentUi(amounts[5], amounts[5] / maxAmount, FindViewById<TextView>(Resource.Id.Recent6));
         }
 
         private void UpdateRecentUi(double amount, double percent, TextView recentText)
         {
             recentText.Text = ((int)amount).ToString();
-            var parameters = new LinearLayout.LayoutParams(recentText.LayoutParameters);
+            var parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
             parameters.Weight = (float)percent;
             parameters.RightMargin = 10;
             parameters.LeftMargin = 10;

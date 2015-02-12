@@ -90,5 +90,13 @@
             android:textColor="@android:color/black"
             android:background="@drawable/FunctionButton"
             android:layout_margin="10px" />
+        <Button
+            android:text="@string/CheckUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CheckUpdateButton"
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/black"
+            android:layout_margin="10px" />
     </LinearLayout>
 </LinearLayout>

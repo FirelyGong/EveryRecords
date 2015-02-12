@@ -109,7 +109,7 @@ namespace EveryRecords.DataFactories
             _categoryData.Categories.Add(new CategoryItem { Category = "成员", SubCategories = new List<string>(new string[] { "FirelyGong", "Qihui" }) });
             _categoryData.Categories.Add(new CategoryItem { Category = "收入支出", SubCategories = new List<string>(new string[] { "支出", "收入" }) });
             _categoryData.Categories.Add(new CategoryItem { Category = "支出", SubCategories = new List<string>(new string[] { "日常", "服饰", "交通", "通迅", "娱乐", "人情往来", "学习" }) });
-            _categoryData.Categories.Add(new CategoryItem { Category = "收入", SubCategories = new List<string>(new string[] { "工资", "红包" }) });
+            _categoryData.Categories.Add(new CategoryItem { Category = "收入", SubCategories = new List<string>(new string[] { "工资", "公司福利", "红包" }) });
             _categoryData.Categories.Add(new CategoryItem { Category = "日常", SubCategories = new List<string>(new string[] { "超市", "买菜", "餐费", "厨房用品", "日用品", "家电家具", "水电煤","零食" }) });
             _categoryData.Categories.Add(new CategoryItem { Category = "服饰", SubCategories = new List<string>(new string[] { "外套", "鞋袜", "内衣", "护肤品", "运动用品" }) });
             _categoryData.Categories.Add(new CategoryItem { Category = "通迅", SubCategories = new List<string>(new string[] { "话费", "网费", "电视", "手机" }) });

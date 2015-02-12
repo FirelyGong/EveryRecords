@@ -98,7 +98,8 @@ namespace EveryRecords
                 return;
             }
 
-            var recording = RecordingDataFactory.Instance.AddRecord(_paths, _commentsText.Text, amount);
+            bool isExpenses = FindViewById<CheckBox>(Resource.Id.IsExpensesCheck).Checked;
+            var recording = RecordingDataFactory.Instance.AddRecord(_paths, _commentsText.Text, amount, isExpenses);
             var lastActivity = Intent.GetStringExtra(ReturnToTag);
             var intent = new Intent(this, Type.GetType(lastActivity, true));
             intent.PutExtra(OutputRecordTag, recording);

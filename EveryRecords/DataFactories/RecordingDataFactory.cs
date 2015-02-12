@@ -68,6 +68,11 @@ namespace EveryRecords.DataFactories
 
         public string AddRecord(IList<string> paths, string comments, double amount)
         {
+            return AddRecord(paths, comments, amount, true);
+        }
+
+        public string AddRecord(IList<string> paths, string comments, double amount, bool includeInTotal)
+        {
             DataChanged = true;
 
             MakeSureRecordInCurrentMonth();
@@ -75,7 +80,12 @@ namespace EveryRecords.DataFactories
             IList<string> lst = new List<string>();
             foreach (var path in paths)
             {
-                var arr = path.Split('/');
+                var arr = path.Split('/').ToList();
+                if (!includeInTotal)
+                {
+                    arr.Remove(CategoryDataFactory.RootCategory);
+                }
+
                 foreach (var node in arr)
                 {
                     if (!lst.Contains(node))
@@ -85,8 +95,9 @@ namespace EveryRecords.DataFactories
                     }
                 }
 
-                categories.Add(arr[arr.Length - 1]);
+                categories.Add(arr[arr.Count - 1]);
             }
+
             var record = new RecordItem
                         {
                             Category = string.Join(",", categories),

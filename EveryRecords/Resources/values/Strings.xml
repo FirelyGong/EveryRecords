@@ -28,4 +28,6 @@
   <string name="AboutApp">《花哪了》是一款记录家庭收入开支的应用，操作简单，界面简洁。它可以定制不同的分类，以从不同的多维度来记录和分析每一笔收入和开支。绝对是居家生活必备工具！</string>
   <string name="Introduce">观看简介</string>
   <string name="ExpensesLimit">支出提醒</string>
+  <string name="IsExpenses">计入支出</string>
+  <string name="CheckUpdate">检查更新</string>
 </resources>
