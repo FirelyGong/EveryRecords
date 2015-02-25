@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using System.Globalization;
 using EveryRecords.DataFactories;
+using EveryRecords.Charts;
 
 namespace EveryRecords
 {
@@ -24,6 +25,7 @@ namespace EveryRecords
         private ListView _reportingList;
         private bool _displayingDetail;
         private RecordingDataFactory _reocrdingData;
+        private ChartPane _chartPane;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -56,7 +58,7 @@ namespace EveryRecords
             title.Text = string.Format(CultureInfo.InvariantCulture, "{0}Äê{1}ÔÂ", year, month);
 
             _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
-            
+            _chartPane = FindViewById<ChartPane>(Resource.Id.PieChart);
             _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
             _reportingList.ItemLongClick += reportingList_ItemLongClick;
@@ -190,6 +192,16 @@ namespace EveryRecords
                 datas = new string[] { NoRecord };
             }
             _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
+            if (!_displayingDetail && datas.Length > 1 && datas[0].Contains(":"))
+            {
+                var data=datas.Select(d=>double.Parse(d.Split(':')[1])).ToArray();
+                var label=datas.Select(d=>d.Split(':')[0]).ToArray();
+                _chartPane.InitializeChart(ChartType.PieChart, data, label);
+            }
+            else
+            {
+                _chartPane.Clear();
+            }
         }
 
         private string FormatListItem(string category, double amount)

@@ -9,7 +9,8 @@ using System.Globalization;
 using EveryRecords.DataFactories;
 using System.Linq;
 using System.Threading.Tasks;
-
+using EveryRecords.Charts;
+using Android.Graphics;
 namespace EveryRecords
 {
     [Activity(Label = "花哪了", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
@@ -115,29 +116,21 @@ namespace EveryRecords
             UpdateRecents();
             _sumText.Text = "当月记录金额:" + RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
         }
-        
+
         private void UpdatePercentage()
         {
-            var percentUI = FindViewById<LinearLayout>(Resource.Id.PercentLayout);
+            var percentUI = FindViewById<ChartPane>(Resource.Id.PercentChart);
             var parameters = new LinearLayout.LayoutParams(percentUI.LayoutParameters);
             var limit = SettingDataFactory.Instance.ExpensesLimit;
+
+            var amount = RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
+
             if (limit <= 0)
             {
-                parameters.Weight = 0.95f;
-            }
-            else
-            {
-                var amount = RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
-                var percent = amount / limit;
-                if (percent > 1)
-                {
-                    percent = 1;
-                }
-
-                parameters.Weight = (float)(1 - percent);
+                limit = amount;
             }
 
-            percentUI.LayoutParameters = parameters;
+            percentUI.InitializeChart(ChartType.PercentageChart, new[] { amount, limit }, null, Color.White);
         }
 
         private void UpdateRecents()
@@ -145,10 +138,12 @@ namespace EveryRecords
             var historic = HistoricDataFactory.Instance.GetHistoryList();
             historic.Remove(HistoricDataFactory.NoHistoryList);
             var amounts = historic.Select(h => double.Parse(h.Split(':')[1])).ToList();
-            double maxAmount = 0;
+            var labels = historic.Select(h => h.Split(':')[0]).ToList();
+            var zhuxing = FindViewById<ChartPane>(Resource.Id.ZhuXingTu);
+            //double maxAmount = 0;
             if (amounts.Count > 0)
             {
-                maxAmount = amounts.Max();
+                //maxAmount = amounts.Max();
             }
             else
             {
@@ -160,23 +155,7 @@ namespace EveryRecords
                 amounts.Add(0);
             }
 
-            UpdateRecentUi(amounts[0], amounts[0] / maxAmount, FindViewById<TextView>(Resource.Id.Recent1));
-            UpdateRecentUi(amounts[1], amounts[1] / maxAmount, FindViewById<TextView>(Resource.Id.Recent2));
-            UpdateRecentUi(amounts[2], amounts[2] / maxAmount, FindViewById<TextView>(Resource.Id.Recent3));
-            UpdateRecentUi(amounts[3], amounts[3] / maxAmount, FindViewById<TextView>(Resource.Id.Recent4));
-            UpdateRecentUi(amounts[4], amounts[4] / maxAmount, FindViewById<TextView>(Resource.Id.Recent5));
-            UpdateRecentUi(amounts[5], amounts[5] / maxAmount, FindViewById<TextView>(Resource.Id.Recent6));
-        }
-
-        private void UpdateRecentUi(double amount, double percent, TextView recentText)
-        {
-            recentText.Text = ((int)amount).ToString();
-            var parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent);
-            parameters.Weight = (float)percent;
-            parameters.RightMargin = 10;
-            parameters.LeftMargin = 10;
-            parameters.Gravity = GravityFlags.Top | GravityFlags.CenterHorizontal;
-            recentText.LayoutParameters = parameters;
+            zhuxing.InitializeChart(ChartType.Histogram, amounts.ToArray(), labels.ToArray(), Color.LightGray);
         }
     }
 }

@@ -92,26 +92,10 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
+    <EveryRecords.Charts.ChartPane
         android:layout_width="match_parent"
         android:layout_height="25dip"
-        android:id="@+id/MiddleTopLayout"
-        android:background="@drawable/PercentageBackground"
-        android:weightSum="1"
-        android:gravity="right">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="5px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/PercentLayout"
-            android:layout_weight="0.5"
-            android:background="@android:color/background_light" />
-    </LinearLayout>
+        android:id="@+id/PercentChart" />
     <LinearLayout
         android:orientation="horizontal"
         android:minWidth="25px"
@@ -198,150 +182,16 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/BottomLayout"
-        android:layout_weight="0.4"
-        android:weightSum="6">
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
+        android:layout_weight="0.4">
+        <EveryRecords.Charts.ChartPane
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/Recent1Layout"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:weightSum="1">
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Recent1"
-                android:textColor="#ffffff"
-                android:gravity="top"
-                android:layout_weight="0.05"
-                android:background="#DCDCDC"
-                android:layout_marginLeft="10px"
-                android:layout_marginRight="10px" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/Recent2Layout"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:weightSum="1">
-            <TextView
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Recent2"
-                android:textColor="#ffffff"
-                android:gravity="top"
-                android:layout_weight="0.05"
-                android:background="#DCDCDC"
-                android:layout_marginLeft="10px"
-                android:layout_marginRight="10px" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/Recent3Layout"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:weightSum="1">
-            <TextView
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Recent3"
-                android:textColor="#ffffff"
-                android:gravity="top"
-                android:layout_weight="0.05"
-                android:background="#DCDCDC"
-                android:layout_marginRight="10px"
-                android:layout_marginLeft="10px" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/Recent4Layout"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:weightSum="1">
-            <TextView
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Recent4"
-                android:textColor="#ffffff"
-                android:gravity="top"
-                android:layout_weight="0.05"
-                android:background="#DCDCDC"
-                android:layout_marginLeft="10px"
-                android:layout_marginRight="10px" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/Recent5Layout"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:weightSum="1">
-            <TextView
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Recent5"
-                android:textColor="#ffffff"
-                android:gravity="top"
-                android:layout_weight="0.05"
-                android:background="#DCDCDC"
-                android:layout_marginLeft="10px"
-                android:layout_marginRight="10px" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/Recent6Layout"
-            android:weightSum="1"
-            android:layout_weight="1"
-            android:gravity="bottom">
-            <TextView
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Recent6"
-                android:textColor="#ffffff"
-                android:gravity="top"
-                android:layout_weight="0.05"
-                android:background="#DCDCDC"
-                android:layout_marginRight="10px"
-                android:layout_marginLeft="10px" />
-        </LinearLayout>
+            android:id="@+id/ZhuXingTu" />
     </LinearLayout>
 </LinearLayout>

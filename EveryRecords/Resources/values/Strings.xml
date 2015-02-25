@@ -30,4 +30,6 @@
   <string name="ExpensesLimit">支出提醒</string>
   <string name="IsExpenses">计入支出</string>
   <string name="CheckUpdate">检查更新</string>
+  <string name="RecordLog">查帐</string>
+  <string name="ReportPath">报表范围</string>
 </resources>

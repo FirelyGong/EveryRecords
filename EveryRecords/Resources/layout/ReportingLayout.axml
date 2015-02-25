@@ -76,12 +76,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/ContentLayout"
-        android:layout_margin="10px">
-        <ListView
+        android:layout_margin="10px"
+        android:weightSum="10">
+        <LinearLayout
+            android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ReportsList" />
+            android:id="@+id/linearLayout5"
+            android:layout_weight="6">
+            <ListView
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ReportsList" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/BottomLayout"
+            android:layout_weight="4">
+            <EveryRecords.Charts.ChartPane
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/PieChart" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -74,6 +74,20 @@
         android:layout_height="match_parent"
         android:id="@+id/ContentLayout"
         android:layout_margin="10px">
+        <CheckBox
+            android:text="@string/AllowDeleteRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/AllowDeleteRecordCheck"
+            android:textColor="@android:color/black"
+            android:layout_margin="10px" />
+        <CheckBox
+            android:text="@string/AllowDeleteHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/AllowDeleteHistoryCheck"
+            android:textColor="@android:color/black"
+            android:layout_margin="10px" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
@@ -94,19 +108,25 @@
                 android:layout_height="match_parent"
                 android:id="@+id/ExpensesLimitText" />
         </LinearLayout>
-        <CheckBox
-            android:text="@string/AllowDeleteRecord"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/AllowDeleteRecordCheck"
-            android:textColor="@android:color/black"
-            android:layout_margin="10px" />
-        <CheckBox
-            android:text="@string/AllowDeleteHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/AllowDeleteHistoryCheck"
-            android:textColor="@android:color/black"
-            android:layout_margin="10px" />
+            android:id="@+id/linearLayout2">
+            <TextView
+                android:text="@string/ReportPath"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView2"
+                android:textColor="@android:color/black"
+                android:gravity="center_vertical" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ReportPathText" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
