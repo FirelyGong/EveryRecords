@@ -40,18 +40,19 @@ namespace EveryRecords.Charts
             {
                 return;
             }
+            paint.TextSize = TextSize;
             var labelLen = paint.MeasureText(FormatLabel(Data[0], total, Label[0]));
             var centerX = Width / 2;
             var centerY = Height / 2;
-            paint.TextSize = TextSize;
             var textHeight = paint.GetFontMetrics().Bottom - paint.GetFontMetrics().Ascent;
-            var availableWidth = Width - labelLen * 2;
+            var availableWidth = Width - labelLen * 1.5f;
             if (availableWidth <= 0)
             {
                 availableWidth = Width / 2;
             }
-            var rectWidth = Math.Min(availableWidth, Height) - textHeight * 2;
-            var rect = new RectF(centerX - rectWidth / 2, textHeight, centerX + rectWidth / 2, rectWidth + textHeight);
+
+            var rectWidth = Math.Min(availableWidth, Height - textHeight * 2);
+            var rect = new RectF(centerX - rectWidth / 2, centerY - rectWidth / 2, centerX + rectWidth / 2, centerY + rectWidth / 2);
             var current = 0f;
 
             for (int i = 0; i < Data.Length; i++)
