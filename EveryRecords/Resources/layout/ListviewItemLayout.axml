@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/linearLayout2"
-            android:background="@android:color/background_light">
+            android:background="@android:color/background_light"
+            android:layout_margin="2px">
             <TextView
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearance"

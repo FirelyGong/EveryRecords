@@ -68,7 +68,7 @@
     <Compile Include="Charts\ChartPane.cs" />
     <Compile Include="Charts\ChartType.cs" />
     <Compile Include="Charts\IChart.cs" />
-    <Compile Include="Charts\PercentageChart.cs" />
+    <Compile Include="Charts\ProgressChart.cs" />
     <Compile Include="Charts\PieChart.cs" />
     <Compile Include="Charts\Histogram.cs" />
     <Compile Include="DataFactories\CategoryDataFactory.cs" />

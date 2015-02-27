@@ -5,8 +5,8 @@ namespace EveryRecords.Charts
     {
         Histogram = 0,
 
-        PieChart = 1,
+        Pie = 1,
 
-        PercentageChart = 2
+        Progress = 2
     }
 }

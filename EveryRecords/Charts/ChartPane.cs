@@ -139,10 +139,10 @@ namespace EveryRecords.Charts
             {
                 case ChartType.Histogram:
                     return new Histogram();
-                case ChartType.PieChart:
+                case ChartType.Pie:
                     return new PieChart();
-                case ChartType.PercentageChart:
-                    return new PercentageChart();
+                case ChartType.Progress:
+                    return new ProgressChart();
             }
 
             return null;

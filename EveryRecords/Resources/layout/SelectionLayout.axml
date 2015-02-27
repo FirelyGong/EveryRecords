@@ -21,5 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SelectionList"
-        android:layout_margin="10px" />
+        android:layout_margin="10px"
+        android:dividerHeight="0dp"
+        android:divider="#00000000" />
 </LinearLayout>

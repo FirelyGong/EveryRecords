@@ -5,6 +5,7 @@ using System.Linq;
 using Android.Graphics;
 
 using Color = Android.Graphics.Color;
+using Android.Text;
 
 namespace EveryRecords.Charts
 {
@@ -79,61 +80,6 @@ namespace EveryRecords.Charts
             }
         }
 
-        private void DrawLabel(Canvas canvas, double angle, float centerX, float centerY, float rectWidth, float textHeight, Paint paint, double data, double amount, string label)
-        {
-            string text = FormatLabel(data, amount, label);
-            if (angle > 270)
-            {
-                var offsetX = Math.Sin((angle - 270) * Math.PI / 180) * rectWidth / 2;
-                var offsetY = Math.Cos((angle - 270) * Math.PI / 180) * rectWidth / 2;
-
-                canvas.DrawText(text, (int)(centerX + offsetX), (int)(centerY - offsetY), paint);
-            }
-            else if (angle > 180)
-            {
-                var offsetX = Math.Cos((angle - 180) * Math.PI / 180) * rectWidth / 2;
-                var offsetY = Math.Sin((angle - 180) * Math.PI / 180) * rectWidth / 2;
-                var textLen = paint.MeasureText(text);
-                var x = Width / 2 - offsetX - textLen;
-                if (x < 0)
-                {
-                    x = 0;
-                }
-
-                canvas.DrawText(text, (int)x, (int)(centerY - offsetY), paint);
-            }
-            else if (angle > 90)
-            {
-                var offsetX = Math.Sin((angle - 90) * Math.PI / 180) * rectWidth / 2;
-                var offsetY = Math.Cos((angle - 90) * Math.PI / 180) * rectWidth / 2;
-                var textLen = paint.MeasureText(text);
-                var x = Width / 2 - offsetX - textLen;
-                if (x < 0)
-                {
-                    x = 0;
-                }
-
-                canvas.DrawText(text, (int)x, (int)(centerY + offsetY + textHeight), paint);
-            }
-            else
-            {
-                var offsetY = Math.Sin(angle * Math.PI / 180) * rectWidth / 2;
-                var offsetX = Math.Cos(angle * Math.PI / 180) * rectWidth / 2;
-
-                canvas.DrawText(
-                    text,
-                    (int)(centerX + offsetX),
-                    (int)(centerY + offsetY + textHeight),
-                    paint);
-            }
-        }
-
-        private string FormatLabel(double data, double amount, string label)
-        {
-            string text = string.Format("{0}:{1},{2}% ", label, data, (int)(data / amount * 100 + 0.5));
-            return text;
-        }
-
         public void InitSize(float width, float height, float textSize)
         {
             Width = width;
@@ -158,5 +104,82 @@ namespace EveryRecords.Charts
         public Color ChartColor { get; set; }
 
         public Color LabelColor { get; set; }
+
+        private void DrawLabel(Canvas canvas, double angle, float centerX, float centerY, float rectWidth, float textHeight, Paint paint, double data, double amount, string label)
+        {
+            string text = FormatLabel(data, amount, label);
+            if (angle > 270)
+            {
+                var offsetX = Math.Sin((angle - 270) * Math.PI / 180) * rectWidth / 2;
+                var offsetY = Math.Cos((angle - 270) * Math.PI / 180) * rectWidth / 2;
+
+                //canvas.DrawText(text, (int)(centerX + offsetX), (int)(centerY - offsetY), paint);
+                var textX=centerX + (float)offsetX;
+                var textY=centerY - (float)offsetY;
+                DrawText(canvas, textX, textY - textHeight, (int)(Width - textX), text, paint);
+            }
+            else if (angle > 180)
+            {
+                var offsetX = Math.Cos((angle - 180) * Math.PI / 180) * rectWidth / 2;
+                var offsetY = Math.Sin((angle - 180) * Math.PI / 180) * rectWidth / 2;
+                var textLen = paint.MeasureText(text);
+                var x = Width / 2 - offsetX - textLen;
+                if (x < 0)
+                {
+                    DrawText(canvas, 0, centerY - (float)offsetY - (float)textHeight, (int)(Width / 2 - offsetX), text, paint);
+                }
+                else
+                {
+                    DrawText(canvas, (float)x, centerY - (float)offsetY - (float)textHeight, (int)textLen, text, paint);
+                }
+                //canvas.DrawText(text, (int)x, (int)(centerY - offsetY), paint);
+            }
+            else if (angle > 90)
+            {
+                var offsetX = Math.Sin((angle - 90) * Math.PI / 180) * rectWidth / 2;
+                var offsetY = Math.Cos((angle - 90) * Math.PI / 180) * rectWidth / 2;
+                var textLen = paint.MeasureText(text);
+                var x = Width / 2 - offsetX - textLen;
+                if (x < 0)
+                {
+                    DrawText(canvas, 0, (float)(centerY + offsetY), (int)(Width / 2 - offsetX), text, paint);
+                }
+                else
+                {
+                    DrawText(canvas, (float)x, (float)(centerY + offsetY), (int)textLen, text, paint);
+                }
+                //canvas.DrawText(text, (int)x, (int)(centerY + offsetY + textHeight), paint);
+            }
+            else
+            {
+                var offsetY = Math.Sin(angle * Math.PI / 180) * rectWidth / 2;
+                var offsetX = Math.Cos(angle * Math.PI / 180) * rectWidth / 2;
+
+                //canvas.DrawText(
+                //    text,
+                //    (int)(centerX + offsetX),
+                //    (int)(centerY + offsetY + textHeight),
+                //    paint);
+                var textX = centerX + (float)offsetX;
+                var textY = (float)(centerY + offsetY);
+                DrawText(canvas, textX, textY, (int)(Width-offsetX), text, paint);
+            }
+        }
+
+        private string FormatLabel(double data, double amount, string label)
+        {
+            string text = string.Format("{0}:{1},{2}% ", label, data, (int)(data / amount * 100 + 0.5));
+            return text;
+        }
+
+        private void DrawText(Canvas canvas, float x, float y, int textWidth, string text, Paint paint)
+        {
+            var textPaint = new TextPaint(paint);
+            StaticLayout layout = new StaticLayout(text, textPaint, textWidth, Layout.Alignment.AlignNormal, 1.0F, 0.0F, true);
+            canvas.Save();
+            canvas.Translate(x, y);
+            layout.Draw(canvas);
+            canvas.Restore();
+        }
     }
 }

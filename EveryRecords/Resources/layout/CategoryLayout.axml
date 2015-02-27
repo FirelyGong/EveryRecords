@@ -125,6 +125,8 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/CategoryItems" />
+            android:id="@+id/CategoryItems"
+            android:divider="#00000000"
+            android:dividerHeight="0dp" />
     </LinearLayout>
 </LinearLayout>

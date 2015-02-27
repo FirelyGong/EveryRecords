@@ -130,7 +130,7 @@ namespace EveryRecords
                 limit = amount;
             }
 
-            percentUI.InitializeChart(ChartType.PercentageChart, new[] { amount, limit }, null, Color.White);
+            percentUI.InitializeChart(ChartType.Progress, new[] { amount, limit }, null, Color.White);
         }
 
         private void UpdateRecents()

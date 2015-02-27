@@ -75,18 +75,13 @@ namespace EveryRecords
             text.Text = item;
             var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
             var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
-            int marginTop = 0;
             int marginBotton = 0;
             if (position == Count - 1)
             {
                 marginBotton = 2;
-            }            
-            if (position == 0)
-            {
-                marginTop = 2;
             }
 
-            margin.SetMargins(2, marginTop, 2, marginBotton);
+            margin.SetMargins(2, 2, 2, marginBotton);
             border.LayoutParameters = margin;
 
             return view;

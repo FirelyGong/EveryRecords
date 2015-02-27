@@ -79,7 +79,9 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/RecordList" />
+            android:id="@+id/RecordList"
+            android:divider="#00000000"
+            android:dividerHeight="0dp" />
         <Button
             android:text="@string/Add"
             android:layout_width="match_parent"

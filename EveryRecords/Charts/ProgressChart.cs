@@ -6,9 +6,9 @@ using System.Text;
 
 namespace EveryRecords.Charts
 {
-    public class PercentageChart:IChart
+    public class ProgressChart:IChart
     {
-        public PercentageChart()
+        public ProgressChart()
         {
             Data=new double[]{};
             Label=new string[]{};
@@ -30,7 +30,7 @@ namespace EveryRecords.Charts
                 return;
             }
 
-            LinearGradient shader = new LinearGradient(0, 0, Width, Height, new int[] { Color.LightGreen, Color.LightBlue, Color.Red }, null, Shader.TileMode.Mirror);
+            LinearGradient shader = new LinearGradient(0, 0, Width, Height, new int[] { Color.LightGreen, Color.Orange, Color.Red }, null, Shader.TileMode.Mirror);
             var paint = new Paint { AntiAlias = true };
             paint.SetShader(shader);
             canvas.DrawRect(0, 0, Width, Height, paint);

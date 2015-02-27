@@ -196,7 +196,7 @@ namespace EveryRecords
             {
                 var data=datas.Select(d=>double.Parse(d.Split(':')[1])).ToArray();
                 var label=datas.Select(d=>d.Split(':')[0]).ToArray();
-                _chartPane.InitializeChart(ChartType.PieChart, data, label);
+                _chartPane.InitializeChart(ChartType.Pie, data, label);
             }
             else
             {

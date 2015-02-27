@@ -79,6 +79,8 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/HistoryList" />
+            android:id="@+id/HistoryList"
+            android:divider="#00000000"
+            android:dividerHeight="0dp" />
     </LinearLayout>
 </LinearLayout>
