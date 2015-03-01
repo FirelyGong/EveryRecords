@@ -172,6 +172,12 @@
     <AndroidResource Include="Resources\menu\AppMenu.xml" />
     <AndroidResource Include="Resources\drawable\PercentageBackground.xml" />
     <AndroidResource Include="Resources\values\attrs.xml" />
+    <AndroidResource Include="Resources\drawable\category.ico" />
+    <AndroidResource Include="Resources\drawable\History.ico" />
+    <AndroidResource Include="Resources\drawable\hnl.ico" />
+    <AndroidResource Include="Resources\drawable\report.ico" />
+    <AndroidResource Include="Resources\drawable\record.ico" />
+    <AndroidResource Include="Resources\drawable\hnlApp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

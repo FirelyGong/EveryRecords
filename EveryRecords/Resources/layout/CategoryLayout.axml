@@ -45,7 +45,6 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/titleText"
                     android:textColor="@android:color/background_light"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:background="#4682B4"
                     android:layout_width="match_parent"

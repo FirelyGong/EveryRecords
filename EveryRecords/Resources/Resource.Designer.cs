@@ -79,28 +79,46 @@ namespace EveryRecords
 			public const int c = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int d = 2130837507;
+			public const int category = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int e = 2130837508;
+			public const int d = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int EveryRecords = 2130837509;
+			public const int e = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int EveryRecords_small = 2130837510;
+			public const int EveryRecords = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int FunctionButton = 2130837511;
+			public const int EveryRecords_small = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int Icon = 2130837512;
+			public const int FunctionButton = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int PercentageBackground = 2130837513;
+			public const int History = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int TitleButton = 2130837514;
+			public const int hnl = 2130837514;
+			
+			// aapt resource value: 0x7f02000b
+			public const int hnlApp = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int Icon = 2130837516;
+			
+			// aapt resource value: 0x7f02000d
+			public const int PercentageBackground = 2130837517;
+			
+			// aapt resource value: 0x7f02000e
+			public const int record = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int report = 2130837519;
+			
+			// aapt resource value: 0x7f020010
+			public const int TitleButton = 2130837520;
 			
 			static Drawable()
 			{

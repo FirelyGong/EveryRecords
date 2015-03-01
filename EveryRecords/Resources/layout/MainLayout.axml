@@ -11,10 +11,10 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/TitleLayout"
         android:background="#4682B4"
-        android:layout_weight="0.15">
+        android:layout_weight="0.35">
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
@@ -36,7 +36,6 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/TitleText"
                     android:gravity="center_vertical"
-                    android:textStyle="bold"
                     android:textColor="@android:color/background_light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,35 +80,39 @@
                 android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/linearLayout10">
+                android:id="@+id/linearLayout10"
+                android:gravity="bottom"
+                android:weightSum="1">
                 <TextView
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:id="@+id/SummaryText"
                     android:gravity="center"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    android:layout_weight="0.8" />
+                <EveryRecords.Charts.ChartPane
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:id="@+id/PercentChart"
+                    android:layout_weight="0.2" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <EveryRecords.Charts.ChartPane
-        android:layout_width="match_parent"
-        android:layout_height="25dip"
-        android:id="@+id/PercentChart" />
     <LinearLayout
         android:orientation="horizontal"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/MiddleLayout"
-        android:layout_weight="0.45">
+        android:layout_weight="0.4">
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/Col1Layout"
             android:layout_weight="0.25"
@@ -120,15 +123,16 @@
                 android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_margin="10px" />
+                android:layout_height="0dp"
+                android:layout_weight="0.33"
+                android:layout_margin="10px"
+                android:drawableTop="@drawable/record" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/Col2Layout"
             android:layout_weight="0.25"
@@ -139,15 +143,16 @@
                 android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_margin="10px" />
+                android:layout_height="0dp"
+                android:layout_weight="0.33"
+                android:layout_margin="10px"
+                android:drawableTop="@drawable/report" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/Col3Layout"
             android:layout_weight="0.25"
@@ -158,15 +163,16 @@
                 android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_margin="10px" />
+                android:layout_height="0dp"
+                android:layout_weight="0.33"
+                android:layout_margin="10px"
+                android:drawableTop="@drawable/History" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/Col4Layout"
             android:layout_weight="0.25"
@@ -177,9 +183,10 @@
                 android:background="@drawable/FunctionButton"
                 android:textColor="@android:color/black"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_margin="10px" />
+                android:layout_height="0dp"
+                android:layout_weight="0.33"
+                android:layout_margin="10px"
+                android:drawableTop="@drawable/category" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -187,9 +194,9 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/BottomLayout"
-        android:layout_weight="0.4">
+        android:layout_weight="0.25">
         <EveryRecords.Charts.ChartPane
             android:layout_width="match_parent"
             android:layout_height="match_parent"
