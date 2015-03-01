@@ -22,7 +22,7 @@ namespace EveryRecords
         private Button _exit;
         private Button _history;
         private string _verString;
-
+        private DateTime _lastQuitTime;
         private TextView _sumText;
 
         protected override void OnCreate(Bundle bundle)
@@ -100,6 +100,19 @@ namespace EveryRecords
             UpdateUiInfo();
         }
 
+        public override void OnBackPressed()
+        {
+            if ((DateTime.Now - _lastQuitTime).TotalSeconds >= 2)
+            {
+                _lastQuitTime = DateTime.Now;
+                Toast.MakeText(this, "再按一次返回键退出", ToastLength.Short).Show();
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
+        }
+
         private void ShowIntroduction()
         {
             if (_verString != SettingDataFactory.Instance.AppVersion)
@@ -130,7 +143,7 @@ namespace EveryRecords
                 limit = amount;
             }
 
-            percentUI.InitializeChart(ChartType.Progress, new[] { amount, limit }, null, Color.White);
+            percentUI.InitializeChart(ChartType.Progress, new[] { amount, limit }, null, this.StringToColor("#4682B4"));
         }
 
         private void UpdateRecents()

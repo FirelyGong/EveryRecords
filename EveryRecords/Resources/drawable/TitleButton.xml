@@ -4,22 +4,22 @@
   <item android:state_pressed="true">
     <shape>
       <solid android:color="#4169E1" />
-      <padding android:left="10dp" android:top="5dp"
-                android:right="10dp" android:bottom="5dp" />
+      <padding android:left="10dp" android:top="2dp"
+                android:right="10dp" android:bottom="2dp" />
     </shape>
   </item>
   <item android:state_focused="true">
     <shape>
       <solid android:color="#4169E1" />
-      <padding android:left="10dp" android:top="5dp"
-                android:right="10dp" android:bottom="5dp" />
+      <padding android:left="10dp" android:top="2dp"
+                android:right="10dp" android:bottom="2dp" />
     </shape>
   </item>
   <item>
     <shape>
       <solid android:color="#4682B4" />
-      <padding android:left="10dp" android:top="5dp"
-                android:right="10dp" android:bottom="5dp" />
+      <padding android:left="10dp" android:top="2dp"
+                android:right="10dp" android:bottom="2dp" />
     </shape>
   </item>
 </selector>

@@ -28,18 +28,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayout4"
-                android:background="#191970"
+                android:background="#696969"
                 android:weightSum="1"
                 android:gravity="center"
                 android:layout_marginTop="10px">
                 <Button
-                    android:text="@string/Back"
                     android:id="@+id/BackButton"
                     android:background="@drawable/TitleButton"
                     android:textColor="@android:color/background_light"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/back" />
                 <TextView
                     android:text="@string/ReportTitle"
                     android:textAppearance="?android:attr/textAppearanceLarge"

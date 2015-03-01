@@ -9,6 +9,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Graphics;
+using System.Drawing;
 
 namespace EveryRecords
 {
@@ -38,6 +40,19 @@ namespace EveryRecords
                 {
                     backAction();
                 };
+            }
+        }
+
+        public static Android.Graphics.Color StringToColor(this Activity activity, string colorString)
+        {
+            try
+            {
+                var color = (System.Drawing.Color)new ColorConverter().ConvertFromString(colorString);
+                return new Android.Graphics.Color(color.R, color.G, color.B);
+            }
+            catch
+            {
+                return Android.Graphics.Color.Black;
             }
         }
     }
