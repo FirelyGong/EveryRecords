@@ -29,6 +29,7 @@ namespace EveryRecords.DataFactories
 
         private RecordingDataFactory(int year, int month)
         {
+            DataLoaded = false;
             _recordingData = new RecordingData();
             DataPath = ConstructDataPath(year, month);
         }
@@ -63,6 +64,7 @@ namespace EveryRecords.DataFactories
             {
                 SaveData(_recordingData);
                 DataChanged = false;
+                DataLoaded = true;
             }
         }
 
@@ -73,9 +75,8 @@ namespace EveryRecords.DataFactories
 
         public string AddRecord(IList<string> paths, string comments, double amount, bool includeInTotal)
         {
-            DataChanged = true;
-
             MakeSureRecordInCurrentMonth();
+            DataChanged = true;
             IList<string> categories = new List<string>();
             IList<string> lst = new List<string>();
             foreach (var path in paths)
@@ -113,7 +114,6 @@ namespace EveryRecords.DataFactories
 
         public bool DeleteRecord(string recordString)
         {
-            DataChanged = true;
             var record = _recordingData.Records.FirstOrDefault(r => r.ToString() == recordString);
             if (record == null)
             {
@@ -136,6 +136,9 @@ namespace EveryRecords.DataFactories
                         }
                     }
                 }
+
+                DataChanged = true;
+                DataLoaded = false;
                 UpdateHistoricData();
                 return _recordingData.Records.Remove(record);
             }
@@ -193,9 +196,12 @@ namespace EveryRecords.DataFactories
             var filePath = ConstructDataPath(DateTime.Now.Year, DateTime.Now.Month);
             if (filePath != DataPath)
             {
+                DataChanged = true;
                 SaveData();
                 UpdateHistoricData();
+
                 DataPath = filePath;
+                DataLoaded = false;
                 LoadData();
             }
         }

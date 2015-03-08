@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <declare-styleable name="ZhuXingTu">
-  </declare-styleable>
+  <declare-styleable name="ChartPane">
+     <attr name="TextColor" format="color" />
+     <attr name="ChartColor" format="color" />
+  </declare-styleable>  
 </resources>

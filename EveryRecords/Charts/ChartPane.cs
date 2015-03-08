@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Android.Content.Res;
 
 namespace EveryRecords.Charts
 {
@@ -36,6 +37,7 @@ namespace EveryRecords.Charts
         public ChartPane(Context context, IAttributeSet attrs, int defStyle)
             : base(context, attrs, defStyle)
         {
+ 
         }
 
         public double[] Data

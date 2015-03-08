@@ -35,6 +35,8 @@ namespace EveryRecords
             this.InitialActivity(null);
             
             _sumText = FindViewById<TextView>(Resource.Id.SummaryText);
+            var yearMonthText = FindViewById<TextView>(Resource.Id.YearMonthText);
+            yearMonthText.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", DateTime.Now.Year, DateTime.Now.Month);
             _recording = FindViewById<Button>(Resource.Id.RecordButton);
             _recording.Click += delegate
             {
@@ -89,7 +91,6 @@ namespace EveryRecords
         protected override void OnStart()
         {
             base.OnStart();
-            ShowIntroduction();
             UpdateUiInfo();
         }
 
@@ -123,11 +124,15 @@ namespace EveryRecords
             }
         }
 
-        private void UpdateUiInfo()
+        private async void UpdateUiInfo()
         {
+            var bln = await LoadDataAsync();
+
             UpdatePercentage();
             UpdateRecents();
             _sumText.Text = "当月记录金额:" + RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
+
+            ShowIntroduction();
         }
 
         private void UpdatePercentage()
@@ -148,27 +153,47 @@ namespace EveryRecords
 
         private void UpdateRecents()
         {
-            var historic = HistoricDataFactory.Instance.GetHistoryList();
+            var historic = HistoricDataFactory.Instance.GetHistoryList(DateTime.Now.Year, DateTime.Now.Month);
             historic.Remove(HistoricDataFactory.NoHistoryList);
-            var amounts = historic.Select(h => double.Parse(h.Split(':')[1])).ToList();
-            var labels = historic.Select(h => h.Split(':')[0]).ToList();
             var zhuxing = FindViewById<ChartPane>(Resource.Id.ZhuXingTu);
-            //double maxAmount = 0;
-            if (amounts.Count > 0)
+
+            var count = historic.Count;
+            if (count > 6)
             {
-                //maxAmount = amounts.Max();
+                for (int i = 6; i < count; i++)
+                {
+                    historic.RemoveAt(0);
+                }
             }
             else
             {
-                return;
+                for (int i = count; i < 6; i++)
+                {
+                    historic.Add("0:0");
+                }
             }
 
-            for (int i = amounts.Count; i < 6; i++)
-            {
-                amounts.Add(0);
-            }
+            var amounts = historic.Select(h => double.Parse(h.Split(':')[1])).ToList();
+            var labels = historic.Select(h => h.Split(':')[0]).ToList();
 
             zhuxing.InitializeChart(ChartType.Histogram, amounts.ToArray(), labels.ToArray(), Color.LightGray);
+        }
+
+        private Task<bool> LoadDataAsync()
+        {
+            return Task.Run(() =>
+            {
+                LoadData();
+                return true;
+            });
+        }
+
+        private void LoadData()
+        {
+            CategoryDataFactory.Instance.LoadData();
+            RecordingDataFactory.Instance.LoadData();
+            SettingDataFactory.Instance.LoadData();
+            HistoricDataFactory.Instance.LoadData();
         }
     }
 }

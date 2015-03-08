@@ -10,7 +10,7 @@ namespace EveryRecords.DataFactories
     public class SettingDataFactory:DataFactory
     {
         public static readonly SettingDataFactory Instance = new SettingDataFactory();
-
+        
         private SettingData _settingData;
 
         private SettingDataFactory()

@@ -46,8 +46,7 @@
                     android:gravity="center"
                     android:background="#4682B4"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2px" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -105,26 +104,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/ExpensesLimitText" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2">
-            <TextView
-                android:text="@string/ReportPath"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/textView2"
-                android:textColor="@android:color/black"
-                android:gravity="center_vertical" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ReportPathText" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

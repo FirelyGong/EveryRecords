@@ -19,13 +19,15 @@ namespace EveryRecords
     public class ReportingActivity : Activity
     {
         public const string RecordsYearMonthTag = "RecordsYearMonth";
-
         private const string NoRecord = "没有记录！";
         private TextView _subTitle;
+        private TextView _title;
         private ListView _reportingList;
-        private bool _displayingDetail;
         private RecordingDataFactory _reocrdingData;
         private ChartPane _chartPane;
+        int _year;
+        int _month;
+        Button _share;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -38,30 +40,28 @@ namespace EveryRecords
             this.InitialActivity(() => OnBackPressed());
 
             var yearMonth = Intent.GetStringExtra(RecordsYearMonthTag);
-                int year;
-                int month;
             if (string.IsNullOrEmpty(yearMonth))
             {
-                year = DateTime.Now.Year;
-                month = DateTime.Now.Month;
+                _year = DateTime.Now.Year;
+                _month = DateTime.Now.Month;
                 _reocrdingData = RecordingDataFactory.Instance;
             }
             else
             {
                 string[] arr=yearMonth.Split('-');
-                int.TryParse(arr[0], out year);
-                int.TryParse(arr[1], out month);
-                _reocrdingData = RecordingDataFactory.CreateHistoryData(year, month);
+                int.TryParse(arr[0], out _year);
+                int.TryParse(arr[1], out _month);
+                _reocrdingData = RecordingDataFactory.CreateHistoryData(_year, _month);
                 _reocrdingData.LoadData();
             }
-            var title = FindViewById<TextView>(Resource.Id.TitleText);
-            title.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
-
+            _title = FindViewById<TextView>(Resource.Id.TitleText);
+            _title.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", _year, _month);
             _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
+            _share = FindViewById<Button>(Resource.Id.ShareButton);
+            _share.Click += share_Click;
             _chartPane = FindViewById<ChartPane>(Resource.Id.PieChart);
             _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
-            _reportingList.ItemLongClick += reportingList_ItemLongClick;
             DisplayCategory("");
         }
 
@@ -70,6 +70,7 @@ namespace EveryRecords
             if (string.IsNullOrEmpty(_subTitle.Text))
             {
                 base.OnBackPressed();
+                Finish();
             }
             else
             {
@@ -83,21 +84,11 @@ namespace EveryRecords
             base.OnActivityResult(requestCode, resultCode, data);
             if (requestCode == 0)
             {
+                var item = BackToLastLevel();
                 if (resultCode == Result.Ok)
                 {
-                    var item = data.GetStringExtra(ConfirmActivity.DataTag);
-                    var bln = _reocrdingData.DeleteRecord(item);
-                    if (bln)
-                    {
-                        _reocrdingData.SaveData();
-                        var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
-                        list.Remove(item);
-                        _reportingList.Adapter = new SimpleListAdapter(this, list);
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, "删除失败", ToastLength.Long).Show();
-                    }
+                    _reocrdingData.LoadData();
+                    DisplayCategory(item);
                 }
             }
         }
@@ -105,7 +96,7 @@ namespace EveryRecords
         private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
-            if (item == NoRecord || _displayingDetail)
+            if (item == NoRecord)
             {
                 return;
             }
@@ -114,29 +105,7 @@ namespace EveryRecords
             _subTitle.Text = _subTitle.Text + "/" + current;
             DisplayCategory(current);
         }
-
-        private void reportingList_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
-        {
-            var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
-            if (item == NoRecord || (!_displayingDetail))
-            {
-                return;
-            }
-
-            if (SettingDataFactory.Instance.AllowDeleteRecord)
-            {
-                var intent = new Intent(this, typeof(ConfirmActivity));
-                intent.PutExtra(ConfirmActivity.MessageTag, string.Format(CultureInfo.InvariantCulture, "确定要删除[{0}]吗？", item));
-                intent.PutExtra(ConfirmActivity.DataTag, item);
-                intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
-                StartActivityForResult(intent, 0);
-            }
-            else
-            {
-                Toast.MakeText(this, "当前设置不允许删除", ToastLength.Long).Show();
-            }
-        }
-
+        
         private string BackToLastLevel()
         {
             string[] arr = _subTitle.Text.Split('/');
@@ -154,21 +123,16 @@ namespace EveryRecords
             string[] datas = new string[] { };
             if (string.IsNullOrEmpty(parent))
             {
-                _displayingDetail = false;
                 var item = FormatListItem(CategoryDataFactory.RootCategory, _reocrdingData.GetCategorySummary(CategoryDataFactory.RootCategory));
-                datas=new string[]{item};
+                datas = new string[] { item };
+                _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
+                SetShareButtonVisible();
             }
             else
             {
                 var subs = CategoryDataFactory.Instance.GetSubCategories(parent);
-                if (subs.Count == 0)
+                if (subs.Count > 0)
                 {
-                    _displayingDetail = true;
-                    datas = _reocrdingData.GetRecords(parent).ToArray();
-                }
-                else
-                {
-                    _displayingDetail = false;
                     var items = _reocrdingData.GetSubCategoriesSummary(parent);
                     var list = new List<string>();
                     foreach (var item in items)
@@ -183,32 +147,67 @@ namespace EveryRecords
                         }
                     }
 
-                    datas = list.ToArray();
-                }
-            }
+                    datas = list.ToArray(); 
+                    _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
+                    if (datas[0].Contains(":"))
+                    {
+                        var data = datas.Select(d => double.Parse(d.Split(':')[1])).ToArray();
+                        var label = datas.Select(d => d.Split(':')[0]).ToArray();
+                        _chartPane.InitializeChart(ChartType.Pie, data, label);
+                    }
+                    else
+                    {
+                        _chartPane.Clear();
+                    }
 
-            if(datas.Length==0)
-            {
-                datas = new string[] { NoRecord };
-            }
-            _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
-            if (!_displayingDetail && datas.Length > 1 && datas[0].Contains(":"))
-            {
-                var data=datas.Select(d=>double.Parse(d.Split(':')[1])).ToArray();
-                var label=datas.Select(d=>d.Split(':')[0]).ToArray();
-                _chartPane.InitializeChart(ChartType.Pie, data, label);
-            }
-            else
-            {
-                _chartPane.Clear();
-            }
+                    SetShareButtonVisible();
+                }
+                else
+                {
+                    var intent = new Intent(this, typeof(DetailListActivity));
+                    intent.PutExtra(DetailListActivity.RecordsYearMonthTag, string.Format(CultureInfo.InvariantCulture,"{0}-{1}", _year, _month));
+                    intent.PutExtra(DetailListActivity.RecordsPathTag, _subTitle.Text);
+                    intent.PutExtra(DetailListActivity.RecordsCategoryTag, parent);
+                    StartActivityForResult(intent, 0);
+                }
+            }                       
         }
 
         private string FormatListItem(string category, double amount)
         {
             var item = string.Format(CultureInfo.InvariantCulture, "{0}:{1}", category, amount);
 
-        return item;
+            return item;
+        }
+
+        private void share_Click(object sender, EventArgs e)
+        {
+            var list = ((SimpleListAdapter)_reportingList.Adapter).Datasource;
+            string[] arr = _subTitle.Text.Split('/');
+            if (arr.Length <= 1)
+            {
+                return;
+            }
+
+            var intent = new Intent(this, typeof(CategoryGraphActivity));
+            intent.PutExtra(CategoryGraphActivity.RecordsYearMonthTag, _title.Text);
+            var category = arr[arr.Length - 1];
+            intent.PutExtra(CategoryGraphActivity.RecordsCategoryTag, category);
+            intent.PutExtra(CategoryGraphActivity.RecordsDetailTag, string.Join(";", list));
+            StartActivity(intent);
+        }
+
+        private void SetShareButtonVisible()
+        {
+            var list = ((SimpleListAdapter)_reportingList.Adapter).Datasource;
+            if (list.Count > 1 && list[0].Contains(":"))
+            {
+                _share.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                _share.Visibility = ViewStates.Invisible;
+            }
         }
     }
 }

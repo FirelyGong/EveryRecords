@@ -35,5 +35,11 @@ namespace EveryRecords.Persistence
             get;
             set;
         }
+
+        public void Clear()
+        {
+            Records.Clear();
+            Summaries.Clear();
+        }
     }
 }

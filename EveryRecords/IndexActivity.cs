@@ -28,7 +28,7 @@ namespace EveryRecords
         protected override void OnStart()
         {
             base.OnStart();
-            PrepareMainActivity();
+            ShowMainActivity();
         }
         
         protected override void OnPause()
@@ -38,28 +38,11 @@ namespace EveryRecords
             Finish();
         }
 
-        private async void PrepareMainActivity()
-        {
-            var bln = await LoadDataAsync();
-
-            StartActivity(typeof(MainActivity));
-        }
-
-        private Task<bool> LoadDataAsync()
-        {
-            return Task.Run(() =>
+        private async void ShowMainActivity(){
+            await Task.Run(() =>
             {
-                LoadData();
-                return true;
+                StartActivity(typeof(MainActivity));
             });
-        }
-
-        private void LoadData()
-        {
-            CategoryDataFactory.Instance.LoadData();
-            RecordingDataFactory.Instance.LoadData();
-            SettingDataFactory.Instance.LoadData();
-            HistoricDataFactory.Instance.LoadData();
         }
     }
 }

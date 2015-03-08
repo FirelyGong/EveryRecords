@@ -34,6 +34,14 @@ namespace EveryRecords
             _deleteEndaled = enableDel;
         }
 
+        public IList<string> Datasource
+        {
+            get
+            {
+                return new List<string>(_items);
+            }
+        }
+
         public override long GetItemId(int position)
         {
             return position;

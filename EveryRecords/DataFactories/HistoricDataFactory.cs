@@ -1,6 +1,7 @@
 ﻿using EveryRecords.Persistence;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace EveryRecords.DataFactories
         public const string NoHistoryList = "没有历史记录";
 
         public static readonly HistoricDataFactory Instance = new HistoricDataFactory();
-
+        
         private HistoricData _historicData;
 
         private HistoricDataFactory()
@@ -54,15 +55,21 @@ namespace EveryRecords.DataFactories
             }
         }
 
-        public IList<string> GetHistoryList()
+        public IList<string> GetHistoryList(int fromYear, int fromMonth)
         {
-            var result = _historicData.HistoricItems.Select(h => h.ToString()).ToList();
+            var yearMonth = string.Format(CultureInfo.InvariantCulture, "{0}-{1}", fromYear.ToString("0000"), fromMonth.ToString("00"));
+            var result = _historicData.HistoricItems.Where(h => string.Compare(h.HistoricId, yearMonth) <= 0).Select(h => h.ToString()).ToList();
             if (result.Count == 0)
             {
                 result.Add(NoHistoryList);
             }
 
-            return result;
+            return result.OrderBy(h => h).ToList();
+        }
+
+        public IList<string> GetHistoryList()
+        {
+            return GetHistoryList(int.MaxValue, 13);
         }
 
         public void AddHistoric(string historicId, double amount)

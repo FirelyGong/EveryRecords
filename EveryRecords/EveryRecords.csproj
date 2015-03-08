@@ -65,6 +65,7 @@
     <Compile Include="AboutActivity.cs" />
     <Compile Include="ActivityExtensionMethods.cs" />
     <Compile Include="CategoryActivity.cs" />
+    <Compile Include="CategoryGraphActivity.cs" />
     <Compile Include="Charts\ChartPane.cs" />
     <Compile Include="Charts\ChartType.cs" />
     <Compile Include="Charts\IChart.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="ConfirmActivity.cs" />
     <Compile Include="DataFactories\DataFactory.cs" />
     <Compile Include="DataFactories\HistoricDataFactory.cs" />
+    <Compile Include="DetailListActivity.cs" />
     <Compile Include="HistoryActivity.cs" />
     <Compile Include="IndexActivity.cs" />
     <Compile Include="IntroductionActivity.cs" />
@@ -137,6 +139,12 @@
     <AndroidResource Include="Resources\layout\IndexLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\DetailListLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CategoryGraphLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainLayout.axml" />
@@ -179,6 +187,8 @@
     <AndroidResource Include="Resources\drawable\record.ico" />
     <AndroidResource Include="Resources\drawable\hnlApp.png" />
     <AndroidResource Include="Resources\drawable\back.ico" />
+    <AndroidResource Include="Resources\drawable\share.ico" />
+    <AndroidResource Include="Resources\drawable\toshare.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

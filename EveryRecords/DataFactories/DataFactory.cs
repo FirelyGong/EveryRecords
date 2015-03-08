@@ -9,10 +9,8 @@ namespace EveryRecords.DataFactories
 {
     public class DataFactory
     {
-        protected bool DataLoaded;
-
         protected bool DataChanged;
-
+        protected bool DataLoaded;
         protected string BasePath;
 
         protected virtual string DataPath { get; set; }
@@ -20,7 +18,12 @@ namespace EveryRecords.DataFactories
         public DataFactory()
         {
             DataLoaded = false;
-            BasePath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "Android/data/com.ziwish.EveryRecord");
+            BasePath = GetDataFolder();
+        }
+
+        public static string GetDataFolder()
+        {
+            return Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "Android/data/com.ziwish.EveryRecord");
         }
 
         protected T LoadData<T>()

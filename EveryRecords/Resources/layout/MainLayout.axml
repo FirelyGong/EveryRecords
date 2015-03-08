@@ -56,7 +56,8 @@
                     android:id="@+id/VerButton"
                     android:background="@drawable/TitleButton"
                     android:layout_margin="10px"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
                 <Button
                     android:text="@string/Setting"
                     android:layout_width="wrap_content"
@@ -64,7 +65,8 @@
                     android:id="@+id/SettingButton"
                     android:background="@drawable/TitleButton"
                     android:layout_margin="10px"
-                    android:textColor="@android:color/background_light" />
+                    android:textColor="@android:color/background_light"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
                 <Button
                     android:text="@string/Exit"
                     android:layout_width="wrap_content"
@@ -72,7 +74,8 @@
                     android:id="@+id/ExitButton"
                     android:background="@drawable/TitleButton"
                     android:textColor="@android:color/background_light"
-                    android:layout_margin="10px" />
+                    android:layout_margin="10px"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -88,10 +91,19 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:id="@+id/YearMonthText"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:textColor="@android:color/background_light" />
+                <TextView
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:id="@+id/SummaryText"
                     android:gravity="center"
                     android:textColor="@android:color/background_light"
-                    android:layout_weight="0.8" />
+                    android:layout_weight="0.4" />
                 <EveryRecords.Charts.ChartPane
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
