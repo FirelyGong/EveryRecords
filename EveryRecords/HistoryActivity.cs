@@ -37,7 +37,7 @@ namespace EveryRecords
         {
             base.OnResume();
 
-            _historyList.Adapter = new SimpleListAdapter(this, HistoricDataFactory.Instance.GetHistoryList(), true);
+            _historyList.Adapter = new GridListAdapter(this, HistoricDataFactory.Instance.GetHistoryList());
         }
 
         protected override void OnPause()
@@ -58,9 +58,9 @@ namespace EveryRecords
                     var bln = false;// RecordingDataFactory.Instance.DeleteHistory(item);
                     if (bln)
                     {
-                        var list = ((SimpleListAdapter)_historyList.Adapter).GetSource();
+                        var list = ((StringListAdapter)_historyList.Adapter).GetSource();
                         list.Remove(item);
-                        _historyList.Adapter = new SimpleListAdapter(this, list);
+                        _historyList.Adapter = new GridListAdapter(this, list);
                     }
                     else
                     {

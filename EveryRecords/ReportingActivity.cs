@@ -126,7 +126,7 @@ namespace EveryRecords
             {
                 var item = FormatListItem(CategoryDataFactory.RootCategory, _reocrdingData.GetCategorySummary(CategoryDataFactory.RootCategory));
                 datas = new string[] { item };
-                _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList(), true);
+                _reportingList.Adapter = new GridListAdapter(this, datas.ToList());
                 SetShareButtonVisible();
             }
             else
@@ -149,7 +149,7 @@ namespace EveryRecords
                     }
 
                     datas = list.ToArray();
-                    _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList(), true);
+                    _reportingList.Adapter = new GridListAdapter(this, datas.ToList());
                     if (datas[0].Contains(":"))
                     {
                         var data = datas.Select(d => double.Parse(d.Split(':')[1])).ToArray();
@@ -183,7 +183,7 @@ namespace EveryRecords
 
         private void share_Click(object sender, EventArgs e)
         {
-            var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
+            var list = ((StringListAdapter)_reportingList.Adapter).GetSource();
             string[] arr = _subTitle.Text.Split('/');
             if (arr.Length <= 1)
             {
@@ -200,7 +200,7 @@ namespace EveryRecords
 
         private void SetShareButtonVisible()
         {
-            var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
+            var list = ((StringListAdapter)_reportingList.Adapter).GetSource();
             if (list.Count > 1 && list[0].Contains(":"))
             {
                 _share.Visibility = ViewStates.Visible;

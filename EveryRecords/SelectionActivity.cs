@@ -35,7 +35,7 @@ namespace EveryRecords
             title.Text = "«Î—°‘Ò∑÷¿‡";
 
             var list = FindViewById<GridView>(Resource.Id.SelectionList);
-            list.Adapter = new SimpleListAdapter(this, datas.ToList(), true);
+            list.Adapter = new GridListAdapter(this, datas.ToList());
             list.ItemClick += list_ItemClick;
         }
 

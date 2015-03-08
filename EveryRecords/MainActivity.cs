@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EveryRecords.Charts;
 using Android.Graphics;
+using System.IO;
 namespace EveryRecords
 {
     [Activity(Label = "花哪了", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
@@ -29,63 +30,70 @@ namespace EveryRecords
         {
             base.OnCreate(bundle);
 
-            // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.MainLayout);
-
-            this.InitialActivity(null);
-            
-            _sumText = FindViewById<TextView>(Resource.Id.SummaryText);
-            var yearMonthText = FindViewById<TextView>(Resource.Id.YearMonthText);
-            yearMonthText.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", DateTime.Now.Year, DateTime.Now.Month);
-            _recording = FindViewById<Button>(Resource.Id.RecordButton);
-            _recording.Click += delegate
+            try
             {
-                StartActivity(typeof(StartRecordingActivity));
-            };
+                // Set our view from the "main" layout resource
+                SetContentView(Resource.Layout.MainLayout);
 
-            _reporting = FindViewById<Button>(Resource.Id.ViewReportButton);
-            _reporting.Click += delegate
+                this.InitialActivity(null);
+
+                _sumText = FindViewById<TextView>(Resource.Id.SummaryText);
+                var yearMonthText = FindViewById<TextView>(Resource.Id.YearMonthText);
+                yearMonthText.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", DateTime.Now.Year, DateTime.Now.Month);
+                _recording = FindViewById<Button>(Resource.Id.RecordButton);
+                _recording.Click += delegate
+                {
+                    StartActivity(typeof(StartRecordingActivity));
+                };
+
+                _reporting = FindViewById<Button>(Resource.Id.ViewReportButton);
+                _reporting.Click += delegate
+                {
+                    var intent = new Intent(this, typeof(ReportingActivity));
+                    var now = DateTime.Now;
+                    intent.PutExtra(ReportingActivity.RecordsYearMonthTag, string.Format(CultureInfo.InvariantCulture, "{0}-{1}", now.Year, now.Month));
+
+                    StartActivity(intent);
+                };
+
+                _setting = FindViewById<Button>(Resource.Id.SettingButton);
+                _setting.Click += delegate
+                {
+                    StartActivity(typeof(SettingActivity));
+                };
+
+                var cateogry = FindViewById<Button>(Resource.Id.CategoryButton);
+                cateogry.Click += delegate
+                {
+                    StartActivity(typeof(CategoryActivity));
+                };
+
+                _exit = FindViewById<Button>(Resource.Id.ExitButton);
+                _exit.Click += delegate
+                {
+                    Finish();
+                };
+
+                _history = FindViewById<Button>(Resource.Id.HistoryButton);
+                _history.Click += delegate
+                {
+                    StartActivity(typeof(HistoryActivity));
+                };
+
+                var ver = FindViewById<Button>(Resource.Id.VerButton);
+                _verString = GetType().Assembly.GetName().Version.ToString();
+                ver.Text = _verString;
+                ver.Click += delegate
+                {
+                    StartActivity(typeof(AboutActivity));
+                };
+
+                _sumText.Text = "数据加载中..";
+            }
+            catch (Exception ex)
             {
-                var intent = new Intent(this, typeof(ReportingActivity));
-                var now = DateTime.Now;
-                intent.PutExtra(ReportingActivity.RecordsYearMonthTag, string.Format(CultureInfo.InvariantCulture, "{0}-{1}", now.Year, now.Month));
-
-                StartActivity(intent);
-            };
-
-            _setting = FindViewById<Button>(Resource.Id.SettingButton);
-            _setting.Click += delegate
-            {
-                StartActivity(typeof(SettingActivity));
-            };
-
-            var cateogry = FindViewById<Button>(Resource.Id.CategoryButton);
-            cateogry.Click += delegate
-            {
-                StartActivity(typeof(CategoryActivity));
-            };
-
-            _exit = FindViewById<Button>(Resource.Id.ExitButton);
-            _exit.Click += delegate
-            {
-                Finish();
-            };
-
-            _history = FindViewById<Button>(Resource.Id.HistoryButton);
-            _history.Click += delegate
-            {
-                StartActivity(typeof(HistoryActivity));
-            };
-
-            var ver = FindViewById<Button>(Resource.Id.VerButton);
-            _verString = GetType().Assembly.GetName().Version.ToString();
-            ver.Text = _verString;
-            ver.Click += delegate
-            {
-                StartActivity(typeof(AboutActivity));
-            };
-
-            _sumText.Text = "数据加载中..";
+                LogException(ex);
+            }
         }
 
         protected override void OnStart()
@@ -194,6 +202,35 @@ namespace EveryRecords
             RecordingDataFactory.Instance.LoadData();
             SettingDataFactory.Instance.LoadData();
             HistoricDataFactory.Instance.LoadData();
+        }
+
+        private void LogException(Exception ex)
+        {
+            string logFile = "exception.txt";
+            string folder=System.IO.Path.Combine(DataFactory.GetDataFolder(), "log");
+            string path = System.IO.Path.Combine(folder, logFile);
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            var fileMode = FileMode.Append;
+            if (!File.Exists(path))
+            {
+                fileMode = FileMode.Create;
+            }
+
+            using (var fs = new FileStream(path, fileMode, FileAccess.Write))
+            {
+                using (var ms = new BinaryWriter(fs))
+                {
+                    ms.Write(System.Environment.NewLine);
+                    ms.Write("=====" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "======");
+                    ms.Write(System.Environment.NewLine);
+                    ms.Write(ex.Message);
+                    ms.Write(System.Environment.NewLine);
+                }
+            }
         }
     }
 }

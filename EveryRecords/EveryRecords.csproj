@@ -81,6 +81,8 @@
     <Compile Include="IndexActivity.cs" />
     <Compile Include="IntroductionActivity.cs" />
     <Compile Include="ListAdapters\ColumnListAdapter.cs" />
+    <Compile Include="ListAdapters\GridListAdapter.cs" />
+    <Compile Include="ListAdapters\StringListAdapter.cs" />
     <Compile Include="Persistence\CategoryData.cs" />
     <Compile Include="Persistence\CategoryItem.cs" />
     <Compile Include="Persistence\HistoricData.cs" />
