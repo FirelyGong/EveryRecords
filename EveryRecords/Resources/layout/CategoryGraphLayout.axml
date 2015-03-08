@@ -47,7 +47,7 @@
                     android:background="#4682B4"
                     android:weightSum="1">
                     <TextView
-                        android:text="花哪儿图表"
+                        android:text="花哪了图表"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/TitleText"
                         android:textColor="@android:color/background_light"

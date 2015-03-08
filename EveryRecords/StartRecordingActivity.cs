@@ -32,7 +32,7 @@ namespace EveryRecords
             _records = new List<string>();
 
             _recordList = FindViewById<ListView>(Resource.Id.RecordList);
-            _recordList.Adapter = new SimpleListAdapter(this, new List<string>(new []{"请添加记录"}));
+            _recordList.Adapter = new ColumnListAdapter(this, new List<string>(new []{"请添加记录"}));
             _recordList.ItemLongClick += recordList_ItemLongClick;
             var add = FindViewById<Button>(Resource.Id.AddButton);
             add.Click += add_Click;
@@ -49,7 +49,7 @@ namespace EveryRecords
                 {
                     var recording = data.GetStringExtra(RecordingActivity.OutputRecordTag);
                     _records.Add(recording);
-                    _recordList.Adapter = new SimpleListAdapter(this, _records);
+                    _recordList.Adapter = new ColumnListAdapter(this, _records);
                 }
             }
 
@@ -62,7 +62,7 @@ namespace EveryRecords
                     if (bln)
                     {
                         _records.Remove(item);
-                        _recordList.Adapter = new SimpleListAdapter(this, _records);
+                        _recordList.Adapter = new ColumnListAdapter(this, _records);
                     }
                     else
                     {
