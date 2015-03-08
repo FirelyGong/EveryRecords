@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using EveryRecords.DataFactories;
+using EveryRecords.ListAdapters;
 
 namespace EveryRecords
 {

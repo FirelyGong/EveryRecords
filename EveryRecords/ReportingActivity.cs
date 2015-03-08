@@ -12,6 +12,7 @@ using Android.Widget;
 using System.Globalization;
 using EveryRecords.DataFactories;
 using EveryRecords.Charts;
+using EveryRecords.ListAdapters;
 
 namespace EveryRecords
 {
@@ -22,7 +23,7 @@ namespace EveryRecords
         private const string NoRecord = "Ã»ÓÐ¼ÇÂ¼£¡";
         private TextView _subTitle;
         private TextView _title;
-        private ListView _reportingList;
+        private GridView _reportingList;
         private RecordingDataFactory _reocrdingData;
         private ChartPane _chartPane;
         int _year;
@@ -60,7 +61,7 @@ namespace EveryRecords
             _share = FindViewById<Button>(Resource.Id.ShareButton);
             _share.Click += share_Click;
             _chartPane = FindViewById<ChartPane>(Resource.Id.PieChart);
-            _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
+            _reportingList = FindViewById<GridView>(Resource.Id.ReportsList);
             _reportingList.ItemClick += list_ItemClick;
             DisplayCategory("");
         }
@@ -95,7 +96,7 @@ namespace EveryRecords
 
         private void list_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
+            var item = ((GridView)sender).Adapter.GetItem(e.Position).ToString();
             if (item == NoRecord)
             {
                 return;
@@ -125,7 +126,7 @@ namespace EveryRecords
             {
                 var item = FormatListItem(CategoryDataFactory.RootCategory, _reocrdingData.GetCategorySummary(CategoryDataFactory.RootCategory));
                 datas = new string[] { item };
-                _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
+                _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList(), true);
                 SetShareButtonVisible();
             }
             else
@@ -147,8 +148,8 @@ namespace EveryRecords
                         }
                     }
 
-                    datas = list.ToArray(); 
-                    _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
+                    datas = list.ToArray();
+                    _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList(), true);
                     if (datas[0].Contains(":"))
                     {
                         var data = datas.Select(d => double.Parse(d.Split(':')[1])).ToArray();
@@ -182,7 +183,7 @@ namespace EveryRecords
 
         private void share_Click(object sender, EventArgs e)
         {
-            var list = ((SimpleListAdapter)_reportingList.Adapter).Datasource;
+            var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
             string[] arr = _subTitle.Text.Split('/');
             if (arr.Length <= 1)
             {
@@ -199,7 +200,7 @@ namespace EveryRecords
 
         private void SetShareButtonVisible()
         {
-            var list = ((SimpleListAdapter)_reportingList.Adapter).Datasource;
+            var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
             if (list.Count > 1 && list[0].Contains(":"))
             {
                 _share.Visibility = ViewStates.Visible;

@@ -80,6 +80,7 @@
     <Compile Include="HistoryActivity.cs" />
     <Compile Include="IndexActivity.cs" />
     <Compile Include="IntroductionActivity.cs" />
+    <Compile Include="ListAdapters\ColumnListAdapter.cs" />
     <Compile Include="Persistence\CategoryData.cs" />
     <Compile Include="Persistence\CategoryItem.cs" />
     <Compile Include="Persistence\HistoricData.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Persistence\SettingData.cs" />
     <Compile Include="Persistence\SummaryItem.cs" />
     <Compile Include="DataFactories\SettingDataFactory.cs" />
-    <Compile Include="SimpleListAdapter.cs" />
+    <Compile Include="ListAdapters\SimpleListAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="RecordingActivity.cs" />
     <Compile Include="DataFactories\RecordingDataFactory.cs" />
@@ -143,6 +144,12 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\CategoryGraphLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\GridviewItemLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ListviewColumnItemLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

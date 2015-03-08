@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using System.Globalization;
 using EveryRecords.DataFactories;
+using EveryRecords.ListAdapters;
 
 namespace EveryRecords
 {

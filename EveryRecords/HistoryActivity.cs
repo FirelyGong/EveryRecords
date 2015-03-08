@@ -11,13 +11,14 @@ using Android.Views;
 using Android.Widget;
 using System.Globalization;
 using EveryRecords.DataFactories;
+using EveryRecords.ListAdapters;
 
 namespace EveryRecords
 {
     [Activity(Label = "HistoryActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class HistoryActivity : Activity
     {
-        private ListView _historyList;
+        private GridView _historyList;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -27,7 +28,7 @@ namespace EveryRecords
             SetContentView(Resource.Layout.HistoryLayout);
 
             this.InitialActivity(() => Finish());
-            _historyList = FindViewById<ListView>(Resource.Id.HistoryList);
+            _historyList = FindViewById<GridView>(Resource.Id.HistoryList);
             _historyList.ItemClick += historyList_ItemClick;
             _historyList.ItemLongClick += historyList_ItemLongClick;
         }
@@ -36,7 +37,7 @@ namespace EveryRecords
         {
             base.OnResume();
 
-            _historyList.Adapter = new SimpleListAdapter(this, HistoricDataFactory.Instance.GetHistoryList());
+            _historyList.Adapter = new SimpleListAdapter(this, HistoricDataFactory.Instance.GetHistoryList(), true);
         }
 
         protected override void OnPause()
@@ -85,7 +86,7 @@ namespace EveryRecords
 
         private void historyList_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
         {
-            var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
+            var item = ((GridView)sender).Adapter.GetItem(e.Position).ToString();
             if (item == HistoricDataFactory.NoHistoryList)
             {
                 Toast.MakeText(this, "没有记录可以删除", ToastLength.Long).Show();

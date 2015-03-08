@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using EveryRecords.DataFactories;
+using EveryRecords.ListAdapters;
 
 namespace EveryRecords
 {
@@ -33,8 +34,8 @@ namespace EveryRecords
             var title = FindViewById<TextView>(Resource.Id.TitleText);
             title.Text = "«Î—°‘Ò∑÷¿‡";
 
-            var list = FindViewById<ListView>(Resource.Id.SelectionList);
-            list.Adapter = new SimpleListAdapter(this, datas.ToList());
+            var list = FindViewById<GridView>(Resource.Id.SelectionList);
+            list.Adapter = new SimpleListAdapter(this, datas.ToList(), true);
             list.ItemClick += list_ItemClick;
         }
 
@@ -42,7 +43,7 @@ namespace EveryRecords
         {
             var lastActivity = Intent.GetStringExtra(ReturnToTag);
             var intent = new Intent(this, Type.GetType(lastActivity, true));
-            intent.PutExtra(SelectionTag, ((ListView)sender).Adapter.GetItem(e.Position).ToString());
+            intent.PutExtra(SelectionTag, ((GridView)sender).Adapter.GetItem(e.Position).ToString());
             SetResult(Result.Ok, intent);
             Finish();
         }

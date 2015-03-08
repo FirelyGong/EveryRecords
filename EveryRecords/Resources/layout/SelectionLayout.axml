@@ -15,7 +15,7 @@
         android:background="#4682B4"
         android:layout_marginBottom="20px"
         android:padding="10px" />
-    <ListView
+    <GridView
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
@@ -23,5 +23,8 @@
         android:id="@+id/SelectionList"
         android:layout_margin="10px"
         android:dividerHeight="0dp"
-        android:divider="#00000000" />
+        android:divider="#00000000"
+        android:columnWidth="70dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
 </LinearLayout>

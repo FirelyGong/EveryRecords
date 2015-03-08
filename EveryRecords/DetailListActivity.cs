@@ -3,6 +3,7 @@ using Android.Content;
 using Android.OS;
 using Android.Widget;
 using EveryRecords.DataFactories;
+using EveryRecords.ListAdapters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -144,7 +145,7 @@ namespace EveryRecords
             {
                 datas = new string[] { NoRecord };
             }
-            _reportingList.Adapter = new SimpleListAdapter(this, datas.ToList());
+            _reportingList.Adapter = new ColumnListAdapter(this, datas.ToList());
         }
 
         private string FormatListItem(string category, double amount)

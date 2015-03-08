@@ -3,12 +3,10 @@ using Android.Views;
 using Android.Widget;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace EveryRecords
+namespace EveryRecords.ListAdapters
 {
-    public class SimpleListAdapter : BaseAdapter<string>
+    public class ColumnListAdapter : BaseAdapter<string>
     {
         /// <summary>
         /// 所有UserInof 的数据
@@ -16,22 +14,14 @@ namespace EveryRecords
         private IList<string> _items;
 
         private Activity _context;
-
-        private bool _deleteEndaled;
-
+        
         public event Action<int, string> ItemDeleted = delegate { };
 
-        public SimpleListAdapter(Activity context, IList<string> items)
-            : this(context, items, false)
-        {
-        }
-
-        public SimpleListAdapter(Activity context, IList<string> items, bool enableDel)
+        public ColumnListAdapter(Activity context, IList<string> items)
             :base()
         {
             _context = context;
             _items = items;
-            _deleteEndaled = enableDel;
         }
 
         public IList<string> Datasource
@@ -75,22 +65,31 @@ namespace EveryRecords
             var view = convertView;
             if (view == null)
             {
-                //使用自订的UserListItemLayout
-                view = _context.LayoutInflater.Inflate(Resource.Layout.ListviewItemLayout, null);
-            }
+                var strings = item.Split(':');
+                view = _context.LayoutInflater.Inflate(Resource.Layout.ListviewColumnItemLayout, parent, false);
+                var text = view.FindViewById<TextView>(Resource.Id.textView1);
+                var text2 = view.FindViewById<TextView>(Resource.Id.textView2);
+                text.Text = strings[0];
+                if (strings.Length > 1)
+                {
+                    text2.Text = strings[1];
+                }
+                else
+                {
+                    text2.Text = "";
+                }
 
-            var text = view.FindViewById<TextView>(Resource.Id.textView1);
-            text.Text = item;
-            var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
-            var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
-            int marginBotton = 0;
-            if (position == Count - 1)
-            {
-                marginBotton = 2;
-            }
+                var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
+                var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
+                int marginBotton = 0;
+                if (position == Count - 1)
+                {
+                    marginBotton = 2;
+                }
 
-            margin.SetMargins(2, 2, 2, marginBotton);
-            border.LayoutParameters = margin;
+                margin.SetMargins(2, 2, 2, marginBotton);
+                border.LayoutParameters = margin;
+            }
 
             return view;
         }
