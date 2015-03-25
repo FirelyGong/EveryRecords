@@ -17,14 +17,11 @@ namespace EveryRecords.Charts
             "#666666", "#003366", "#993333", "#993333", "#990033", "#CC0033", "#003300", "#0066CC", "#993333", "#CC3333",
             "#99CC00", "#336633", "#993333", "#333300",
         };
-        
-        public PieChart()
+        public PieChart(double[] data, string[] label)
         {
-            Data = new double[] { };
-            Label = new string[] { };
-            ChartColor = Color.LightGray;
-            LabelColor = Color.LightGray;
-        }
+            Data = data;
+            Label = label;
+        }     
 
         public double[] Data { get; set; }
         public string[] Label { get; set; }

@@ -48,7 +48,8 @@ namespace EveryRecords
             {
                 var data = detail.Select(d => double.Parse(d.Split(':')[1])).ToArray();
                 var label = detail.Select(d => d.Split(':')[0]).ToArray();
-                pieChart.InitializeChart(ChartType.Pie, data, label);
+                IChart chart = new PieChart(data, label);
+                pieChart.InitializeChart(chart);
                 cateText.Text = cm + " " + data.Sum() + "Ԫ";
             }
             else

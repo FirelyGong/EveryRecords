@@ -27,19 +27,19 @@ namespace EveryRecords.ListAdapters
             if (view == null)
             {
                 view = _context.LayoutInflater.Inflate(Resource.Layout.ListviewItemLayout, parent, false);
-                var text = view.FindViewById<TextView>(Resource.Id.textView1);
-                text.Text = item;
-                var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
-                var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
-                int marginBotton = 0;
-                if (position == Count - 1)
-                {
-                    marginBotton = 2;
-                }
-
-                margin.SetMargins(2, 2, 2, marginBotton);
-                border.LayoutParameters = margin;
             }
+            var text = view.FindViewById<TextView>(Resource.Id.textView1);
+            text.Text = item;
+            var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
+            var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
+            int marginBotton = 0;
+            if (position == Count - 1)
+            {
+                marginBotton = 2;
+            }
+
+            margin.SetMargins(2, 2, 2, marginBotton);
+            border.LayoutParameters = margin;
 
             return view;
         }

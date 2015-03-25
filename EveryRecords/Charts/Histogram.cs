@@ -12,12 +12,17 @@ namespace EveryRecords.Charts
 
         public double[] Data { get; set; }
 
-        public Histogram()
+        public Histogram(double[] data, string[] label)
+            : this(data, label, Color.LightGray, Color.LightGray)
         {
-            Data=new double[]{};
-            Label=new string[]{};
-            ChartColor = Color.LightGray;
-            LabelColor = Color.LightGray;
+        }
+
+        public Histogram(double[] data, string[] label, Color chartColor, Color labelColor)
+        {
+            Data = data;
+            Label = label;
+            ChartColor = chartColor;
+            LabelColor = labelColor;
         }
 
         public void Draw(Canvas canvas)
@@ -31,15 +36,15 @@ namespace EveryRecords.Charts
             }
 
             var minHeight = 2 * Resources.System.DisplayMetrics.Density;
-            var singleChartWidth = Width / dataCount - margin * 2;
+            var singleChartWidth = (Width - margin) / dataCount - margin * 2;
             var yMax = Data.Max();
-            paint.Color = ChartColor;
             paint.TextSize = TextSize;
             var textHeight = paint.GetFontMetrics().Bottom - paint.GetFontMetrics().Ascent;
-            var chartHeight = Height - textHeight* 2;
+            var chartHeight = Height - textHeight* 3;
             for (int i = 0; i < dataCount; i++)
             {
-                var left = (i * 2 + 1) * margin + singleChartWidth * i;
+                paint.Color = LabelColor;
+                var left = (i * 2 + 2) * margin + singleChartWidth * i;
                 float top = 0;
                 float histogramHeight;
                 if (Data[i] == 0)
@@ -54,18 +59,22 @@ namespace EveryRecords.Charts
                     {
                         histogramHeight = minHeight;
                     }
-                    if (Label != null && Label.Length > i)
-                    {
-                        canvas.DrawText(Label[i], left, Height - margin, paint);
-                    }
+                }
+                if (Label != null && Label.Length > i)
+                {
+                    canvas.DrawText(Label[i], left, Height - margin, paint);
                 }
 
-                top = chartHeight - histogramHeight + textHeight;
-                canvas.DrawRect(left, top, left + singleChartWidth, chartHeight + textHeight, paint);
+                top = chartHeight - histogramHeight + textHeight * 2;
                 canvas.DrawText(Data[i].ToString(), left, top - margin, paint);
+
+                paint.Color = ChartColor;
+                canvas.DrawRect(left, top, left + singleChartWidth, top + histogramHeight, paint);
             }
-            paint.Color = Color.Black;
-            canvas.DrawLine(0, chartHeight + textHeight, Width, chartHeight + textHeight, paint);
+            paint.Color = Color.Gray;
+            paint.StrokeWidth = 3;
+            canvas.DrawLine(0, chartHeight + textHeight * 2, Width, chartHeight + textHeight * 2, paint);
+            canvas.DrawLine(margin, textHeight, margin, chartHeight + textHeight * 2, paint);
         }
 
         public string[] Label { get; set; }

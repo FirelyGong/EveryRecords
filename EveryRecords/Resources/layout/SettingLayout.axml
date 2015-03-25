@@ -71,39 +71,106 @@
         android:layout_height="match_parent"
         android:id="@+id/ContentLayout"
         android:layout_margin="10px">
-        <CheckBox
-            android:text="@string/AllowDeleteRecord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/AllowDeleteRecordCheck"
-            android:textColor="@android:color/black"
-            android:layout_margin="10px" />
-        <CheckBox
-            android:text="@string/AllowDeleteHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/AllowDeleteHistoryCheck"
-            android:textColor="@android:color/black"
-            android:layout_margin="10px" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout1">
+            android:id="@+id/linearLayout1"
+            android:weightSum="10">
             <TextView
-                android:text="@string/ExpensesLimit"
+                android:text="@string/MonthBudget"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/textView1"
                 android:textColor="@android:color/black"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:layout_weight="7" />
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/ExpensesLimitText" />
+                android:id="@+id/ExpensesLimitText"
+                android:layout_weight="3" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2"
+            android:weightSum="10">
+            <TextView
+                android:text="@string/AllowDeleteRecord"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView2"
+                android:layout_weight="7"
+                android:textColor="@android:color/black" />
+            <CheckBox
+                android:id="@+id/AllowDeleteRecordCheck"
+                android:textColor="@android:color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10">
+            <TextView
+                android:text="@string/AllowDeleteHistory"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_weight="7"
+                android:textColor="@android:color/black" />
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/AllowDeleteHistoryCheck"
+                android:textColor="@android:color/black"
+                android:layout_margin="10px"
+                android:layout_weight="3"
+                android:gravity="center" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10">
+            <TextView
+                android:text="@string/EditCategory"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/EditCategory1"
+                android:textColor="@android:color/black"
+                android:layout_weight="7"
+                android:clickable="true" />
+            <TextView
+                android:text="..."
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/EditCategory2"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:clickable="true"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

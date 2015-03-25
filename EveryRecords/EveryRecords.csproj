@@ -63,26 +63,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutActivity.cs" />
-    <Compile Include="ActivityExtensionMethods.cs" />
+    <Compile Include="AppExtension.cs" />
     <Compile Include="CategoryActivity.cs" />
     <Compile Include="CategoryGraphActivity.cs" />
     <Compile Include="Charts\ChartPane.cs" />
-    <Compile Include="Charts\ChartType.cs" />
     <Compile Include="Charts\IChart.cs" />
     <Compile Include="Charts\ProgressChart.cs" />
     <Compile Include="Charts\PieChart.cs" />
     <Compile Include="Charts\Histogram.cs" />
+    <Compile Include="Charts\ProgressCircleChart.cs" />
     <Compile Include="DataFactories\CategoryDataFactory.cs" />
     <Compile Include="ConfirmActivity.cs" />
     <Compile Include="DataFactories\DataFactory.cs" />
     <Compile Include="DataFactories\HistoricDataFactory.cs" />
     <Compile Include="DetailListActivity.cs" />
+    <Compile Include="FrameElements.cs" />
     <Compile Include="HistoryActivity.cs" />
     <Compile Include="IndexActivity.cs" />
     <Compile Include="IntroductionActivity.cs" />
     <Compile Include="ListAdapters\ColumnListAdapter.cs" />
     <Compile Include="ListAdapters\GridListAdapter.cs" />
     <Compile Include="ListAdapters\StringListAdapter.cs" />
+    <Compile Include="MonthSummaryActivity.cs" />
     <Compile Include="Persistence\CategoryData.cs" />
     <Compile Include="Persistence\CategoryItem.cs" />
     <Compile Include="Persistence\HistoricData.cs" />
@@ -96,10 +98,11 @@
     <Compile Include="RecordingActivity.cs" />
     <Compile Include="DataFactories\RecordingDataFactory.cs" />
     <Compile Include="Persistence\RecordItem.cs" />
+    <Compile Include="RecordTypes.cs" />
     <Compile Include="ReportingActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectionActivity.cs" />
+    <Compile Include="CategorySelectionActivity.cs" />
     <Compile Include="SettingActivity.cs" />
     <Compile Include="StartRecordingActivity.cs" />
   </ItemGroup>
@@ -118,7 +121,7 @@
     <AndroidResource Include="Resources\layout\ListviewItemLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\SelectionLayout.axml">
+    <AndroidResource Include="Resources\layout\CategorySelectionLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\HistoryLayout.axml">
@@ -152,6 +155,12 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ListviewColumnItemLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MonthSummaryLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ListviewColumnSmallItemLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

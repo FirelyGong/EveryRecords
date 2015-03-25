@@ -61,7 +61,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:id="@+id/ShareButton"
+                        android:id="@+id/GraphicButton"
                         android:layout_weight="0.2"
                         android:background="@drawable/TitleButton"
                         android:drawableLeft="@drawable/toshare" />
@@ -99,19 +99,12 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/linearLayout5"
-            android:layout_weight="6">
-            <GridView
-                android:minWidth="25px"
-                android:minHeight="25px"
+            android:id="@+id/BottomLayout"
+            android:layout_weight="4">
+            <EveryRecords.Charts.ChartPane
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/ReportsList"
-                android:dividerHeight="0dp"
-                android:divider="#00000000"
-                android:numColumns="auto_fit"
-                android:columnWidth="80dp"
-                android:stretchMode="columnWidth" />
+                android:id="@+id/PieChart" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -119,12 +112,19 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/BottomLayout"
-            android:layout_weight="4">
-            <EveryRecords.Charts.ChartPane
+            android:id="@+id/linearLayout5"
+            android:layout_weight="6">
+            <GridView
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/PieChart" />
+                android:id="@+id/MainGrid"
+                android:dividerHeight="0dp"
+                android:divider="#00000000"
+                android:numColumns="auto_fit"
+                android:columnWidth="80dp"
+                android:stretchMode="columnWidth" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

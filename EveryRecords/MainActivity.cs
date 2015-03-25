@@ -14,17 +14,14 @@ using Android.Graphics;
 using System.IO;
 namespace EveryRecords
 {
-    [Activity(Label = "花哪了", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "花哪了", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
-        private Button _recording;
-        private Button _reporting;
         private Button _setting;
         private Button _exit;
         private Button _history;
         private string _verString;
         private DateTime _lastQuitTime;
-        private TextView _sumText;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -37,37 +34,20 @@ namespace EveryRecords
 
                 this.InitialActivity(null);
 
-                _sumText = FindViewById<TextView>(Resource.Id.SummaryText);
-                var yearMonthText = FindViewById<TextView>(Resource.Id.YearMonthText);
-                yearMonthText.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", DateTime.Now.Year, DateTime.Now.Month);
-                _recording = FindViewById<Button>(Resource.Id.RecordButton);
-                _recording.Click += delegate
-                {
-                    StartActivity(typeof(StartRecordingActivity));
-                };
+                var payment = FindViewById<Button>(Resource.Id.PaymentButton);
+                payment.Click += payment_Click;
 
-                _reporting = FindViewById<Button>(Resource.Id.ViewReportButton);
-                _reporting.Click += delegate
-                {
-                    var intent = new Intent(this, typeof(ReportingActivity));
-                    var now = DateTime.Now;
-                    intent.PutExtra(ReportingActivity.RecordsYearMonthTag, string.Format(CultureInfo.InvariantCulture, "{0}-{1}", now.Year, now.Month));
-
-                    StartActivity(intent);
-                };
+                var income = FindViewById<Button>(Resource.Id.IncomeButton);
+                income.Click += income_Click;
+                var reporting = FindViewById<Button>(Resource.Id.ViewReportButton);
+                reporting.Click += reporting_Click;
 
                 _setting = FindViewById<Button>(Resource.Id.SettingButton);
                 _setting.Click += delegate
                 {
                     StartActivity(typeof(SettingActivity));
                 };
-
-                var cateogry = FindViewById<Button>(Resource.Id.CategoryButton);
-                cateogry.Click += delegate
-                {
-                    StartActivity(typeof(CategoryActivity));
-                };
-
+                
                 _exit = FindViewById<Button>(Resource.Id.ExitButton);
                 _exit.Click += delegate
                 {
@@ -81,21 +61,21 @@ namespace EveryRecords
                 };
 
                 var ver = FindViewById<Button>(Resource.Id.VerButton);
-                _verString = GetType().Assembly.GetName().Version.ToString();
+                _verString = GetType().Assembly.GetName().Version.ToShortString();
                 ver.Text = _verString;
                 ver.Click += delegate
                 {
                     StartActivity(typeof(AboutActivity));
                 };
 
-                _sumText.Text = "数据加载中..";
+                //_sumText.Text = "数据加载中..";
             }
             catch (Exception ex)
             {
                 LogException(ex);
             }
         }
-
+        
         protected override void OnStart()
         {
             base.OnStart();
@@ -138,8 +118,6 @@ namespace EveryRecords
 
             UpdatePercentage();
             UpdateRecents();
-            _sumText.Text = "当月记录金额:" + RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
-
             ShowIntroduction();
         }
 
@@ -149,42 +127,43 @@ namespace EveryRecords
             var parameters = new LinearLayout.LayoutParams(percentUI.LayoutParameters);
             var limit = SettingDataFactory.Instance.ExpensesLimit;
 
-            var amount = RecordingDataFactory.Instance.GetCategorySummary(CategoryDataFactory.RootCategory);
+            var amount = RecordingDataFactory.Instance.GetCategorySummary("支出");
 
             if (limit <= 0)
             {
                 limit = amount;
             }
 
-            percentUI.InitializeChart(ChartType.Progress, new[] { amount, limit }, null, this.StringToColor("#4682B4"));
+            IChart chart = new ProgressCircleChart(limit, amount,
+                new[]{string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", DateTime.Now.Year, DateTime.Now.Month)
+            ,"当月支出金额:" +amount}, this.StringToColor("#ffffff"), this.StringToColor("#ffffff"));
+
+            percentUI.InitializeChart(chart);
         }
 
         private void UpdateRecents()
         {
-            var historic = HistoricDataFactory.Instance.GetHistoryList(DateTime.Now.Year, DateTime.Now.Month);
-            historic.Remove(HistoricDataFactory.NoHistoryList);
+            var historic = RecordingDataFactory.Instance.GetDailySummaries(RecordTypes.Payment.ToLabel()+"/日期",DateTime.Now, 7);
             var zhuxing = FindViewById<ChartPane>(Resource.Id.ZhuXingTu);
-
-            var count = historic.Count;
-            if (count > 6)
-            {
-                for (int i = 6; i < count; i++)
-                {
-                    historic.RemoveAt(0);
-                }
-            }
-            else
-            {
-                for (int i = count; i < 6; i++)
-                {
-                    historic.Add("0:0");
-                }
-            }
-
             var amounts = historic.Select(h => double.Parse(h.Split(':')[1])).ToList();
-            var labels = historic.Select(h => h.Split(':')[0]).ToList();
+            var labels = historic.Select(h => DateTime.Parse(h.Split(':')[0]).Day.ToString()).ToList();
+            var count = historic.Count;
 
-            zhuxing.InitializeChart(ChartType.Histogram, amounts.ToArray(), labels.ToArray(), Color.LightGray);
+            for (int i = 0; i < 7; i++)
+            {
+                var lbl = DateTime.Now.AddDays(0 - i).Day.ToString();
+                var index = labels.BinarySearch(lbl);
+                if (index < 0)
+                {
+                    var pos = ~index;
+                    labels.Insert(pos, lbl);
+                    amounts.Insert(pos, 0);
+                }
+            }
+
+            IChart chart = new Histogram(amounts.ToArray(), labels.ToArray(), this.StringToColor("#FF9900"), this.StringToColor("#4682B4"));
+
+            zhuxing.InitializeChart(chart);
         }
 
         private Task<bool> LoadDataAsync()
@@ -198,7 +177,8 @@ namespace EveryRecords
 
         private void LoadData()
         {
-            CategoryDataFactory.Instance.LoadData();
+            CategoryDataFactory.Payment.LoadData();
+            CategoryDataFactory.Income.LoadData();
             RecordingDataFactory.Instance.LoadData();
             SettingDataFactory.Instance.LoadData();
             HistoricDataFactory.Instance.LoadData();
@@ -231,6 +211,28 @@ namespace EveryRecords
                     ms.Write(System.Environment.NewLine);
                 }
             }
+        }
+
+        private void income_Click(object sender, EventArgs e)
+        {
+            var intent = new Intent(this, typeof(StartRecordingActivity));
+            intent.PutExtra(FrameElements.CategoryTypeTag, CategoryDataFactory.IncomeString);
+            StartActivity(intent);
+        }
+
+        private void payment_Click(object sender, EventArgs e)
+        {
+            var intent = new Intent(this, typeof(StartRecordingActivity));
+            intent.PutExtra(FrameElements.CategoryTypeTag, CategoryDataFactory.PaymentString);
+            StartActivity(intent);
+        }
+
+        private void reporting_Click(object sender, EventArgs e)
+        {
+            var intent = new Intent(this, typeof(MonthSummaryActivity));
+            var now = DateTime.Now;
+            intent.PutExtra(FrameElements.RecordsYearMonthTag, string.Format(CultureInfo.InvariantCulture, "{0}-{1}", now.Year, now.Month));
+            StartActivity(intent);
         }
     }
 }

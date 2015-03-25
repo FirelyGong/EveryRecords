@@ -35,6 +35,16 @@ namespace EveryRecords
             _allowDeleteRecord.CheckedChange += allowDeleteRecord_CheckedChange;
             _expensesLimit = FindViewById<EditText>(Resource.Id.ExpensesLimitText);
             _expensesLimit.AfterTextChanged += expensesLimit_AfterTextChanged;
+
+            var editCategory1 = FindViewById<TextView>(Resource.Id.EditCategory1);
+            editCategory1.Click += editCategory_Click;
+            var editCategory2 = FindViewById<TextView>(Resource.Id.EditCategory2);
+            editCategory2.Click += editCategory_Click;
+        }
+
+        private void editCategory_Click(object sender, EventArgs e)
+        {
+            StartActivity(typeof(CategoryActivity));
         }
 
         private void expensesLimit_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)

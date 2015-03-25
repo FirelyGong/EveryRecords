@@ -18,9 +18,9 @@ namespace EveryRecords
     [Activity(Label = "StartRecordingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class StartRecordingActivity : Activity
     {
-        private ListView _recordList;
-        private IList<string> _records;
+        private bool _needRefreshList;
         private bool _waitingForResult;
+        private string _recordType;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -29,13 +29,37 @@ namespace EveryRecords
             // Create your application here
             SetContentView(Resource.Layout.StartRecordingLayout);
             this.InitialActivity(() => Finish());
-            _records = new List<string>();
-
-            _recordList = FindViewById<ListView>(Resource.Id.RecordList);
-            _recordList.Adapter = new ColumnListAdapter(this, new List<string>(new []{"请添加记录"}));
-            _recordList.ItemLongClick += recordList_ItemLongClick;
+            _needRefreshList = true;
+            _recordType = Intent.GetStringExtra(FrameElements.CategoryTypeTag);
+            if (string.IsNullOrEmpty(_recordType))
+            {
+                _recordType = CategoryDataFactory.PaymentString;
+                Elements.Title.Text = CategoryDataFactory.PaymentString;
+            }
+            else
+            {
+                Elements.Title.Text = _recordType;
+            }
+            
+            Elements.List.ItemLongClick += recordList_ItemLongClick;
             var add = FindViewById<Button>(Resource.Id.AddButton);
             add.Click += add_Click;
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            if ((!_waitingForResult) && _needRefreshList)
+            {
+                var records = RecordingDataFactory.Instance.GetDailyRecords(_recordType, DateTime.Now);
+                if (records.Count == 0)
+                {
+                    records.Add("今天还没有" + _recordType + "记录");
+                }
+
+                Elements.List.Adapter = new ColumnListAdapter(this, records);
+            }
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
@@ -45,12 +69,7 @@ namespace EveryRecords
             _waitingForResult = false;
             if (requestCode == 0)
             {
-                if (resultCode == Result.Ok)
-                {
-                    var recording = data.GetStringExtra(RecordingActivity.OutputRecordTag);
-                    _records.Add(recording);
-                    _recordList.Adapter = new ColumnListAdapter(this, _records);
-                }
+                _needRefreshList = resultCode == Result.Ok;
             }
 
             if (requestCode == 1)
@@ -61,11 +80,11 @@ namespace EveryRecords
                     var bln = RecordingDataFactory.Instance.DeleteRecord(item);
                     if (bln)
                     {
-                        _records.Remove(item);
-                        _recordList.Adapter = new ColumnListAdapter(this, _records);
+                        _needRefreshList = true;
                     }
                     else
                     {
+                        _needRefreshList = false;
                         Toast.MakeText(this, "删除失败", ToastLength.Long).Show();
                     }
                 }
@@ -80,19 +99,21 @@ namespace EveryRecords
                 return;
             }
 
-            if (_recordList.Adapter.Count > 0)
+            if (Elements.List.Adapter.Count > 0)
             {
                 RecordingDataFactory.Instance.SaveData();
                 HistoricDataFactory.Instance.SaveData();
-                _records.Clear();
             }
+
+            this.RemoveFrameElements();
         }
                 
         private void add_Click(object sender, EventArgs e)
         {
             _waitingForResult = true;
             var intent = new Intent(this, typeof(RecordingActivity));
-            intent.PutExtra(RecordingActivity.ReturnToTag, GetType().FullName);
+            intent.PutExtra(FrameElements.ReturnToTag, GetType().FullName);
+            intent.PutExtra(FrameElements.CategoryTypeTag, _recordType);
             StartActivityForResult(intent, 0);
         }
 
@@ -107,6 +128,14 @@ namespace EveryRecords
             intent.PutExtra(ConfirmActivity.DataTag, item);
             intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
             StartActivityForResult(intent, 1);
+        }
+
+        private FrameElements Elements
+        {
+            get
+            {
+                return this.GetFrameElements();
+            }
         }
     }
 }

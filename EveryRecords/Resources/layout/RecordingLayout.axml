@@ -3,6 +3,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@android:color/background_light">
     <LinearLayout
         android:id="@+id/TitleLayout"
@@ -83,59 +85,52 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/CategoryList" />
+            android:id="@+id/CategoryList"
+            android:divider="#00000000"
+            android:dividerHeight="0dp" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2">
+            android:id="@+id/linearLayout2"
+            android:weightSum="10">
             <TextView
                 android:text="@string/Amount"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textView3"
                 android:textColor="@android:color/black"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:minWidth="25px"
-                android:minHeight="25px"
-                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_weight="2" />
+            <TextView
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/linearLayout4"
-                android:weightSum="10"
-                android:gravity="right"
-                android:layout_margin="10px">
-                <TextView
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/AmountLabel"
-                    android:layout_weight="1"
-                    android:textColor="@android:color/black"
-                    android:gravity="center" />
-                <EditText
-                    android:id="@+id/AmountTextBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:shadowColor="#f0f8ffff"
-                    android:layout_weight="5"
-                    android:layout_margin="10px"
-                    android:layout_gravity="center_vertical" />
-                <Button
-                    android:text="+"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/AddAmountButton"
-                    android:background="@drawable/FunctionButton"
-                    android:textColor="@android:color/black"
-                    android:layout_weight="1"
-                    android:layout_margin="10px" />
-            </LinearLayout>
+                android:id="@+id/AmountLabel"
+                android:layout_weight="2"
+                android:textColor="@android:color/black"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/AmountTextBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:shadowColor="#f0f8ffff"
+                android:layout_weight="5"
+                android:layout_margin="10px"
+                android:layout_gravity="center_vertical" />
+            <Button
+                android:text="+"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/AddAmountButton"
+                android:background="@drawable/FunctionButton"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:layout_margin="10px" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -143,28 +138,68 @@
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout1">
+            android:id="@+id/linearLayout4"
+            android:weightSum="10">
+            <TextView
+                android:text="@string/Date"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView5"
+                android:textColor="@android:color/black"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_weight="2" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/DateLabel"
+                android:layout_weight="6"
+                android:textColor="@android:color/black"
+                android:gravity="center" />
+            <Button
+                android:text="-"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/MinusDateButton"
+                android:background="@drawable/FunctionButton"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:layout_margin="10px" />
+            <Button
+                android:text="+"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/AddDateButton"
+                android:background="@drawable/FunctionButton"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:layout_margin="10px" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:weightSum="10">
             <TextView
                 android:text="@string/Comments"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textView4"
                 android:textColor="@android:color/black"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:layout_weight="2" />
             <EditText
                 android:id="@+id/CommentsText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="10px" />
+                android:layout_margin="10px"
+                android:layout_weight="8" />
         </LinearLayout>
-        <CheckBox
-            android:text="@string/IsExpenses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/IsExpensesCheck"
-            android:textColor="@android:color/black"
-            android:checked="true" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
@@ -177,10 +212,9 @@
             <Button
                 android:text="@string/Save"
                 android:id="@+id/SaveButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/FunctionButton"
-                android:layout_weight="0.5"
                 android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>

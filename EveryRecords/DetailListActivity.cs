@@ -15,11 +15,7 @@ namespace EveryRecords
     [Activity(Label = "DetailListActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class DetailListActivity:Activity
     {
-        public const string RecordsYearMonthTag = "RecordsYearMonth";
-        public const string RecordsCategoryTag = "RecordsCategory";
-        public const string RecordsPathTag = "RecordsPath";
         private const string NoRecord = "没有记录！";
-        private ListView _reportingList;
         private RecordingDataFactory _reocrdingData;
         private bool _recordsChanged;
 
@@ -33,9 +29,9 @@ namespace EveryRecords
 
             this.InitialActivity(() => OnBackPressed());
 
-            var yearMonth = Intent.GetStringExtra(RecordsYearMonthTag);
-            var category = Intent.GetStringExtra(RecordsCategoryTag);
-            var recordsPath = Intent.GetStringExtra(RecordsPathTag);
+            var yearMonth = Intent.GetStringExtra(FrameElements.RecordsYearMonthTag);
+            var recordsPath = Intent.GetStringExtra(FrameElements.RecordsCategoryTag);
+            var category = recordsPath.Substring(recordsPath.LastIndexOf("/") + 1);
             int year;
             int month;
             if (string.IsNullOrEmpty(yearMonth))
@@ -60,13 +56,10 @@ namespace EveryRecords
                 }
             }
 
-            var title = FindViewById<TextView>(Resource.Id.TitleText);
-            title.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
+            Elements.Title.Text = string.Format(CultureInfo.InvariantCulture, "{0}年{1}月", year, month);
 
-            var subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
-            subTitle.Text = recordsPath;
-            _reportingList = FindViewById<ListView>(Resource.Id.ReportsList);
-            _reportingList.ItemLongClick += reportingList_ItemLongClick;
+            Elements.SubTitle.Text = recordsPath;
+            Elements.List.ItemLongClick += reportingList_ItemLongClick;
             DisplayCategory(category);
         }
 
@@ -82,9 +75,9 @@ namespace EveryRecords
                     if (bln)
                     {
                         _reocrdingData.SaveData();
-                        var list = ((SimpleListAdapter)_reportingList.Adapter).GetSource();
+                        var list = ((SimpleListAdapter)Elements.List.Adapter).GetSource();
                         list.Remove(item);
-                        _reportingList.Adapter = new SimpleListAdapter(this, list);
+                        Elements.List.Adapter = new SimpleListAdapter(this, list);
                         _recordsChanged = true;
                     }
                     else
@@ -110,7 +103,13 @@ namespace EveryRecords
             base.OnBackPressed();
             Finish();
         }
-        
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            this.RemoveFrameElements();
+        }
+
         private void reportingList_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
         {
             var item = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
@@ -145,7 +144,8 @@ namespace EveryRecords
             {
                 datas = new string[] { NoRecord };
             }
-            _reportingList.Adapter = new ColumnListAdapter(this, datas.ToList());
+
+            Elements.List.Adapter = new ColumnListAdapter(this, datas.ToList());
         }
 
         private string FormatListItem(string category, double amount)
@@ -153,6 +153,14 @@ namespace EveryRecords
             var item = string.Format(CultureInfo.InvariantCulture, "{0}:{1}", category, amount);
 
             return item;
+        }
+
+        private FrameElements Elements
+        {
+            get
+            {
+                return this.GetFrameElements();
+            }
         }
     }
 }

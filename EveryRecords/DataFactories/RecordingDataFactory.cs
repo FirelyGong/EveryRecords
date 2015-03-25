@@ -14,7 +14,7 @@ namespace EveryRecords.DataFactories
         public const string RecordFilePrefix = "recordings_";
 
         public static readonly RecordingDataFactory Instance = new RecordingDataFactory();
-
+        
         public static RecordingDataFactory CreateHistoryData(int year, int month)
         {
             return new RecordingDataFactory(year, month);
@@ -68,36 +68,14 @@ namespace EveryRecords.DataFactories
             }
         }
 
-        public string AddRecord(IList<string> paths, string comments, double amount)
+        public string AddRecord(IList<string> paths, DateTime recordDate, string comments, double amount)
         {
-            return AddRecord(paths, comments, amount, true);
-        }
-
-        public string AddRecord(IList<string> paths, string comments, double amount, bool includeInTotal)
-        {
-            MakeSureRecordInCurrentMonth();
             DataChanged = true;
-            IList<string> categories = new List<string>();
-            IList<string> lst = new List<string>();
-            foreach (var path in paths)
-            {
-                var arr = path.Split('/').ToList();
-                if (!includeInTotal)
-                {
-                    arr.Remove(CategoryDataFactory.RootCategory);
-                }
+            DataLoaded = false;
 
-                foreach (var node in arr)
-                {
-                    if (!lst.Contains(node))
-                    {
-                        lst.Add(node);
-                        AddCategorySummary(node, amount);
-                    }
-                }
-
-                categories.Add(arr[arr.Count - 1]);
-            }
+            MakeSureRecordInCurrentMonth();
+            var categories = GetRecordCategories(paths);
+            UpdateSummaries(paths, recordDate, amount);
 
             var record = new RecordItem
                         {
@@ -105,7 +83,7 @@ namespace EveryRecords.DataFactories
                             Path = string.Join(";", paths),
                             Amount = amount,
                             Comments = comments,
-                            RecordTime = DateTime.Now.ToString("yyyy/MM/dd-HH:mm:ss")
+                            RecordDate = recordDate.ToDateString()
                         };
             _recordingData.Records.Add(record);
             UpdateHistoricData();
@@ -121,24 +99,12 @@ namespace EveryRecords.DataFactories
             }
             else
             {
-                var amount = 0 - record.Amount;
-                string[] paths = record.Path.Split(';');
-                IList<string> lst = new List<string>();
-                foreach (var path in paths)
-                {
-                    var arr = path.Split('/');
-                    foreach (var node in arr)
-                    {
-                        if (!lst.Contains(node))
-                        {
-                            lst.Add(node);
-                            AddCategorySummary(node, amount);
-                        }
-                    }
-                }
-
                 DataChanged = true;
                 DataLoaded = false;
+
+                var amount = 0 - record.Amount;
+                string[] paths = record.Path.Split(';');
+                UpdateSummaries(paths, DateTime.Parse(record.RecordDate), amount);
                 UpdateHistoricData();
                 return _recordingData.Records.Remove(record);
             }
@@ -158,10 +124,11 @@ namespace EveryRecords.DataFactories
         public Dictionary<string, double> GetSubCategoriesSummary(string parent)
         {
             Dictionary<string, double> result = new Dictionary<string, double>();
-            var categories = CategoryDataFactory.Instance.GetSubCategories(parent);
-            foreach (var item in categories)
+            var list = _recordingData.Summaries.Where(l => l.Parent == parent);
+
+            foreach (var item in list)
             {
-                result.Add(item, GetCategorySummary(item));
+                result.Add(item.Category, item.Summary);
             }
 
             return result;
@@ -169,15 +136,37 @@ namespace EveryRecords.DataFactories
 
         public IList<string> GetRecords(string category)
         {
-            return new List<string>(_recordingData.Records.Where(r => r.Category.Contains(category)).Select(r => r.ToString()));
+            return new List<string>(_recordingData.Records.Where(r => r.Category.Contains(category)).OrderBy(r => r.RecordDate).Select(r => r.ToString()));
         }
 
-        private void AddCategorySummary(string category, double amount)
+        public IList<string> GetDailyRecords(string recordType, DateTime date)
         {
-            var result = _recordingData.Summaries.FirstOrDefault(l => l.Category == category);
+            return new List<string>(_recordingData.Records.Where(r => r.Path.Contains(recordType) &&  r.RecordDate==date.ToDateString()).OrderBy(r => r.RecordDate).Select(r => r.ToString()));
+        }
+
+        public IList<string> GetDailySummaries(string recordType, DateTime toDate, int days)
+        {
+            string end = toDate.ToDateString();
+            string from = toDate.AddDays(0 - days).ToDateString();
+            return new List<string>(_recordingData.Summaries.Where(r =>
+            {
+                DateTime dt;
+                bool bln = DateTime.TryParse(r.Category, out dt);
+                if (bln && (toDate - dt).Days < days && r.Parent == recordType)
+                {
+                    return true;
+                }
+
+                return false;
+            }).OrderBy(r => r.Category).Select(r => r.ToString()));
+        }
+
+        private void AddCategorySummary(string parent, string category, double amount)
+        {
+            var result = _recordingData.Summaries.FirstOrDefault(l => l.Parent==parent && l.Category == category);
             if (result == null)
             {
-                _recordingData.Summaries.Add(new SummaryItem { Category = category, Summary = amount });
+                _recordingData.Summaries.Add(new SummaryItem { Parent=parent, Category = category, Summary = amount });
             }
             else
             {
@@ -210,7 +199,48 @@ namespace EveryRecords.DataFactories
         {
             string currentFile=Path.GetFileNameWithoutExtension(DataPath);
             string historicId = currentFile.Substring((currentFile.IndexOf("_") + 1));
-            HistoricDataFactory.Instance.AddHistoric(historicId, GetCategorySummary(CategoryDataFactory.RootCategory));
+            HistoricDataFactory.Instance.AddHistoric(historicId, GetCategorySummary("支出"));
+        }
+
+        private string[] GetRecordCategories(IList<string> paths)
+        {
+            return paths.Select(p => p.Substring(p.LastIndexOf("/") + 1)).ToArray();
+        }
+
+        private void UpdateSummaries(IList<string> paths, DateTime recordDate, double amount)
+        {
+            var types = new[] { RecordTypes.Payment.ToLabel(), RecordTypes.Income.ToLabel() };
+            string recordType = "";
+            IList<string> lst = new List<string>();
+            foreach (var path in paths)
+            {
+                var arr = path.Split('/').ToList();
+
+                var parent = "";
+                foreach (var node in arr)
+                {
+                    if (types.Contains(node))
+                    {
+                        recordType = node;
+                    }
+
+                    if (!lst.Contains(node))
+                    {
+                        lst.Add(node);
+                        AddCategorySummary(parent, node, amount);
+                        if (string.IsNullOrEmpty(parent))
+                        {
+                            parent = node;
+                        }
+                        else
+                        {
+                            parent += "/" + node;
+                        }
+                    }
+                }
+            }
+
+            AddCategorySummary(recordType + "/日期", recordDate.ToDateString(), amount);
         }
     }
 }

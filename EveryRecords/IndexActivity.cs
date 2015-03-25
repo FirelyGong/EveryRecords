@@ -14,7 +14,7 @@ using EveryRecords.DataFactories;
 
 namespace EveryRecords
 {
-    [Activity(Label = "花哪了", MainLauncher = true, Icon = "@drawable/hnl", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "花哪了", Icon = "@drawable/hnl", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class IndexActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)

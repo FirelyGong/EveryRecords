@@ -17,47 +17,55 @@ namespace EveryRecords
     [Activity(Label = "RecordingActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class RecordingActivity : Activity
     {
-        public const string OutputRecordTag = "CreatedRecording";
-        public const string ReturnToTag = "ReturnTo";
-
-        private IList<string> _categories;
         private IList<string> _paths;
-        private string _currentPath;
-        private int _currentCategoryIndex;
+        private string _recordType;
 
         private TextView _amountLabel;
         private EditText _amountTextBox;
         private EditText _commentsText;
-        
+        private TextView _dateLabel;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
                         
             // Create your application here
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.RecordingLayout);
 
             this.InitialActivity(() => Finish());
+            _recordType = Intent.GetStringExtra(FrameElements.CategoryTypeTag);
+            if (string.IsNullOrEmpty(_recordType))
+            {
+                _recordType = CategoryDataFactory.PaymentString;
+            }
 
             _paths = new List<string>();
-            _categories = CategoryDataFactory.Instance.GetCategories();
             _amountTextBox = FindViewById<EditText>(Resource.Id.AmountTextBox);
             _amountLabel = FindViewById<TextView>(Resource.Id.AmountLabel);
             _commentsText = FindViewById<EditText>(Resource.Id.CommentsText);
+            _dateLabel = FindViewById<TextView>(Resource.Id.DateLabel);
+            _dateLabel.Text = DateTime.Now.ToDateString();
 
             var save = FindViewById<Button>(Resource.Id.SaveButton);
             save.Click += save_Click;
 
             var addAmount = FindViewById<Button>(Resource.Id.AddAmountButton);
             addAmount.Click += addAmount_Click;
-            TryContinueCategory();          
+
+            var addDate = FindViewById<Button>(Resource.Id.AddDateButton);
+
+            addDate.Click += addDate_Click;
+            var minusDate = FindViewById<Button>(Resource.Id.MinusDateButton);
+            minusDate.Click += minusDate_Click;
         }
 
         protected override void OnStart()
         {
             base.OnStart();
 
-            _categories = CategoryDataFactory.Instance.GetCategories();
+            var categories = CategoryDataFactory.GetInstance(_recordType).GetCategories();
+            SelectDataFromCategories(categories);
+            //TryContinueCategory();  
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
@@ -70,19 +78,9 @@ namespace EveryRecords
                 return;
             }
 
-            var selection=data.GetStringExtra(SelectionActivity.SelectionTag);
-            _currentPath += "/" + selection;
-
-            var sub = CategoryDataFactory.Instance.GetSubCategories(selection);
-            if (sub.Count>0)
-            {
-                SelectDataFromCategory(selection);
-            }
-            else
-            {
-                _paths.Add(_currentPath);
-                TryContinueCategory();
-            }
+            _paths = data.GetStringExtra(CategorySelectionActivity.SelectionTag).Split(';');
+            var list = FindViewById<ListView>(Resource.Id.CategoryList);
+            list.Adapter = new SimpleListAdapter(this, _paths);
         }
 
         private void save_Click(object sender, EventArgs e)
@@ -99,11 +97,12 @@ namespace EveryRecords
                 return;
             }
 
-            bool isExpenses = FindViewById<CheckBox>(Resource.Id.IsExpensesCheck).Checked;
-            var recording = RecordingDataFactory.Instance.AddRecord(_paths, _commentsText.Text, amount, isExpenses);
-            var lastActivity = Intent.GetStringExtra(ReturnToTag);
+            DateTime dt = DateTime.Now;
+            DateTime.TryParse(_dateLabel.Text, out dt);
+            var recording = RecordingDataFactory.Instance.AddRecord(_paths, dt, _commentsText.Text, amount);
+            var lastActivity = Intent.GetStringExtra(FrameElements.ReturnToTag);
             var intent = new Intent(this, Type.GetType(lastActivity, true));
-            intent.PutExtra(OutputRecordTag, recording);
+            intent.PutExtra(FrameElements.OutputRecordTag, recording);
             SetResult(Result.Ok, intent);
             Finish();
         }
@@ -124,30 +123,27 @@ namespace EveryRecords
             }
         }
 
-        private void SelectDataFromCategory(string category)
+        private void SelectDataFromCategories(IList<string> categories)
         {
-            var intent = new Intent(this, typeof(SelectionActivity));
-            intent.PutExtra(SelectionActivity.ReturnToTag, this.GetType().FullName);
-            intent.PutExtra(SelectionActivity.ParentCategoryTag, category);
+            var intent = new Intent(this, typeof(CategorySelectionActivity));
+            intent.PutExtra(FrameElements.CategoryTypeTag, _recordType);
+            intent.PutExtra(FrameElements.ReturnToTag, this.GetType().FullName);
+            intent.PutExtra(CategorySelectionActivity.ParentCategoryTag, string.Join(";",categories));
             StartActivityForResult(intent, 0);
         }
 
-        private void TryContinueCategory()
+        private void minusDate_Click(object sender, EventArgs e)
         {
-            if(_currentCategoryIndex>=_categories.Count)
-            {
-                _currentCategoryIndex = 0;
+            DateTime dt;
+            DateTime.TryParse(_dateLabel.Text, out dt);
+            _dateLabel.Text = dt.AddDays(-1).ToDateString();
+        }
 
-                var list = FindViewById<ListView>(Resource.Id.CategoryList);
-                list.Adapter = new SimpleListAdapter(this, _paths);
-            }
-            else
-            {
-                _currentPath = CategoryDataFactory.RootCategory;
-                var item = _categories[_currentCategoryIndex];
-                SelectDataFromCategory(item);
-                _currentCategoryIndex++;
-            }
+        private void addDate_Click(object sender, EventArgs e)
+        {
+            DateTime dt;
+            DateTime.TryParse(_dateLabel.Text, out dt);
+            _dateLabel.Text = dt.AddDays(1).ToDateString();
         }
     }
 }

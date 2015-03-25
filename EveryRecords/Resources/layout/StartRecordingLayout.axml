@@ -41,7 +41,7 @@
                 <TextView
                     android:text="@string/Record"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/titleText"
+                    android:id="@+id/TitleText"
                     android:textColor="@android:color/background_light"
                     android:gravity="center"
                     android:background="#4682B4"
@@ -71,14 +71,6 @@
         android:layout_height="match_parent"
         android:id="@+id/ContentLayout"
         android:layout_margin="10px">
-        <ListView
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/RecordList"
-            android:divider="#00000000"
-            android:dividerHeight="0dp" />
         <Button
             android:text="@string/Add"
             android:layout_width="match_parent"
@@ -87,5 +79,13 @@
             android:background="@drawable/FunctionButton"
             android:textColor="@android:color/black"
             android:layout_marginTop="10px" />
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/MainList"
+            android:divider="#00000000"
+            android:dividerHeight="0dp" />
     </LinearLayout>
 </LinearLayout>

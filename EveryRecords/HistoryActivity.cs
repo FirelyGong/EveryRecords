@@ -77,9 +77,9 @@ namespace EveryRecords
             {
                 return;
             }
-            
-            var intent = new Intent(this, typeof(ReportingActivity));
-            intent.PutExtra(ReportingActivity.RecordsYearMonthTag, item.Split(':')[0]);
+
+            var intent = new Intent(this, typeof(MonthSummaryActivity));
+            intent.PutExtra(FrameElements.RecordsYearMonthTag, item.Split(':')[0]);
 
             StartActivity(intent);
         }

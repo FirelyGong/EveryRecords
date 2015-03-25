@@ -17,8 +17,6 @@ namespace EveryRecords.Charts
 {
     public class ChartPane : TextView
     {
-        private IChart _chartDrawer;
-
         protected ChartPane(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
@@ -44,12 +42,12 @@ namespace EveryRecords.Charts
         {
             get
             {
-                if (_chartDrawer == null)
+                if (Chart == null)
                 {
                     return new double[] { };
                 }
 
-                return _chartDrawer.Data;
+                return Chart.Data;
             }
         }
 
@@ -57,12 +55,12 @@ namespace EveryRecords.Charts
         {
             get
             {
-                if (_chartDrawer == null)
+                if (Chart == null)
                 {
                     return new string[] { };
                 }
 
-                return _chartDrawer.Label;
+                return Chart.Label;
             }
         }
 
@@ -70,12 +68,12 @@ namespace EveryRecords.Charts
         {
             get
             {
-                if (_chartDrawer == null)
+                if (Chart == null)
                 {
                     return Color.Black;
                 }
 
-                return _chartDrawer.ChartColor;
+                return Chart.ChartColor;
             }
         }
 
@@ -83,71 +81,72 @@ namespace EveryRecords.Charts
         {
             get
             {
-                if (_chartDrawer == null)
+                if (Chart == null)
                 {
                     return Color.Black;
                 }
 
-                return _chartDrawer.LabelColor;
+                return Chart.LabelColor;
             }
         }
 
-        public ChartType Chart { get; private set; }
+        public IChart Chart
+        {
+            get;
+            private set;
+        }
 
-        public void InitializeChart(ChartType chart, double[] data, string[] label)
+        public void InitializeChart(IChart chart)
         {
             Chart = chart;
-            _chartDrawer = ConstructChart(chart);
-            _chartDrawer.Data = data;
-            _chartDrawer.Label = label;
             Invalidate();
         }
 
-        public void InitializeChart(ChartType chart, double[] data, string[] label, Color chartColor)
-        {
-            InitializeChart(chart, data, label, chartColor, chartColor);
-        }
+        //public void InitializeChart(double[] data, string[] label, Color chartColor)
+        //{
+        //    InitializeChart(chart, data, label, chartColor, chartColor);
+        //}
 
-        public void InitializeChart(ChartType chart, double[] data, string[] label, Color chartColor, Color labelColor)
-        {
-            Chart = chart;
-            _chartDrawer = ConstructChart(chart);
-            _chartDrawer.Data = data;
-            _chartDrawer.Label = label;
-            _chartDrawer.ChartColor = chartColor;
-            _chartDrawer.LabelColor = labelColor;
-            Invalidate();
-        }
+        //public void InitializeChart(double[] data, string[] label, Color chartColor, Color labelColor)
+        //{
+        //    Chart = chart;
+        //    _chartDrawer = ConstructChart(chart);
+        //    _chartDrawer.Data = data;
+        //    _chartDrawer.Label = label;
+        //    _chartDrawer.ChartColor = chartColor;
+        //    _chartDrawer.LabelColor = labelColor;
+        //    Invalidate();
+        //}
 
         public void Clear()
         {
-            _chartDrawer = null;
+            Chart = null;
             Invalidate();
         }
 
         protected override void OnDraw(Canvas canvas)
         {
             base.OnDraw(canvas);
-            if (_chartDrawer != null)
+            if (Chart != null)
             {
-                _chartDrawer.InitSize(Width, Height, TextSize);
-                _chartDrawer.Draw(canvas);
+                Chart.InitSize(Width, Height, TextSize);
+                Chart.Draw(canvas);
             }
         }
 
-        private IChart ConstructChart(ChartType chart)
-        {
-            switch (chart)
-            {
-                case ChartType.Histogram:
-                    return new Histogram();
-                case ChartType.Pie:
-                    return new PieChart();
-                case ChartType.Progress:
-                    return new ProgressChart();
-            }
+        //public static IChart ConstructChart(ChartType chart)
+        //{
+        //    switch (chart)
+        //    {
+        //        case ChartType.Histogram:
+        //            return new Histogram();
+        //        case ChartType.Pie:
+        //            return new PieChart();
+        //        case ChartType.Progress:
+        //            return new ProgressChart();
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

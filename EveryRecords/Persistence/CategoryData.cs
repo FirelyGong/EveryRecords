@@ -20,7 +20,7 @@ namespace EveryRecords.Persistence
         {
             Categories = new List<CategoryItem>();
         }
-
+        
         [XmlArray("Categories"), XmlArrayItem("CategoryItem")]
         public List<CategoryItem> Categories { get; set; }
     }

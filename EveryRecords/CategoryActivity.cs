@@ -20,6 +20,7 @@ namespace EveryRecords
     {
         TextView _subTitle;
         EditText _currentNode;
+        Button _addButton;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -32,27 +33,29 @@ namespace EveryRecords
 
             _currentNode = FindViewById<EditText>(Resource.Id.NodeText);
             _subTitle = FindViewById<TextView>(Resource.Id.SubTitleText);
-            _subTitle.Text = CategoryDataFactory.RootCategory;
-           
-            var add = FindViewById<Button>(Resource.Id.AddButton);
-            add.Click += add_Click;
+            _subTitle.Text = "";
+
+            _addButton = FindViewById<Button>(Resource.Id.AddButton);
+            _addButton.Click += add_Click;
 
             var list = FindViewById<ListView>(Resource.Id.CategoryItems);
             list.ItemClick += list_ItemClick;
             list.ItemLongClick += list_ItemLongClick;
-            DisplayCategory(CategoryDataFactory.RootCategory);
+            DisplayCategory("");
         }
 
         public override void OnBackPressed()
         {
-            if (_subTitle.Text == CategoryDataFactory.RootCategory)
+            if (string.IsNullOrEmpty(_subTitle.Text))
             {
                 base.OnBackPressed();
             }
             else
             {
-                var parent = BackToLastLevel();
-                DisplayCategory(parent);
+                var path = _subTitle.Text;
+                AppExtension.BackToLastLevel(ref path);
+                _subTitle.Text = path;
+                DisplayCategory(_subTitle.Text);
             }
         }
 
@@ -60,7 +63,8 @@ namespace EveryRecords
         {
             try
             {
-                CategoryDataFactory.Instance.SaveData();
+                CategoryDataFactory.Income.SaveData();
+                CategoryDataFactory.Payment.SaveData();
             }
             catch (Exception ex)
             {
@@ -79,9 +83,8 @@ namespace EveryRecords
                 if (resultCode == Result.Ok)
                 {
                     var item = data.GetStringExtra(ConfirmActivity.DataTag);
-                    var current = GetCurrentLevel();
-                    CategoryDataFactory.Instance.RemoveCategory(current, item);
-                    DisplayCategory(current);
+                    CategoryDataFactory.Payment.RemoveCategory(_subTitle.Text, item);
+                    DisplayCategory(_subTitle.Text);
                 }
             }
         }
@@ -94,14 +97,13 @@ namespace EveryRecords
                 return;
             }
 
-            var current = GetCurrentLevel();
-            if (!CategoryDataFactory.Instance.AddCategory(current, _currentNode.Text))
+            if (!CategoryDataFactory.Payment.AddCategory(_subTitle.Text, _currentNode.Text))
             {
                 Toast.MakeText(this, "分类已存在！", ToastLength.Long).Show();
             }
             else
             {
-                DisplayCategory(current);
+                DisplayCategory(_subTitle.Text);
             }
         }
         
@@ -109,8 +111,16 @@ namespace EveryRecords
         {
             var current = ((ListView)sender).Adapter.GetItem(e.Position).ToString();
 
-            _subTitle.Text = _subTitle.Text + "/" + current;
-            DisplayCategory(current);
+            if (string.IsNullOrEmpty(_subTitle.Text))
+            {
+                _subTitle.Text = current;
+            }
+            else
+            {
+                _subTitle.Text = _subTitle.Text + "/" + current;
+            }
+
+            DisplayCategory(_subTitle.Text);
         }
 
         private void list_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
@@ -124,34 +134,30 @@ namespace EveryRecords
             intent.PutExtra(ConfirmActivity.ReturnToTag, GetType().FullName);
             StartActivityForResult(intent, 0);
         }
-
-        private string BackToLastLevel()
-        {
-            string[] arr = _subTitle.Text.Split('/');
-            if (arr.Length <= 1)
-            {
-                return CategoryDataFactory.RootCategory;
-            }
-
-            _subTitle.Text = _subTitle.Text.Substring(0, _subTitle.Text.LastIndexOf("/"));
-            return arr[arr.Length - 2];
-        }
-
-        private string GetCurrentLevel()
-        {
-            string[] arr = _subTitle.Text.Split('/');
-            if (arr.Length <= 1)
-            {
-                return CategoryDataFactory.RootCategory;
-            }
-
-            return arr[arr.Length - 1];
-        }
-
+        
         private void DisplayCategory(string parent)
         {
             var list = FindViewById<ListView>(Resource.Id.CategoryItems);
-            list.Adapter = new SimpleListAdapter(this, CategoryDataFactory.Instance.GetSubCategories(parent).ToList());
+            IList<string> data = null;
+            if (string.IsNullOrEmpty(parent))
+            {
+                data = new List<string>(new string[] { "支出", "支出成员", "收入", "收入成员" }); 
+                _addButton.Visibility = ViewStates.Invisible;
+            }
+            else
+            {
+                _addButton.Visibility = ViewStates.Visible;
+                if (parent.Contains("支出"))
+                {
+                    data = CategoryDataFactory.Payment.GetSubCategories(parent).ToList();
+                }
+                else
+                {
+                    data = CategoryDataFactory.Income.GetSubCategories(parent).ToList();
+                }
+            }
+
+            list.Adapter = new SimpleListAdapter(this, data);
             _currentNode.Text = "";
         }
     }

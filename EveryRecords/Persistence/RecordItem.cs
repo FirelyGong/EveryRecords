@@ -12,8 +12,8 @@ namespace EveryRecords.Persistence
         [XmlAttribute("Category")]
         public string Category { get; set; }
 
-        [XmlAttribute("RecordTime")]
-        public string RecordTime { get; set; }
+        [XmlAttribute("RecordDate")]
+        public string RecordDate { get; set; }
 
         [XmlAttribute("Comments")]
         public string Comments { get; set; }
@@ -28,10 +28,10 @@ namespace EveryRecords.Persistence
         {
             if (string.IsNullOrEmpty(Comments))
             {
-                return string.Format(CultureInfo.InvariantCulture, "{0} - {1}:{2}", RecordTime.Split('-')[0], Category, Amount);
+                return string.Format(CultureInfo.InvariantCulture, "{0} - {1}:{2}", RecordDate, Category, Amount);
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "{0} - {1}:{2}({3})", RecordTime.Split('-')[0], Category, Amount, Comments);
+            return string.Format(CultureInfo.InvariantCulture, "{0} - {1}({2}):{3}", RecordDate, Category, Comments, Amount);
         }
     }
 }

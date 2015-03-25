@@ -8,11 +8,11 @@ namespace EveryRecords.Charts
 {
     public class ProgressChart:IChart
     {
-        public ProgressChart()
+        public ProgressChart(double value, double amount, Color chartColor)
         {
-            Data=new double[]{};
+            Data=new []{value, amount};
             Label=new string[]{};
-            ChartColor = Color.White;
+            ChartColor = chartColor;
             LabelColor = Color.Black;
         }
 

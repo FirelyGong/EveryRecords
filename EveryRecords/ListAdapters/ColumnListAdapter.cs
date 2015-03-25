@@ -8,9 +8,18 @@ namespace EveryRecords.ListAdapters
 {
     public class ColumnListAdapter : StringListAdapter
     {
+        private bool _useSmallItem;
+
         public ColumnListAdapter(Activity context, IList<string> items)
-            :base(context, items)
+            :this(context, items, false)
         {
+            _context = context;
+            _items = items;
+        }
+        public ColumnListAdapter(Activity context, IList<string> items, bool useSmallItem)
+            : base(context, items)
+        {
+            _useSmallItem = useSmallItem;
             _context = context;
             _items = items;
         }
@@ -28,31 +37,39 @@ namespace EveryRecords.ListAdapters
             var view = convertView;
             if (view == null)
             {
-                var strings = item.Split(':');
-                view = _context.LayoutInflater.Inflate(Resource.Layout.ListviewColumnItemLayout, parent, false);
-                var text = view.FindViewById<TextView>(Resource.Id.textView1);
-                var text2 = view.FindViewById<TextView>(Resource.Id.textView2);
-                text.Text = strings[0];
-                if (strings.Length > 1)
+                if (_useSmallItem)
                 {
-                    text2.Text = strings[1];
+                    view = _context.LayoutInflater.Inflate(Resource.Layout.ListviewColumnSmallItemLayout, parent, false);
                 }
                 else
                 {
-                    text2.Text = "";
+                    view = _context.LayoutInflater.Inflate(Resource.Layout.ListviewColumnItemLayout, parent, false);
                 }
-
-                var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
-                var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
-                int marginBotton = 0;
-                if (position == Count - 1)
-                {
-                    marginBotton = 2;
-                }
-
-                margin.SetMargins(2, 2, 2, marginBotton);
-                border.LayoutParameters = margin;
             }
+            var strings = item.Split(':');
+
+            var text = view.FindViewById<TextView>(Resource.Id.textView1);
+            var text2 = view.FindViewById<TextView>(Resource.Id.textView2);
+            text.Text = strings[0];
+            if (strings.Length > 1)
+            {
+                text2.Text = strings[1];
+            }
+            else
+            {
+                text2.Text = "";
+            }
+
+            var border = view.FindViewById<LinearLayout>(Resource.Id.linearLayout2);
+            var margin = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.MatchParent);
+            int marginBotton = 0;
+            if (position == Count - 1)
+            {
+                marginBotton = 2;
+            }
+
+            margin.SetMargins(2, 2, 2, marginBotton);
+            border.LayoutParameters = margin;
 
             return view;
         }
