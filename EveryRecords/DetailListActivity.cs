@@ -31,7 +31,6 @@ namespace EveryRecords
 
             var yearMonth = Intent.GetStringExtra(FrameElements.RecordsYearMonthTag);
             var recordsPath = Intent.GetStringExtra(FrameElements.RecordsCategoryTag);
-            var category = recordsPath.Substring(recordsPath.LastIndexOf("/") + 1);
             int year;
             int month;
             if (string.IsNullOrEmpty(yearMonth))
@@ -60,7 +59,7 @@ namespace EveryRecords
 
             Elements.SubTitle.Text = recordsPath;
             Elements.List.ItemLongClick += reportingList_ItemLongClick;
-            DisplayCategory(category);
+            DisplayCategory(recordsPath);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

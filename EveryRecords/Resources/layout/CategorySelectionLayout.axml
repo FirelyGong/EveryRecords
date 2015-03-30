@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/background_light">
+    <TextView
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TitleText"
+        android:textColor="@android:color/background_light"
+        android:gravity="center"
+        android:background="#4682B4"
+        android:layout_marginBottom="20px"
+        android:padding="10px" />
+    <GridView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SelectionList"
+        android:layout_margin="10px"
+        android:dividerHeight="0dp"
+        android:divider="#00000000"
+        android:columnWidth="70dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth" />
+    <Button
+        android:text="@string/LastLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LastLevelButton"
+        android:background="@drawable/FunctionButton"
+        android:textColor="@android:color/black"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="10dp" />
+</LinearLayout>

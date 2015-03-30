@@ -134,9 +134,9 @@ namespace EveryRecords.DataFactories
             return result;
         }
 
-        public IList<string> GetRecords(string category)
+        public IList<string> GetRecords(string path)
         {
-            return new List<string>(_recordingData.Records.Where(r => r.Category.Contains(category)).OrderBy(r => r.RecordDate).Select(r => r.ToString()));
+            return new List<string>(_recordingData.Records.Where(r => r.Path.Contains(path)).OrderBy(r => r.RecordDate).Select(r => r.ToString()));
         }
 
         public IList<string> GetDailyRecords(string recordType, DateTime date)

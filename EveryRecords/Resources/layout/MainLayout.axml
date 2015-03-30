@@ -44,9 +44,9 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:minWidth="25px"
-                android:minHeight="25px"
+                android:minHeight="5px"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:id="@+id/linearLayout9"
                 android:gravity="right">
                 <Button
@@ -55,18 +55,20 @@
                     android:layout_height="match_parent"
                     android:id="@+id/VerButton"
                     android:background="@drawable/TitleButton"
-                    android:layout_margin="10px"
                     android:textColor="@android:color/background_light"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="10px" />
                 <Button
                     android:text="@string/Setting"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/SettingButton"
                     android:background="@drawable/TitleButton"
-                    android:layout_margin="10px"
                     android:textColor="@android:color/background_light"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="10px" />
                 <Button
                     android:text="@string/Exit"
                     android:layout_width="wrap_content"
@@ -74,8 +76,9 @@
                     android:id="@+id/ExitButton"
                     android:background="@drawable/TitleButton"
                     android:textColor="@android:color/background_light"
-                    android:layout_margin="10px"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="10px" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -101,88 +104,59 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/MiddleLayout"
-        android:layout_weight="0.2">
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
+        android:layout_weight="0.15"
+        android:weightSum="4"
+        android:background="#B0E0E6">
+        <Button
+            android:id="@+id/PaymentButton"
+            android:text="@string/Payment"
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/background_light"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/Col1Layout"
-            android:layout_weight="0.25"
-            android:weightSum="1">
-            <Button
-                android:id="@+id/PaymentButton"
-                android:text="@string/Payment"
-                android:background="@drawable/FunctionButton"
-                android:textColor="@android:color/background_light"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.66"
-                android:layout_margin="10px"
-                android:drawableTop="@drawable/record" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
+            android:layout_weight="1"
+            android:layout_margin="30px"
+            android:drawableTop="@drawable/record" />
+        <Button
+            android:text="@string/Income"
+            android:id="@+id/IncomeButton"
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/background_light"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/Col2Layout"
-            android:layout_weight="0.25"
-            android:weightSum="1">
-            <Button
-                android:text="@string/Income"
-                android:id="@+id/IncomeButton"
-                android:background="@drawable/FunctionButton"
-                android:textColor="@android:color/background_light"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.66"
-                android:layout_margin="10px"
-                android:drawableTop="@drawable/record" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
+            android:layout_weight="1"
+            android:layout_margin="30px"
+            android:drawableTop="@drawable/record" />
+        <Button
+            android:text="@string/Statistics"
+            android:id="@+id/ViewReportButton"
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/background_light"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/Col3Layout"
-            android:layout_weight="0.25"
-            android:weightSum="1">
-            <Button
-                android:text="@string/Statistics"
-                android:id="@+id/ViewReportButton"
-                android:background="@drawable/FunctionButton"
-                android:textColor="@android:color/background_light"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.66"
-                android:layout_margin="10px"
-                android:drawableTop="@drawable/report" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
+            android:layout_weight="1"
+            android:layout_margin="30px"
+            android:drawableTop="@drawable/report" />
+        <Button
+            android:text="@string/HistoryRec"
+            android:id="@+id/HistoryButton"
+            android:background="@drawable/FunctionButton"
+            android:textColor="@android:color/background_light"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/Col4Layout"
-            android:layout_weight="0.25"
-            android:weightSum="1">
-            <Button
-                android:text="@string/HistoryRec"
-                android:id="@+id/HistoryButton"
-                android:background="@drawable/FunctionButton"
-                android:textColor="@android:color/background_light"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.66"
-                android:layout_margin="10px"
-                android:drawableTop="@drawable/History" />
-        </LinearLayout>
+            android:layout_weight="1"
+            android:layout_margin="30px"
+            android:drawableTop="@drawable/History" />
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/MiddleDownLayout"
+        android:layout_weight="0.05"
+        android:weightSum="4" />
     <LinearLayout
         android:orientation="vertical"
         android:minWidth="25px"

@@ -197,16 +197,15 @@ namespace EveryRecords
         private void share_Click(object sender, EventArgs e)
         {
             var list = ((StringListAdapter)Elements.Grid.Adapter).GetSource();
-            string[] arr = Elements.SubTitle.Text.Split('/');
-            if (arr.Length <= 1)
+            if (list.Count <= 1)
             {
                 return;
             }
 
             var intent = new Intent(this, typeof(CategoryGraphActivity));
-            intent.PutExtra(CategoryGraphActivity.RecordsYearMonthTag, Elements.Title.Text);
-            var category = arr[arr.Length - 1];
-            intent.PutExtra(CategoryGraphActivity.RecordsCategoryTag, category);
+            intent.PutExtra(FrameElements.RecordsYearMonthTag, Elements.Title.Text);
+            var category = Elements.SubTitle.Text;
+            intent.PutExtra(FrameElements.RecordsCategoryTag, category);
             intent.PutExtra(CategoryGraphActivity.RecordsDetailTag, string.Join(";", list));
             StartActivity(intent);
         }

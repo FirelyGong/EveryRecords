@@ -20,8 +20,6 @@ namespace EveryRecords
     [Activity(Label = "CategoryGraphActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class CategoryGraphActivity : Activity
     {
-        public const string RecordsYearMonthTag = "RecordsYearMonth";
-        public const string RecordsCategoryTag = "CategoryRecordData";
         public const string RecordsDetailTag = "CategoryDetail";
 
         protected override void OnCreate(Bundle bundle)
@@ -37,9 +35,9 @@ namespace EveryRecords
             share.Click += share_Click;
 
             var yearMonth = FindViewById<TextView>(Resource.Id.YearMonthText);
-            var ym=Intent.GetStringExtra(RecordsYearMonthTag);
+            var ym=Intent.GetStringExtra(FrameElements.RecordsYearMonthTag);
             yearMonth.Text = ym;
-            var cm = Intent.GetStringExtra(RecordsCategoryTag);
+            var cm = Intent.GetStringExtra(FrameElements.RecordsCategoryTag);
             var cateText = FindViewById<TextView>(Resource.Id.CategoryInfoText);
             var pieChart = FindViewById<ChartPane>(Resource.Id.PieChart);
             var detail = Intent.GetStringExtra(RecordsDetailTag).Split(';');
