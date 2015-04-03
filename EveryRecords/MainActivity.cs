@@ -143,16 +143,29 @@ namespace EveryRecords
 
         private void UpdateRecents()
         {
-            var historic = RecordingDataFactory.Instance.GetDailySummaries(RecordTypes.Payment.ToLabel()+"/日期",DateTime.Now, 7);
+            var recordType=RecordTypes.Payment.ToLabel()+"/日期";
+            var now = DateTime.Now;
+            var historic = RecordingDataFactory.Instance.GetDailySummaries(recordType,now, 7);
+            var count = historic.Count;
+            if (now.Day < 7)
+            {
+                var histRecords = RecordingDataFactory.CreateHistoryData(now.Year, now.Month - 1);
+                histRecords.LoadData();
+                var histList = histRecords.GetDailySummaries(recordType, now.AddDays(0 - now.Day), 7 - count);
+                histList.Reverse().ToList().ForEach(h=>historic.Insert(0,h));
+            }
+                       
             var zhuxing = FindViewById<ChartPane>(Resource.Id.ZhuXingTu);
             var amounts = historic.Select(h => double.Parse(h.Split(':')[1])).ToList();
-            var labels = historic.Select(h => DateTime.Parse(h.Split(':')[0]).Day.ToString()).ToList();
-            var count = historic.Count;
+            var dates = historic.Select(h => DateTime.Parse(h.Split(':')[0])).ToList();
+            var labels = dates.Select(h => h.Day.ToString()).ToList();
 
             for (int i = 0; i < 7; i++)
             {
-                var lbl = DateTime.Now.AddDays(0 - i).Day.ToString();
-                var index = labels.BinarySearch(lbl);
+                var dte = now.Date.AddDays(0 - i);
+
+                var lbl = now.AddDays(0 - i).Day.ToString();
+                var index = dates.BinarySearch(dte);
                 if (index < 0)
                 {
                     var pos = ~index;
